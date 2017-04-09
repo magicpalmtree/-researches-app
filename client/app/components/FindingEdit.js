@@ -108,12 +108,24 @@ module.exports = React.createClass({
                     </Col>
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup controlId="formControlsSelect">
                     <Col componentClass={ControlLabel} sm={2}>
                         makrozbTyp
                     </Col>
                     <Col sm={10}>
-                        <FormControl value={this.state.makrozbTyp} onChange={this.handleInputChange} name="makrozbTyp" />
+                        <FormControl componentClass="select" value={this.state.makrozbTyp} onChange={this.handleInputChange} name="makrozbTyp">
+                            <option>se/plod</option>
+                            <option>naklíč</option>
+                            <option>kvě_ství</option>
+                            <option>pleva</option>
+                            <option>plod</option>
+                            <option>dř_kůra</option>
+                            <option>kosti</option>
+                            <option>ršup</option>
+                            <option>arch</option>
+                            <option>dřevo</option>
+                            <option>měkk</option>
+                        </FormControl>
                     </Col>
                 </FormGroup>
 
