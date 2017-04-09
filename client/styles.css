@@ -1,0 +1,25 @@
+#root {
+    padding: 30px;
+}
+
+.list-title-container {
+    margin-bottom: 20px;
+}
+
+.list-title {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.btn__action {
+    margin: 0 5px;
+}
+
+.btn__action--last {
+    margin: 0;
+}
+
+.label-detail {
+    font-weight: bold;
+    margin-right: 5px;
+}
