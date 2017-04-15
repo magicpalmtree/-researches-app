@@ -68,9 +68,8 @@
     },
 
     "odhad": {
-      "type": "string",
-      "title": "odhad",
-      "enum": ["FALSE", "TRUE"]
+      "type": "boolean",
+      "title": "odhad"
     },
 
     "rFrag": {
