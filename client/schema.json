@@ -1,0 +1,119 @@
+{
+  "type": "object",
+  "required": [
+
+  ],
+  "properties": {
+    "Vyzkum": {
+      "type": "string",
+      "title": "Vyzkum",
+      "enum": ["VK-MSENO"]
+    },
+    "Objekt": {
+      "type": "string",
+      "title": "Objekt",
+      "enum": ["4", "10 - jih", "10 - sever", "11A", "3 - jih",
+               "8B", "9A", "plocha 3C1", "plocha 3C1_J1", "plocha 3C1_J2",
+               "plocha 3F3", "plocha 4", "plocha 4_obj12", "plocha 4_obj27", "plocha 6_obj50"]
+    },
+    "Vzorek": {
+      "type": "string",
+      "title": "Vzorek"
+    },
+    "PCODE": {
+      "type": "string",
+      "title": "PCODE"
+    },
+    "frakce": {
+      "type": "string",
+      "title": "frakce",
+      "enum": ["ORG 1,0"]
+    },
+
+    "cf": {
+      "type": "string",
+      "title": "cf"
+    },
+
+    "makrozbTyp": {
+      "type": "string",
+      "title": "makrozbTyp",
+      "enum": ["se/plod",
+      "naklíč",
+      "kvě_ství",
+      "pleva",
+      "plod",
+      "dř_kůra",
+      "kosti",
+      "ršup",
+      "arch",
+      "dřevo",
+      "měkk"]
+    },
+
+    "zach": {
+      "type": "string",
+      "title": "frakce",
+      "enum": ["uh", "nz", "ji"]
+    },
+
+    "rPocet": {
+      "type": "integer",
+      "title": "rPocet"
+    },
+
+    "rHmot": {
+      "type": "integer",
+      "title": "rHmot"
+    },
+
+    "odhad": {
+      "type": "string",
+      "title": "odhad",
+      "enum": ["FALSE", "TRUE"]
+    },
+
+    "rFrag": {
+      "type": "integer",
+      "title": "rFrag"
+    },
+
+
+    "nasobitel": {
+      "type": "integer",
+      "title": "nasobitel"
+    },
+
+    "FPocet": {
+      "type": "integer",
+      "title": "FPocet"
+    },
+
+    "FFrag": {
+      "type": "integer",
+      "title": "FFrag"
+    },
+
+    "FHmot": {
+      "type": "integer",
+      "title": "FHmot"
+    },
+
+    "datVloz": {
+      "type": "string",
+      "format": "date-time",
+      "title": "datVloz"
+    },
+
+    "poznFrakce": {
+      "type": "integer",
+      "title": "poznFrakce"
+    },
+
+    "Taxon": {
+      "type": "string",
+      "title": "Taxon",
+      "enum": ["Avena sp.","Avena sativa","Hordeum vulgare","Secale cereale","Triticum aestivum s.str.","Triticum aestivum/compactum","Triticum dicoccum","Cerealia","Rubus idaeus","Linum usitatissimum","Avena sterilis","Bromus sp.","Carex sp.","Carpinus betulus","Centaurea cyanus","Cyperaceae","Echinochloa crus-galli","Galium aparine","Galium sp.","Galium spurium","Chenopodium album","Lepidium campestre","Lithospermum arvense","Persicaria lapathifolia agg.","Plantago lanceolata","Poaceae","Polygonum aviculare agg.","Ranunculus sp.","Rumex acetosa","Rumex sp.","Scleranthus annuus s.str.","Silene dioica","Stellaria graminea","Stellaria media","Trifolium pratense s.l.","Trifolium repens","Valerianella dentata","Vicia sp.","Viola sp.","Indeterminata","Rubus fruticosus agg.","Rubus sp.","Sambucus ebulus","Sambucus nigra","Sambucus racemosa","Agrostemma githago","Betula pendula","Hyoscyamus niger","Chelidonium majus","Chenopodium ficifolium","Chenopodium glaucum","Impatiens parviflora","Lamium album","Oxalis fontana","Urtica dioica","Corylus avellana","Pisum/Vicia","Pisum sativum","Sambucus sp."]
+    }
+  }
+}
