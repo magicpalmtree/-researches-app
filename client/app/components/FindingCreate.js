@@ -6,8 +6,6 @@ const FormGroup = require('react-bootstrap').FormGroup;
 const FormControl = require('react-bootstrap').FormControl;
 const ControlLabel = require('react-bootstrap').ControlLabel;
 
-//const Form = require('react-jsonschema-form');
-
 import Form from 'react-jsonschema-form'
 
 const schema = require('../../schema.json');
@@ -16,21 +14,17 @@ const axios = require('axios');
 
 const apiPrefix = 'http://localhost:8099/api/findings/';
 
+// Perform a post request to save a formData
+const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
+    .then(() => {
+        console.log("Saving success")
+    });
 
 module.exports = React.createClass({
 
-    handleSaveClick() {
-        axios.post(apiPrefix, {
-
-            })
-            .then(() => {
-                console.log("Success")
-            })
-    },
-
     render: function() {
         return (
-            <Form schema={schema} />
+            <Form schema={schema} onSubmit={onSubmit}/>
         )
     }
 });
