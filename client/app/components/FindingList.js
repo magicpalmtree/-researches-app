@@ -100,7 +100,8 @@ module.exports = React.createClass({
                        data={_.map(this.state.findings, function (row) { return _.omit(row, ['_id', '__v']);})}
                        itemsPerPage={20}
                        pageButtonLimit={10}
-                       sortable={true}>
+                       sortable={true}
+                       filterable={['Taxon']}>
                 </Table>
             </div>
         );
