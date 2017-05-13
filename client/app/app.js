@@ -1,14 +1,17 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const FindingList = require('./components/FindingList.js');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import FindingList from './components/FindingList.js';
 
-let App = React.createClass({
+injectTapEventPlugin();
 
-    render: function(){
+export default class App extends React.Component {
+
+    render() {
         return(
             <FindingList />
         );
     }
-});
+}
 
 ReactDOM.render(<App/>, document.getElementById("root"));

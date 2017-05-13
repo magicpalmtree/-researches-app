@@ -1,19 +1,36 @@
-const React = require('react');
-const axios = require('axios');
+import React from 'react';
+import axios from 'axios';
 const apiPrefix = 'http://localhost:8099/api/findings/';
 
-const FindingCreate = require('./FindingCreate.js');
-const FindingEdit = require('./FindingEdit.js');
+// import FindingCreate from './FindingCreate.js';
+// import FindingEdit from './FindingEdit.js';
 
+export default class FindingList extends React.Component {
 
-module.exports = React.createClass({
-    getInitialState: function() {
-        return {
+    constructor(props, context) {
+        super(props, context);
+
+        this.state = {
             findings: [],
             showEditModal: false,
             showCreateModal: false
         }
-    },
+    }
+
+    render() {
+        return(
+            <div></div>
+        );
+    }
+
+    componentDidMount() {
+        this.refreshList();
+    }
+
+    componentWillUnmount() {
+        this.serverRequest.abort();
+    }
+
 
     openEditModal(id) {
         this.setState({
@@ -21,19 +38,19 @@ module.exports = React.createClass({
                 [id]: true
             }
         });
-    },
+    }
 
     closeEditModal() {
         this.setState({ showEditModal: false });
-    },
+    }
 
     openCreateModal() {
         this.setState({ showCreateModal: true });
-    },
+    }
 
     closeCreateModal() {
         this.setState({ showCreateModal: false });
-    },
+    }
 
     refreshList() {
         let _this = this;
@@ -45,28 +62,15 @@ module.exports = React.createClass({
                         findings: result.data
                     });
                 })
-    },
+    }
 
     deleteFinding(id) {
         axios.delete(apiPrefix + id).then(() => {
             this.refreshList();
         });
 
-    },
-
-    componentDidMount: function() {
-        this.refreshList();
-    },
-
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-
-    render: function(){
-        return(
-            <div></div>
-        );
     }
-});
+
+}
 
 
