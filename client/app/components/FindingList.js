@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-const apiPrefix = 'http://localhost:8099/api/findings/';
+import apiPrefix from '../app';
 
 // import FindingCreate from './FindingCreate.js';
 // import FindingEdit from './FindingEdit.js';

@@ -1,8 +1,7 @@
-const React = require('react');
-const schema = require('../../schema.json');
-const axios = require('axios');
-
-const apiPrefix = 'http://localhost:8099/api/findings/';
+import React from 'react';
+// import schema from '../../schema.json';
+import axios from 'axios';
+import apiPrefix from "../app";
 
 // Perform a post request to save a formData
 const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
@@ -10,9 +9,8 @@ const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
         console.log("Saving success")
     });
 
-module.exports = React.createClass({
-
-    render: function() {
+export default class FindingCreate extends React.Component {
+    render() {
 
     }
-});
+}

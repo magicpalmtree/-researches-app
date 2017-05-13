@@ -1,7 +1,7 @@
-const React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-   render: function(){
+export default class FindingDetail extends React.Component {
+   render() {
 
    }
-});
+}
