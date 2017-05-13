@@ -1,7 +1,7 @@
 import React from 'react';
 // import schema from '../../schema.json';
 import axios from 'axios';
-import apiPrefix from "../app";
+import {apiPrefix} from "../../App.jsx";
 
 // Perform a post request to save a formData
 const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)

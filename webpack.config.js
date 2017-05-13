@@ -1,8 +1,8 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
 
-    entry: path.resolve(__dirname, 'client') + '/app/app.js',
+    entry: path.resolve(__dirname, 'client') + '/app/App.jsx',
     output: {
         path: path.resolve(__dirname, 'dist') + '/app',
         filename: 'bundle.js',
@@ -11,7 +11,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 include: path.resolve(__dirname, 'client'),
                 loader: 'babel-loader',
                 query: {

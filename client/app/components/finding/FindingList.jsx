@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import apiPrefix from '../app';
+import {apiPrefix} from '../../App.jsx'
 
 // import FindingCreate from './FindingCreate.js';
 // import FindingEdit from './FindingEdit.js';
+
 
 export default class FindingList extends React.Component {
 
@@ -19,7 +20,9 @@ export default class FindingList extends React.Component {
 
     render() {
         return(
-            <div></div>
+            <div>
+                {/*<RaisedButton label="Primary" primary={true} />*/}
+            </div>
         );
     }
 
