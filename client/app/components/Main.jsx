@@ -1,62 +1,58 @@
 import React from 'react';
 
 import FindingList from './finding/List.jsx';
-import Create from './finding/Create.jsx'
+import Create from './finding/Create.jsx';
 
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
-
-const paperStyle = {
-    margin: '20px',
-    padding: '20px'
-};
+import {Navbar, Nav, NavItem, Modal, Button} from 'react-bootstrap';
 
 export default class Main extends React.Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            openDialog: false,
+            showModal: false,
         };
     }
 
-    toggleOpen() {
-        this.setState({openDialog: true});
+    openModal() {
+        this.setState({showModal: true});
+    }
+
+    closeModal() {
+        this.setState({showModal: false});
     }
 
     render() {
         return(
             <div>
-                <AppBar
-                    title={<span>Researches app</span>}
-                    iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-                    iconElementRight={<FlatButton label="Create" onTouchTap={this.toggleOpen.bind(this)}/>}
-                />
+                <Navbar inverse>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <a href="#">Researches app</a>
+                        </Navbar.Brand>
+                        <Navbar.Toggle />
+                    </Navbar.Header>
+                    <Navbar.Collapse>
+                        <Nav pullRight>
+                            <NavItem onClick={this.openModal.bind(this)}>Create</NavItem>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
 
-                <Dialog
-                    title="Create new"
-                    modal={true}
-                    open={this.state.openDialog}
-                >
 
-                </Dialog>
+                <Modal show={this.state.showModal} onHide={this.closeModal.bind(this)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Create a new finding</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Create/>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.closeModal.bind(this)}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
 
-                <Paper style={paperStyle}>
-                    <FindingList />
-                    <ul className="md-ui component-pagination">
-                        <li className="pagination-arrow arrow-left"><i className="material-icons">keyboard_arrow_left</i></li>
-                        <li className="pagination-number">1</li>
-                        <li className="pagination-number">2</li>
-                        <li className="pagination-number current-number">3</li>
-                        <li className="pagination-number">4</li>
-                        <li className="pagination-number">5</li>
-                        <li className="pagination-arrow arrow-right"><i className="material-icons">keyboard_arrow_right</i></li>
-                    </ul>
-                </Paper>
+                <FindingList />
             </div>
         );
     }

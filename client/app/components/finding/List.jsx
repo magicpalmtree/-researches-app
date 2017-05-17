@@ -5,13 +5,11 @@ import {apiPrefix} from '../../App.jsx'
 // import FindingCreate from './FindingCreate.js';
 // import FindingEdit from './FindingEdit.js';
 
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-// import {Tabs, Tab} from 'material-ui/Tabs';
-import Divider from 'material-ui/Divider';
+import {Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 
-
-const cardStyle = {
-    margin: '10px'
+const panelStyle = {
+    marginLeft: '10px',
+    marginRight: '10px'
 };
 
 const itemStyle = {
@@ -48,126 +46,39 @@ export default class List extends React.Component {
                 justifyContent: 'flex-start',
                 flexWrap: 'wrap'
             }}>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeobotanika"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
+                <Panel style={panelStyle} header="Panel heading">
+                    Archeobotanika
+                    <ListGroup fill>
+                        {
+                            headers.map((header) => {
+                                return <ListGroupItem key={header}>{header}</ListGroupItem>
+                            })
+                        }
 
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeozoologie"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
+                    </ListGroup>
+                </Panel>
 
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeobotanika"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
+                <Panel style={panelStyle} header="Panel heading">
+                    Archeobotanika
+                    <ListGroup fill>
+                        {
+                            headers.map((header) => {
+                                return <ListGroupItem key={header}>{header}</ListGroupItem>
+                            })
+                        }
+                    </ListGroup>
+                </Panel>
 
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeozoologie"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
-
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeobotanika"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
-
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
-                <Card style={cardStyle}>
-                    <CardHeader
-                        title="Title"
-                        subtitle="Archeozoologie"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <Divider/>
-                    <CardText>
-                        {headers.map((header) => (
-                            <div style={itemStyle} className="item" key={header}>
-                                <span>{header}</span>
-                                <Divider/>
-                            </div>
-                        ))}
-
-                    </CardText>
-                    <CardText expandable={true}>
-                    </CardText>
-                </Card>
+                <Panel style={panelStyle} header="Panel heading">
+                    Archeozoologie
+                    <ListGroup fill>
+                        {
+                            headers.map((header) => {
+                                return <ListGroupItem key={header}>{header}</ListGroupItem>
+                            })
+                        }
+                    </ListGroup>
+                </Panel>
             </div>
         );
     }

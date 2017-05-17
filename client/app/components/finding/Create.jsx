@@ -1,6 +1,5 @@
 import React from 'react';
 import schema from '../../../schema.json';
-import SchemaForm from 'react-schema-form';
 import axios from 'axios';
 import {apiPrefix} from "../../App.jsx";
 
@@ -17,7 +16,7 @@ export default class Create extends React.Component {
 
     render() {
         return (
-            <SchemaForm schema={schema}/>
+            <div>Schema form</div>
         )
     }
 }
