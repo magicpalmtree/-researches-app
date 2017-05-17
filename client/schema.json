@@ -13,8 +13,8 @@
       "type": "string",
       "title": "Objekt",
       "enum": ["4", "10 - jih", "10 - sever", "11A", "3 - jih",
-               "8B", "9A", "plocha 3C1", "plocha 3C1_J1", "plocha 3C1_J2",
-               "plocha 3F3", "plocha 4", "plocha 4_obj12", "plocha 4_obj27", "plocha 6_obj50"]
+        "8B", "9A", "plocha 3C1", "plocha 3C1_J1", "plocha 3C1_J2",
+        "plocha 3F3", "plocha 4", "plocha 4_obj12", "plocha 4_obj27", "plocha 6_obj50"]
     },
     "Vzorek": {
       "type": "string",
@@ -39,16 +39,16 @@
       "type": "string",
       "title": "makrozbTyp",
       "enum": ["se/plod",
-      "naklíč",
-      "kvě_ství",
-      "pleva",
-      "plod",
-      "dř_kůra",
-      "kosti",
-      "ršup",
-      "arch",
-      "dřevo",
-      "měkk"]
+        "naklíč",
+        "kvě_ství",
+        "pleva",
+        "plod",
+        "dř_kůra",
+        "kosti",
+        "ršup",
+        "arch",
+        "dřevo",
+        "měkk"]
     },
 
     "zach": {

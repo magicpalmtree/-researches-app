@@ -1,0 +1,180 @@
+{
+  "type": "object",
+  "required": [
+
+  ],
+  "properties": {
+    "Lokalita": {
+      "type": "string",
+      "title": "Lokalita - naleziště"
+    },
+    "Kraj": {
+      "type": "string",
+      "title": "Vzorek"
+    },
+    "Okres": {
+      "type": "string",
+      "title": "Okres"
+    },
+    "Katastr": {
+      "type": "string",
+      "title": "Katastr"
+    },
+
+    "NadmorskaVyska": {
+      "type": "string",
+      "title": "Nadmořská výška"
+    },
+
+    "ZkoumanaPlocha": {
+      "type": "string",
+      "title": "Zkoumaná plocha"
+    },
+
+    "Archeolog": {
+      "type": "string",
+      "title": "Archeolog"
+    },
+
+    "RokVyzkumu": {
+      "type": "string",
+      "format": "date",
+      "title": "Rok výzkumu"
+    },
+
+    "Instituce": {
+      "type": "string",
+      "title": "Instituce"
+    },
+
+    "KoordinatyXyz": {
+      "type": "string",
+      "title": "Koordináty XYZ"
+    },
+
+    "Mapa": {
+      "type": "string",
+      "title": "Mapa"
+    },
+
+
+    "Sonda": {
+      "type": "string",
+      "title": "Sonda"
+    },
+
+    "Sektor": {
+      "type": "string",
+      "title": "Sektor"
+    },
+
+
+    "Objekt": {
+      "type": "string",
+      "title": "Objekt"
+    },
+
+    "TypObjektu": {
+      "type": "string",
+      "title": "Typ objektu"
+    },
+
+    "Vrstva": {
+      "type": "string",
+      "title": "Vrstva"
+    },
+
+
+    "Hloubka": {
+      "type": "string",
+      "title": "Hloubka (od do)"
+    },
+
+    "DataceObdobi": {
+      "type": "string",
+      "title": "Datace - archeologické období"
+    },
+
+
+    "DataceKultura": {
+      "type": "string",
+      "title": "Datace - archeologická kultura"
+    },
+
+    "TypNaleziste": {
+      "type": "string",
+      "title": "Typ naleziště"
+    },
+
+
+    "Reference": {
+      "type": "string",
+      "title": "Reference"
+    },
+
+    "TypOdberu": {
+      "type": "string",
+      "title": "Typ odběru"
+    },
+
+    "InventarizacniCislo": {
+      "type": "string",
+      "title": "Inventarizační číslo"
+    },
+
+    "Poznamka": {
+      "type": "string",
+      "title": "Poznámka"
+    },
+
+    "Vzorek": {
+      "type": "string",
+      "title": "Vzorek"
+    },
+
+
+    "BotanickyDruh": {
+      "type": "string",
+      "title": "Botanický druh"
+    },
+
+    "NISP": {
+      "type": "string",
+      "title": "NISP (počet určených nálezů)"
+    },
+
+
+    "Botanik": {
+      "type": "string",
+      "title": "Botanik"
+    },
+
+    "RokUrceni": {
+      "type": "string",
+      "format": "date",
+      "title": "Rok určení"
+    },
+
+
+    "ReferenceArcheobot": {
+      "type": "string",
+      "title": "Reference (archeobot.)"
+    },
+
+    "StavZachovani": {
+      "type": "string",
+      "title": "Stav zachování"
+    },
+
+    "PoznamkaArcheobot": {
+      "type": "string",
+      "title": "Poznámka"
+    },
+
+    "Objem": {
+      "type": "string",
+      "title": "Objem"
+    }
+
+  }
+}
