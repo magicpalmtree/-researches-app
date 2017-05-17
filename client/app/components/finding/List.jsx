@@ -2,9 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {apiPrefix} from '../../App.jsx'
 
-// import FindingCreate from './FindingCreate.js';
-// import FindingEdit from './FindingEdit.js';
-
 import Filter from './Filter.jsx';
 
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem, Pagination, Button, Collapse} from 'react-bootstrap';
@@ -13,6 +10,8 @@ const panelStyle = {
     marginRight: '10px'
 };
 
+
+// DUMMY DATA
 const headersStatic = [
     "Lokalita", "Kraj", "Okres", "Katastr", "Nadmořská výška",
     "Zkoumaná plocha", "Archeolog", "Rok výzkumu", "Instituce", "Koordináty XYZ",
@@ -141,7 +140,7 @@ export default class List extends React.Component {
                     </Panel>
                     <Panel style={panelStyle} header={
                         <div>
-                            <span>Archeobotanika</span>
+                            <span>Archeozoologie</span>
                             <span style={{marginLeft: '70px'}}>
                             <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
                             <i className="fa fa-trash"/>
@@ -173,7 +172,7 @@ export default class List extends React.Component {
                     </Panel>
                     <Panel style={panelStyle} header={
                         <div>
-                            <span>Archeobotanika</span>
+                            <span>Archeozoologie</span>
                             <span style={{marginLeft: '70px'}}>
                             <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
                             <i className="fa fa-trash"/>
