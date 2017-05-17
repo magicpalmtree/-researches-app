@@ -4,3 +4,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.list-item:first-child {
+    border-radius: 0;
+    border-top: none;
+}
