@@ -5,7 +5,7 @@ import {apiPrefix} from '../../App.jsx'
 // import FindingCreate from './FindingCreate.js';
 // import FindingEdit from './FindingEdit.js';
 
-import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Tabs, Tab, Panel, ListGroup, ListGroupItem, Glyphicon} from 'react-bootstrap';
 
 const panelStyle = {
     marginLeft: '10px',
@@ -53,7 +53,16 @@ export default class List extends React.Component {
                 justifyContent: 'flex-start',
                 flexWrap: 'wrap'
             }}>
-                <Panel style={panelStyle} header="Archeobotanika">
+
+                <Panel style={panelStyle} header={
+                    <div>
+                        <span>Archeobotanika</span>
+                        <span style={{marginLeft: '70px'}}>
+                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
+                            <i className="fa fa-trash"/>
+                        </span>
+                    </div>
+                }>
                     <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                         <Tab eventKey={1} title="Static">
                             <ListGroup fill>
@@ -79,7 +88,15 @@ export default class List extends React.Component {
 
                 </Panel>
 
-                <Panel style={panelStyle} header="Archeobotanika">
+                <Panel style={panelStyle} header={
+                    <div>
+                        <span>Archeobotanika</span>
+                        <span style={{marginLeft: '70px'}}>
+                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
+                            <i className="fa fa-trash"/>
+                        </span>
+                    </div>
+                }>
                     <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                         <Tab eventKey={1} title="Static">
                             <ListGroup fill>
@@ -105,7 +122,15 @@ export default class List extends React.Component {
 
                 </Panel>
 
-                <Panel style={panelStyle} header="Archeozoologie">
+                <Panel style={panelStyle} header={
+                    <div>
+                        <span>Archeobotanika</span>
+                        <span style={{marginLeft: '70px'}}>
+                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
+                            <i className="fa fa-trash"/>
+                        </span>
+                    </div>
+                }>
                     <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                         <Tab eventKey={1} title="Static">
                             <ListGroup fill>
@@ -129,6 +154,7 @@ export default class List extends React.Component {
                         </Tab>
                     </Tabs>
                 </Panel>
+
             </div>
         );
     }

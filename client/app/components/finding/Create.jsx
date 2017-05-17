@@ -3,6 +3,8 @@ import schema from '../../../schema.json';
 import axios from 'axios';
 import {apiPrefix} from "../../App.jsx";
 
+import Form from "react-jsonschema-form";
+
 
 // Perform a post request to save a formData
 const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
@@ -11,12 +13,11 @@ const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
     });
 
 
-
 export default class Create extends React.Component {
 
     render() {
         return (
-            <div>Schema form</div>
+            <Form schema={schema}/>
         )
     }
 }
