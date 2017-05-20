@@ -6,6 +6,8 @@ export default class Filter extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.toggleOpen = this.toggleOpen.bind(this);
     }
 
     toggleOpen() {
@@ -15,7 +17,7 @@ export default class Filter extends React.Component {
     render() {
         return (
             <div style={{marginBottom: '20px'}}>
-                <Button bsStyle="primary" onClick={this.toggleOpen.bind(this)}>
+                <Button bsStyle="primary" onClick={this.toggleOpen}>
                     Filter
                 </Button>
 

@@ -40,7 +40,10 @@ export default class List extends React.Component {
             showEditModal: false,
             showFilter: false,
             activePage: 1
-        }
+        };
+
+        this.handleSelect = this.handleSelect.bind(this);
+        this.toggleClick = this.toggleClick.bind(this);
     }
 
     handleSelect(eventKey) {
@@ -59,7 +62,7 @@ export default class List extends React.Component {
         return(
             <div style={{padding: '20px'}}>
 
-                <Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick.bind(this)}/>
+                <Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>
 
                 <div style={{
                     display: 'flex',
@@ -87,7 +90,7 @@ export default class List extends React.Component {
                     items={20}
                     maxButtons={5}
                     activePage={this.state.activePage}
-                    onSelect={this.handleSelect.bind(this)} />
+                    onSelect={this.handleSelect} />
             </div>
 
         );

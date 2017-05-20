@@ -23,7 +23,9 @@ export default class Create extends React.Component {
         this.state = {
             // Default value
             selectValue: "AB"
-        }
+        };
+
+        this.changeHandler = this.changeHandler.bind(this);
     }
 
     changeHandler(e) {
@@ -37,7 +39,7 @@ export default class Create extends React.Component {
             <div>
                 <FormGroup controlId="formControlsSelect">
                     <ControlLabel>Select</ControlLabel>
-                    <FormControl componentClass="select" onChange={this.changeHandler.bind(this)} placeholder="select">
+                    <FormControl componentClass="select" onChange={this.changeHandler} placeholder="select">
                         <option value="AB">Archeobotanický záznam</option>
                         <option value="AZ">Archeozoologický záznam</option>
                     </FormControl>
