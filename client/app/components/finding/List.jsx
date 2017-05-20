@@ -3,13 +3,9 @@ import axios from 'axios';
 import {apiPrefix} from '../../App.jsx'
 
 import Filter from './Filter.jsx';
+import Item from './Item.jsx';
 
-import {Tabs, Tab, Panel, ListGroup, ListGroupItem, Pagination, Button, Collapse} from 'react-bootstrap';
-
-const panelStyle = {
-    marginRight: '10px'
-};
-
+import {Pagination} from 'react-bootstrap';
 
 // DUMMY DATA
 const headersStatic = [
@@ -72,169 +68,12 @@ export default class List extends React.Component {
                     flexWrap: 'wrap'
                 }}>
 
-                    <Panel style={panelStyle} header={
-                        <div>
-                            <span>Archeobotanika</span>
-                            <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
-                        </span>
-                        </div>
-                    }>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Static">
-                                <ListGroup fill>
-                                    {
-                                        headersStatic.map((header) => {
-                                            return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-
-                                </ListGroup>
-                            </Tab>
-                            <Tab eventKey={2} title="Dynamic">
-                                <ListGroup fill>
-                                    {
-                                        headersDynamBot.map((header) => {
-                                            return <ListGroupItem className="list-item"
-                                                                  key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-                                </ListGroup>
-                            </Tab>
-                        </Tabs>
-
-                    </Panel>
-                    <Panel style={panelStyle} header={
-                        <div>
-                            <span>Archeobotanika</span>
-                            <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
-                        </span>
-                        </div>
-                    }>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Static">
-                                <ListGroup fill>
-                                    {
-                                        headersStatic.map((header) => {
-                                            return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-
-                                </ListGroup>
-                            </Tab>
-                            <Tab eventKey={2} title="Dynamic">
-                                <ListGroup fill>
-                                    {
-                                        headersDynamBot.map((header) => {
-                                            return <ListGroupItem className="list-item"
-                                                                  key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-                                </ListGroup>
-                            </Tab>
-                        </Tabs>
-
-                    </Panel>
-                    <Panel style={panelStyle} header={
-                        <div>
-                            <span>Archeozoologie</span>
-                            <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
-                        </span>
-                        </div>
-                    }>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Static">
-                                <ListGroup fill>
-                                    {
-                                        headersStatic.map((header) => {
-                                            return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-
-                                </ListGroup>
-                            </Tab>
-                            <Tab eventKey={2} title="Dynamic">
-                                <ListGroup fill>
-                                    {
-                                        headersDynamZoo.map((header) => {
-                                            return <ListGroupItem className="list-item"
-                                                                  key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-                                </ListGroup>
-                            </Tab>
-                        </Tabs>
-                    </Panel>
-                    <Panel style={panelStyle} header={
-                        <div>
-                            <span>Archeozoologie</span>
-                            <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
-                        </span>
-                        </div>
-                    }>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Static">
-                                <ListGroup fill>
-                                    {
-                                        headersStatic.map((header) => {
-                                            return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-
-                                </ListGroup>
-                            </Tab>
-                            <Tab eventKey={2} title="Dynamic">
-                                <ListGroup fill>
-                                    {
-                                        headersDynamZoo.map((header) => {
-                                            return <ListGroupItem className="list-item"
-                                                                  key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-                                </ListGroup>
-                            </Tab>
-                        </Tabs>
-                    </Panel>
-                    <Panel style={panelStyle} header={
-                        <div>
-                            <span>Archeobotanika</span>
-                            <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
-                        </span>
-                        </div>
-                    }>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Static">
-                                <ListGroup fill>
-                                    {
-                                        headersStatic.map((header) => {
-                                            return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-
-                                </ListGroup>
-                            </Tab>
-                            <Tab eventKey={2} title="Dynamic">
-                                <ListGroup fill>
-                                    {
-                                        headersDynamBot.map((header) => {
-                                            return <ListGroupItem className="list-item"
-                                                                  key={header}>{header}</ListGroupItem>
-                                        })
-                                    }
-                                </ListGroup>
-                            </Tab>
-                        </Tabs>
-
-                    </Panel>
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
+                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
 
                 </div>
 
