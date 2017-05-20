@@ -5,29 +5,12 @@ import {apiPrefix} from '../../App.jsx'
 import Filter from './Filter.jsx';
 import Item from './Item.jsx';
 
-import {Pagination} from 'react-bootstrap';
+import Pagination from "./Pagination.jsx";
 
 // DUMMY DATA
-const headersStatic = [
-    "Lokalita", "Kraj", "Okres", "Katastr", "Nadmořská výška",
-    "Zkoumaná plocha", "Archeolog", "Rok výzkumu", "Instituce", "Koordináty XYZ",
-    "Mapa", "Sonda", "Sektor", "Objekt", "Typ objektu",
-    "Vrstva", "Hloubka(od do)", "Datace-archeologické období", "Datace-archeologická kultura",
-    "Typ naleziště", "Reference", "Typ odběru", "Inventarizační číslo", "Poznámka"
-];
-
 const headersDynamBot = [
     "Vzorek Botanický druh", "NISP (počet určených nálezů)", "Botanik",
     "Rok určení", "Reference (archeobot.)","Stav zachování", "Poznámka","Objem"
-];
-
-const headersDynamZoo = [
-    "Číslo",
-    "Zoologický druh",
-    "NISP (počet určených nálezů)",
-    "Archeozoolog",
-    "Rok určení",
-    "Reference (archeozoo.)"
 ];
 
 export default class List extends React.Component {
@@ -79,17 +62,8 @@ export default class List extends React.Component {
 
                 </div>
 
-                <Pagination
-                    prev
-                    next
-                    first
-                    last
-                    ellipsis
-                    boundaryLinks
-                    items={20}
-                    maxButtons={5}
-                    activePage={this.state.activePage}
-                    onSelect={this.handleSelect} />
+                <Pagination pageCount={5}/>
+
             </div>
 
         );
