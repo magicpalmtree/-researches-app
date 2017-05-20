@@ -45,7 +45,7 @@ export default class Create extends React.Component {
                     </FormControl>
                 </FormGroup>
 
-                <Form schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}/>
+                <Form onSubmit={onSubmit} schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}/>
             </div>
         )
     }

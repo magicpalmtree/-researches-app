@@ -9,16 +9,22 @@ const panelStyle = {
 export default class Item extends React.Component {
     constructor(props) {
         super(props);
+
+        this.removeItem = this.removeItem.bind(this);
+    }
+
+    removeItem(id) {
+        this.props.onDelete(id);
     }
 
     render() {
         return (
             <Panel style={panelStyle} header={
-                <div>
+                <div style={{position: 'relative'}}>
                     <span>Archeobotanika</span>
-                    <span style={{marginLeft: '70px'}}>
-                            <i style={{marginRight: '10px'}} className="fa fa-pencil"/>
-                            <i className="fa fa-trash"/>
+                    <span style={{position: 'absolute', right: '0'}}>
+                            <i style={{marginRight: '15px'}} className="fa fa-pencil"/>
+                            <i style={{cursor: 'pointer'}} className="fa fa-trash" onClick={() => this.removeItem(this.props.item._id)} />
                         </span>
                 </div>
             }>
@@ -26,9 +32,14 @@ export default class Item extends React.Component {
                     <Tab eventKey={1} title="Static">
                         <ListGroup fill>
                             {
-                                this.props.dataStatic.map((header) => {
-                                    return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
+                                Object.keys(this.props.item).map((key) => {
+                                    if(key !== '_id' && key !== '__v') {
+                                        return <ListGroupItem className="list-item" key={key}>
+                                            <span style={{fontWeight: '700'}}> {key} </span> : {this.props.item[key]}
+                                        </ListGroupItem>
+                                    }
                                 })
+
                             }
 
                         </ListGroup>

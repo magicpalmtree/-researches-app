@@ -44,6 +44,7 @@ export default class List extends React.Component {
 
         this.handleSelect = this.handleSelect.bind(this);
         this.toggleClick = this.toggleClick.bind(this);
+        this.deleteFinding = this.deleteFinding.bind(this);
     }
 
     handleSelect(eventKey) {
@@ -70,13 +71,11 @@ export default class List extends React.Component {
                     justifyContent: 'flex-start',
                     flexWrap: 'wrap'
                 }}>
-
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamBot} />
-                    <Item dataStatic={headersStatic} dataDynamic={headersDynamZoo} />
+                    {
+                        this.state.findings.map((item) => {
+                            return <Item onDelete={this.deleteFinding} dataDynamic={headersDynamBot} key={item._id} item={item} />
+                        })
+                    }
 
                 </div>
 

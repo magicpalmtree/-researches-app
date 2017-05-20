@@ -12,6 +12,9 @@ export default class Main extends React.Component {
         this.state = {
             showModal: false,
         };
+
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     openModal() {
@@ -34,13 +37,13 @@ export default class Main extends React.Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullRight>
-                            <NavItem onClick={this.openModal.bind(this)}>Create</NavItem>
+                            <NavItem onClick={this.openModal}>Create</NavItem>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
 
 
-                <Modal show={this.state.showModal} onHide={this.closeModal.bind(this)}>
+                <Modal show={this.state.showModal} onHide={this.closeModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create a new finding</Modal.Title>
                     </Modal.Header>
@@ -48,7 +51,7 @@ export default class Main extends React.Component {
                         <Create/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.closeModal.bind(this)}>Close</Button>
+                        <Button onClick={this.closeModal}>Close</Button>
                     </Modal.Footer>
                 </Modal>
 

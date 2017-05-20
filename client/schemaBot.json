@@ -1,7 +1,30 @@
 {
   "type": "object",
   "required": [
-
+    "Lokalita",
+    "Kraj",
+    "Okres",
+    "Katastr",
+    "NadmorskaVyska",
+    "ZkoumanaPlocha",
+    "Archeolog",
+    "RokVyzkumu",
+    "Instituce",
+    "KoordinatyXyz",
+    "Mapa",
+    "Sonda",
+    "Sektor",
+    "Objekt",
+    "TypObjektu",
+    "Vrstva",
+    "Hloubka",
+    "DataceObdobi",
+    "DataceKultura",
+    "TypNaleziste",
+    "Reference",
+    "TypOdberu",
+    "InventarizacniCislo",
+    "Poznamka"
   ],
   "properties": {
     "Lokalita": {

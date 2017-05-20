@@ -1,22 +1,31 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// define schema as strict:false because we will want
 const FindingSchema = new Schema({
-    Vyzkum : String,
+    Lokalita : String,
+    Kraj : String,
+    Okres : String,
+    Katastr : String,
+    NadmorskaVyska : String,
+    ZkoumanaPlocha : String,
+    Archeolog : String,
+    RokVyzkumu : Date,
+    Instituce : String,
+    KoordinatyXyz : String,
+    Mapa : String,
+    Sonda : String,
+    Sektor : String,
     Objekt : String,
-    Vzorek : String,
-    PCODE : String,
-    frakce : String,
-    makrozbTyp : String,
-    zach : String,
-    rPocet : Number,
-    odhad : Boolean,
-    nasobitel : Number,
-    FPocet : Number,
-    datVloz : Date,
-    poznFrakce : Number,
-    Taxon : String
+    TypObjektu : String,
+    Vrstva : String,
+    Hloubka : String,
+    DataceObdobi : String,
+    DataceKultura : String,
+    TypNaleziste : String,
+    Reference : String,
+    TypOdberu : String,
+    InventarizacniCislo : String,
+    Poznamka : String
 }, {strict: false});
 
 const Finding = mongoose.model('finding', FindingSchema);
