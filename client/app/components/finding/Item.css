@@ -1,0 +1,22 @@
+.header-container {
+    position: relative;
+}
+
+.icon-container {
+    position: absolute; 
+    right: 0;
+}
+
+.icon-container > i:first-child {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.list-item:first-child {
+    border-radius: 0;
+    border-top: none;
+}
+
+.list-item .label-bold {
+    font-weight: 700;
+}
