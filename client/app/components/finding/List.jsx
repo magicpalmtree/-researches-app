@@ -77,19 +77,6 @@ export default class List extends React.Component {
         this.serverRequest.abort();
     }
 
-
-    openEditModal(id) {
-        this.setState({
-            showEditModal: {
-                [id]: true
-            }
-        });
-    }
-
-    closeEditModal() {
-        this.setState({ showEditModal: false });
-    }
-
     refreshList() {
         let _this = this;
         this.serverRequest =

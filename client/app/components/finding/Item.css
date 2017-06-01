@@ -7,6 +7,10 @@
     right: 0;
 }
 
+.icon-container > i {
+    cursor: pointer;
+}
+
 .icon-container > i:first-child {
     margin-right: 15px;
     cursor: pointer;

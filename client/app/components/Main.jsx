@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FindingList from './finding/List.jsx';
+import List from './finding/List.jsx';
 import Create from './finding/Create.jsx';
 
 import {Navbar, Nav, NavItem, Modal, Button} from 'react-bootstrap';
@@ -48,14 +48,14 @@ export default class Main extends React.Component {
                         <Modal.Title>Create a new finding</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Create/>
+                        <Create onFindingCreated={this.closeModal}/>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.closeModal}>Close</Button>
                     </Modal.Footer>
                 </Modal>
 
-                <FindingList />
+                <List />
             </div>
         );
     }

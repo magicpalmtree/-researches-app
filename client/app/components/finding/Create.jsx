@@ -8,12 +8,6 @@ import Form from "react-jsonschema-form";
 
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 
-// Perform a post request to save a formData
-const onSubmit = ({formData}) =>  axios.post(apiPrefix, formData)
-    .then(() => {
-        console.log("Saving success")
-    });
-
 
 export default class Create extends React.Component {
 
@@ -26,6 +20,21 @@ export default class Create extends React.Component {
         };
 
         this.changeHandler = this.changeHandler.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    // Perform a post request to save a formData
+    onSubmit({formData}) {
+        axios.post(apiPrefix, formData)
+            .then(() => {
+                console.log("Saving success");
+                this.closeModal();
+            });
+    }
+
+    closeModal() {
+        this.props.onFindingCreated();
     }
 
     changeHandler(e) {
@@ -45,7 +54,7 @@ export default class Create extends React.Component {
                     </FormControl>
                 </FormGroup>
 
-                <Form onSubmit={onSubmit} schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}/>
+                <Form onSubmit={this.onSubmit} schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}/>
             </div>
         )
     }

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 // set up Express app
 const app = express();
 
-var port = process.env.PORT || 8099;
+const port = process.env.PORT || 8099;
 
 // connect to mongodb
 mongoose.connect('mongodb://localhost/researches_test');
