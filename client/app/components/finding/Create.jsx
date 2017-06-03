@@ -1,6 +1,6 @@
 import React from 'react';
-import schemaBot from '../../../schemaBot.json';
-import schemaZoo from '../../../schemaZoo.json';
+import schemaBot from '../../../schemas/schemaBot.json';
+import schemaZoo from '../../../schemas/schemaZoo.json';
 import axios from 'axios';
 import {apiPrefix} from "../../App.jsx";
 

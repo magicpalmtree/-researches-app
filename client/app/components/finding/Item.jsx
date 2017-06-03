@@ -24,6 +24,7 @@ export default class Item extends React.Component {
         this.onItemSave = this.onItemSave.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
+        this.onInputDynamChange = this.onInputDynamChange.bind(this);
     }
 
     toggleEdit() {
@@ -47,6 +48,14 @@ export default class Item extends React.Component {
 
     onInputChange(e) {
         this.state.item[e.target.name] = e.target.value;
+
+        this.setState({
+            item: this.state.item
+        })
+    }
+
+    onInputDynamChange(e) {
+        this.state.item.dynam[e.target.name] = e.target.value;
 
         this.setState({
             item: this.state.item
@@ -90,7 +99,12 @@ export default class Item extends React.Component {
                         <ListGroup fill>
                             {
                                 Object.keys(this.state.item.dynam).map((key) => {
-                                    return <ListGroupItem className="list-item" key={key}> <span className="label-bold"> {key}</span> {this.state.item.dynam[key]}</ListGroupItem>
+
+                                    return <ListGroupItem className="list-item" key={key}>
+                                        <span className="label-bold"> {key} </span> : {this.state.editMode ?
+                                        <input onChange={this.onInputDynamChange} name={key} type="text"
+                                               value={this.state.item.dynam[key]}/> : this.state.item.dynam[key]}
+                                    </ListGroupItem>
                                 })
                             }
                         </ListGroup>
