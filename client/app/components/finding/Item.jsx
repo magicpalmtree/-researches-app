@@ -57,7 +57,7 @@ export default class Item extends React.Component {
         return (
             <Panel style={panelStyle} header={
                 <div className="header-container">
-                    <span>Archeobotanika</span>
+                    <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
                     <span className="icon-container">
                         {
                             this.state.editMode ? <i className={'fa fa-check'} onClick={() => this.onItemSave()}/> :
@@ -73,7 +73,7 @@ export default class Item extends React.Component {
                         <ListGroup fill>
                             {
                                 Object.keys(this.state.item).map((key) => {
-                                    if(key !== '_id' && key !== '__v') {
+                                    if(key !== '_id' && key !== '__v' && key !== 'dynam' && key !== 'type') {
                                         return <ListGroupItem className="list-item" key={key}>
                                             <span className="label-bold"> {key} </span> : {this.state.editMode ?
                                             <input onChange={this.onInputChange} name={key} type="text"
@@ -89,8 +89,8 @@ export default class Item extends React.Component {
                     <Tab eventKey={2} title="Dynamic">
                         <ListGroup fill>
                             {
-                                this.props.dataDynamic.map((header) => {
-                                    return <ListGroupItem className="list-item" key={header}>{header}</ListGroupItem>
+                                Object.keys(this.state.item.dynam).map((key) => {
+                                    return <ListGroupItem className="list-item" key={key}> <span className="label-bold"> {key}</span> {this.state.item.dynam[key]}</ListGroupItem>
                                 })
                             }
                         </ListGroup>

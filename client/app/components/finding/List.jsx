@@ -46,7 +46,7 @@ export default class List extends React.Component {
         return(
             <div style={{padding: '20px'}}>
 
-                <Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>
+                {/*<Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>*/}
 
                 <div style={{
                     display: 'flex',
@@ -56,7 +56,7 @@ export default class List extends React.Component {
                 }}>
                     {
                         this.state.findings.map((item) => {
-                            return <Item onDelete={this.deleteFinding} dataDynamic={headersDynamBot} key={item._id} item={item} />
+                            return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
                         })
                     }
 

@@ -129,54 +129,59 @@
       "title": "Poznámka"
     },
 
-    "Vzorek": {
-      "type": "string",
-      "title": "Vzorek"
-    },
+    "dynam": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Vzorek": {
+          "type": "string",
+          "title": "Vzorek"
+        },
 
 
-    "BotanickyDruh": {
-      "type": "string",
-      "title": "Botanický druh"
-    },
+        "BotanickyDruh": {
+          "type": "string",
+          "title": "Botanický druh"
+        },
 
-    "NISP": {
-      "type": "string",
-      "title": "NISP (počet určených nálezů)"
-    },
-
-
-    "Botanik": {
-      "type": "string",
-      "title": "Botanik"
-    },
-
-    "RokUrceni": {
-      "type": "string",
-      "format": "date",
-      "title": "Rok určení"
-    },
+        "NISP": {
+          "type": "string",
+          "title": "NISP (počet určených nálezů)"
+        },
 
 
-    "ReferenceArcheobot": {
-      "type": "string",
-      "title": "Reference (archeobot.)"
-    },
+        "Botanik": {
+          "type": "string",
+          "title": "Botanik"
+        },
 
-    "StavZachovani": {
-      "type": "string",
-      "title": "Stav zachování"
-    },
+        "RokUrceni": {
+          "type": "string",
+          "format": "date",
+          "title": "Rok určení"
+        },
 
-    "PoznamkaArcheobot": {
-      "type": "string",
-      "title": "Poznámka"
-    },
 
-    "Objem": {
-      "type": "string",
-      "title": "Objem"
+        "ReferenceArcheobot": {
+          "type": "string",
+          "title": "Reference (archeobot.)"
+        },
+
+        "StavZachovani": {
+          "type": "string",
+          "title": "Stav zachování"
+        },
+
+        "PoznamkaArcheobot": {
+          "type": "string",
+          "title": "Poznámka"
+        },
+
+        "Objem": {
+          "type": "string",
+          "title": "Objem"
+        }
+      }
     }
-
   }
 }

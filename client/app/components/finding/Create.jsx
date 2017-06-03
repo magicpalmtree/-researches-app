@@ -26,6 +26,7 @@ export default class Create extends React.Component {
 
     // Perform a post request to save a formData
     onSubmit({formData}) {
+        formData.type = this.state.selectValue;
         axios.post(apiPrefix, formData)
             .then(() => {
                 console.log("Saving success");
