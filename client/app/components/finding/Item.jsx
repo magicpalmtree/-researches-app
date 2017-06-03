@@ -37,9 +37,7 @@ export default class Item extends React.Component {
         this.toggleEdit();
 
         axios.put(apiPrefix + this.state.item._id, this.state.item)
-            .then(() => {
-                console.log("Edit success!")
-            });
+            .then(() => {});
     }
 
     removeItem(id) {

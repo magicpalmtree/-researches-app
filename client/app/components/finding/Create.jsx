@@ -22,6 +22,7 @@ export default class Create extends React.Component {
         this.changeHandler = this.changeHandler.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.refreshList = this.refreshList.bind(this);
     }
 
     // Perform a post request to save a formData
@@ -29,8 +30,8 @@ export default class Create extends React.Component {
         formData.type = this.state.selectValue;
         axios.post(apiPrefix, formData)
             .then(() => {
-                console.log("Saving success");
                 this.closeModal();
+                this.refreshList();
             });
     }
 
@@ -42,6 +43,10 @@ export default class Create extends React.Component {
         this.setState({
             selectValue: e.target.value
         });
+    }
+
+    refreshList() {
+        this.props.refreshList();
     }
 
     render() {

@@ -7,11 +7,6 @@ import Item from './Item.jsx';
 
 import Pagination from "./Pagination.jsx";
 
-// DUMMY DATA
-const headersDynamBot = [
-    "Vzorek Botanický druh", "NISP (počet určených nálezů)", "Botanik",
-    "Rok určení", "Reference (archeobot.)","Stav zachování", "Poznámka","Objem"
-];
 
 export default class List extends React.Component {
 
@@ -19,7 +14,6 @@ export default class List extends React.Component {
         super(props, context);
 
         this.state = {
-            findings: [],
             showEditModal: false,
             showFilter: false,
             activePage: 1
@@ -28,6 +22,7 @@ export default class List extends React.Component {
         this.handleSelect = this.handleSelect.bind(this);
         this.toggleClick = this.toggleClick.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
+        this.refreshList = this.refreshList.bind(this);
     }
 
     handleSelect(eventKey) {
@@ -42,6 +37,10 @@ export default class List extends React.Component {
         })
     };
 
+    refreshList() {
+        this.props.refreshList();
+    }
+
     render() {
         return(
             <div style={{padding: '20px'}}>
@@ -55,7 +54,7 @@ export default class List extends React.Component {
                     flexWrap: 'wrap'
                 }}>
                     {
-                        this.state.findings.map((item) => {
+                        this.props.findings.map((item) => {
                             return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
                         })
                     }
@@ -73,21 +72,7 @@ export default class List extends React.Component {
         this.refreshList();
     }
 
-    componentWillUnmount() {
-        this.serverRequest.abort();
-    }
 
-    refreshList() {
-        let _this = this;
-        this.serverRequest =
-            axios
-                .get(apiPrefix)
-                .then(function(result) {
-                    _this.setState({
-                        findings: result.data
-                    });
-                })
-    }
 
     deleteFinding(id) {
         axios.delete(apiPrefix + id).then(() => {
