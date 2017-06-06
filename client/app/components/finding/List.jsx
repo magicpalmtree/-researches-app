@@ -14,15 +14,15 @@ export default class List extends React.Component {
         super(props, context);
 
         this.state = {
-            showEditModal: false,
             showFilter: false,
-            activePage: 1
+            pageOfItems: []
         };
 
         this.handleSelect = this.handleSelect.bind(this);
         this.toggleClick = this.toggleClick.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
     }
 
     handleSelect(eventKey) {
@@ -35,48 +35,58 @@ export default class List extends React.Component {
         this.setState({
             showFilter: !this.state.showFilter
         })
-    };
+    }
 
     refreshList() {
         this.props.refreshList();
     }
 
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({ pageOfItems: pageOfItems });
+    }
+
     render() {
-        return(
-            <div style={{padding: '20px'}}>
+        if( this.props.findings[0] === undefined ) {
+            return <div>Loading...</div>
+        } else {
+            return(
+                <div style={{padding: '20px'}}>
 
-                {/*<Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>*/}
+                    {/*<Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>*/}
 
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    flexWrap: 'wrap'
-                }}>
-                    {
-                        this.props.findings.map((item) => {
-                            return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
-                        })
-                    }
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        flexWrap: 'wrap'
+                    }}>
+                        {
+                            this.state.pageOfItems.map((item) => {
+                                return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
+                            })
+                        }
+                    </div>
+                    <div style={{textAlign: 'center'}}>
+                        <Pagination items={this.props.findings} onChangePage={this.onChangePage}/>
+                    </div>
 
                 </div>
 
-                <Pagination pageCount={5}/>
-
-            </div>
-
-        );
+            );
+        }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.refreshList();
     }
-
 
 
     deleteFinding(id) {
         axios.delete(apiPrefix + id).then(() => {
             this.refreshList();
+            let index = this.state.pageOfItems.map(function(x){ return x._id; }).indexOf(id);
+            this.state.pageOfItems.splice(index, 1);
         });
 
     }
