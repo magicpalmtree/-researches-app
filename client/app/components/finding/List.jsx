@@ -5,8 +5,11 @@ import {apiPrefix} from '../../App.jsx'
 import Filter from './Filter.jsx';
 import Item from './Item.jsx';
 
-import Pagination from "./Pagination.jsx";
+import $ from 'jquery';
 
+import ReactPaginate from 'react-paginate';
+
+const PER_PAGE = 5;
 
 export default class List extends React.Component {
 
@@ -15,14 +18,15 @@ export default class List extends React.Component {
 
         this.state = {
             showFilter: false,
-            pageOfItems: []
+            findings: [],
+            offset: 0
         };
 
         this.handleSelect = this.handleSelect.bind(this);
         this.toggleClick = this.toggleClick.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.onChangePage = this.onChangePage.bind(this);
+        this.handlePageClick = this.handlePageClick.bind(this);
     }
 
     handleSelect(eventKey) {
@@ -38,16 +42,33 @@ export default class List extends React.Component {
     }
 
     refreshList() {
-        this.props.refreshList();
+        $.ajax({
+            url      : apiPrefix,
+            data     : {limit: PER_PAGE, offset: this.state.offset},
+            dataType : 'json',
+            type     : 'GET',
+
+            success: data => {
+                this.setState({findings: data.findings, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
+            },
+
+            error: (xhr, status, err) => {
+                console.error(apiPrefix, status, err.toString());
+            }
+        });
     }
 
-    onChangePage(pageOfItems) {
-        // update state with new page of items
-        this.setState({ pageOfItems: pageOfItems });
-    }
+    handlePageClick(data) {
+        let selected = data.selected;
+        let offset = Math.ceil(selected * PER_PAGE);
+
+        this.setState({offset: offset}, () => {
+            this.refreshList();
+        });
+    };
 
     render() {
-        if( this.props.findings[0] === undefined ) {
+        if( this.state.findings === undefined ) {
             return <div>Loading...</div>
         } else {
             return(
@@ -62,13 +83,23 @@ export default class List extends React.Component {
                         flexWrap: 'wrap'
                     }}>
                         {
-                            this.state.pageOfItems.map((item) => {
+                            this.state.findings.map((item) => {
                                 return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
                             })
                         }
                     </div>
                     <div style={{textAlign: 'center'}}>
-                        <Pagination items={this.props.findings} onChangePage={this.onChangePage}/>
+                        <ReactPaginate previousLabel={"previous"}
+                                       nextLabel={"next"}
+                                       breakLabel={<a href="">...</a>}
+                                       breakClassName={"break-me"}
+                                       pageCount={this.state.pageCount}
+                                       marginPagesDisplayed={2}
+                                       pageRangeDisplayed={5}
+                                       onPageChange={this.handlePageClick}
+                                       containerClassName={"pagination"}
+                                       subContainerClassName={"pages pagination"}
+                                       activeClassName={"active"} />
                     </div>
 
                 </div>
@@ -85,8 +116,6 @@ export default class List extends React.Component {
     deleteFinding(id) {
         axios.delete(apiPrefix + id).then(() => {
             this.refreshList();
-            let index = this.state.pageOfItems.map(function(x){ return x._id; }).indexOf(id);
-            this.state.pageOfItems.splice(index, 1);
         });
 
     }
