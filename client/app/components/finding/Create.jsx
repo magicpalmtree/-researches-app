@@ -6,8 +6,9 @@ import {apiPrefix} from "../../App.jsx";
 
 import Form from "react-jsonschema-form";
 
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
+import Emitter from '../../../helpers/emitters.js';
 
 export default class Create extends React.Component {
 
@@ -22,7 +23,6 @@ export default class Create extends React.Component {
         this.changeHandler = this.changeHandler.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.refreshList = this.refreshList.bind(this);
     }
 
     // Perform a post request to save a formData
@@ -31,7 +31,7 @@ export default class Create extends React.Component {
         axios.post(apiPrefix, formData)
             .then(() => {
                 this.closeModal();
-                this.refreshList();
+                Emitter.emit('onListRefresh');
             });
     }
 
@@ -43,10 +43,6 @@ export default class Create extends React.Component {
         this.setState({
             selectValue: e.target.value
         });
-    }
-
-    refreshList() {
-        this.props.refreshList();
     }
 
     render() {

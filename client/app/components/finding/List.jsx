@@ -5,6 +5,8 @@ import {apiPrefix} from '../../App.jsx'
 import Filter from './Filter.jsx';
 import Item from './Item.jsx';
 
+import Emitter from '../../../helpers/emitters.js'
+
 import $ from 'jquery';
 
 import ReactPaginate from 'react-paginate';
@@ -110,6 +112,9 @@ export default class List extends React.Component {
 
     componentWillMount() {
         this.refreshList();
+        Emitter.addListener('onListRefresh', () => {
+            this.refreshList();
+        });
     }
 
 
