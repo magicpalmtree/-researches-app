@@ -7,11 +7,15 @@
     right: 0;
 }
 
-.icon-container > i {
+.icon-container > span {
     cursor: pointer;
 }
 
-.icon-container > i:first-child {
+.icon-container > span:hover {
+    color: #16a085;
+}
+
+.icon-container > span:first-child {
     margin-right: 15px;
     cursor: pointer;
 }

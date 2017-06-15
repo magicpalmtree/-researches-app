@@ -56,7 +56,11 @@ export default class Create extends React.Component {
                     </FormControl>
                 </FormGroup>
 
-                <Form onSubmit={this.onSubmit} schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}/>
+                <Form onSubmit={this.onSubmit} schema={this.state.selectValue === 'AB' ? schemaBot : schemaZoo}>
+                    <div>
+                        <button className="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </Form>
             </div>
         )
     }

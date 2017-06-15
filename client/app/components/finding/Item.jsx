@@ -67,11 +67,11 @@ export default class Item extends React.Component {
                     <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
                     <span className="icon-container">
                         {
-                            this.state.editMode ? <i className={'fa fa-check'} onClick={() => this.onItemSave()}/> :
-                                <i className='fa fa-pencil' onClick={() => this.toggleEdit()}/>
+                            this.state.editMode ? <span className={'fui-check'} onClick={() => this.onItemSave()}/> :
+                                <span className='fui-new' onClick={() => this.toggleEdit()}/>
 
                         }
-                        <i className="fa fa-trash" onClick={() => this.removeItem(this.props.item._id)} />
+                        <span className="fui-trash" onClick={() => this.removeItem(this.props.item._id)} />
                         </span>
                 </div>
             }>
@@ -83,7 +83,7 @@ export default class Item extends React.Component {
                                     if(key !== '_id' && key !== '__v' && key !== 'dynam' && key !== 'type') {
                                         return <ListGroupItem className="list-item" key={key}>
                                             <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                            <input onChange={this.onInputChange} name={key} type="text"
+                                            <input className="form-control" onChange={this.onInputChange} name={key} type="text"
                                                    value={this.state.item[key]}/> : this.state.item[key]}
                                         </ListGroupItem>
                                     }
@@ -100,7 +100,7 @@ export default class Item extends React.Component {
 
                                     return <ListGroupItem className="list-item" key={key}>
                                         <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                        <input onChange={this.onInputDynamChange} name={key} type="text"
+                                        <input className="form-control" onChange={this.onInputDynamChange} name={key} type="text"
                                                value={this.state.item.dynam[key]}/> : this.state.item.dynam[key]}
                                     </ListGroupItem>
                                 })
