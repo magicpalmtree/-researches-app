@@ -3,6 +3,8 @@ import React from 'react';
 import List from './finding/List.jsx';
 import Create from './finding/Create.jsx';
 
+// import FormBuilder from 'react-forms-builder';
+
 import {Navbar, Nav, NavItem, Modal, Button} from 'react-bootstrap';
 
 
@@ -11,21 +13,33 @@ export default class Main extends React.Component {
         super(props, context);
 
         this.state = {
-            showModal: false,
+            showCreateModal: false,
+            showBuildModal: false,
             offset: 0,
             data: {}
         };
 
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.openCreateModal = this.openCreateModal.bind(this);
+        this.closeCreateModal = this.closeCreateModal.bind(this);
+
+        this.openBuildModal = this.openBuildModal.bind(this);
+        this.closeBuildModal = this.closeBuildModal.bind(this);
     }
 
-    openModal() {
-        this.setState({showModal: true});
+    openCreateModal() {
+        this.setState({showCreateModal: true});
     }
 
-    closeModal() {
-        this.setState({showModal: false});
+    closeCreateModal() {
+        this.setState({showCreateModal: false});
+    }
+
+    openBuildModal() {
+        this.setState({showBuildModal: true});
+    }
+
+    closeBuildModal() {
+        this.setState({showBuildModal: false});
     }
 
     render() {
@@ -40,21 +54,37 @@ export default class Main extends React.Component {
                         </Navbar.Header>
                         <Navbar.Collapse>
                             <Nav pullRight>
-                                <NavItem onClick={this.openModal}>Create</NavItem>
+                                <NavItem onClick={this.openCreateModal}>Create</NavItem>
+                            </Nav>
+                            <Nav pullRight>
+                                <NavItem onClick={this.openBuildModal}>Build</NavItem>
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>
 
 
-                    <Modal show={this.state.showModal} onHide={this.closeModal}>
+
+                    <Modal show={this.state.showCreateModal} onHide={this.closeCreateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create a new finding</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Create refreshList={this.loadFindings} onFindingCreated={this.closeModal}/>
+                            <Create refreshList={this.loadFindings} onFindingCreated={this.closeCreateModal}/>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={this.closeModal}>Close</Button>
+                            <Button onClick={this.closeCreateModal}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
+
+                    <Modal show={this.state.showBuildModal} onHide={this.closeBuildModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Build a new schema</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.closeBuildModal}>Close</Button>
                         </Modal.Footer>
                     </Modal>
 
