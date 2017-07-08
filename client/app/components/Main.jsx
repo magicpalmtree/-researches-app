@@ -2,6 +2,7 @@ import React from 'react';
 
 import List from './finding/List.jsx';
 import Create from './finding/Create.jsx';
+import Build from './finding/Build.jsx';
 
 // import FormBuilder from 'react-forms-builder';
 
@@ -76,12 +77,12 @@ export default class Main extends React.Component {
                         </Modal.Footer>
                     </Modal>
 
-                    <Modal show={this.state.showBuildModal} onHide={this.closeBuildModal}>
+                    <Modal bsSize="large" show={this.state.showBuildModal} onHide={this.closeBuildModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Build a new schema</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-
+                            <Build/>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={this.closeBuildModal}>Close</Button>
