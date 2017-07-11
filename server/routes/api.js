@@ -4,6 +4,7 @@ const util       = require('util');
 
 const express = require('express');
 const Finding = require('../models/finding');
+const FindingSchema = require('../models/finding_schema');
 
 const router = express.Router();
 
@@ -67,6 +68,27 @@ router.delete('/findings/:id', function(req, res){
     Finding.findByIdAndRemove({_id: req.params.id}).then(function(finding){
         res.send(finding);
     })
+});
+
+
+
+/**
+ * Schemas routes
+ */
+
+// get a list of findings schemas from a db
+router.get('/findings_schemas', function(req, res){
+    FindingSchema.find({}).then(function(findings_schemas){
+        res.send(findings_schemas);
+    })
+});
+
+
+// create a new finding schema
+router.post('/findings_schemas', function(req, res, next){
+    FindingSchema.create(req.body).then(function(finding_schema){
+        res.send(finding_schema)
+    }).catch(next)
 });
 
 module.exports = router;

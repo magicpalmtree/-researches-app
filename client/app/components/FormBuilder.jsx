@@ -13,7 +13,7 @@ export default class FormBuilder extends React.Component {
         this.state = {
         };
 
-        this.showData = this.showData.bind(this);
+        this.sendSchema = this.sendSchema.bind(this);
 
     }
 
@@ -28,8 +28,9 @@ export default class FormBuilder extends React.Component {
         global.fb = $(formbuilder).formBuilder(options);
     }
 
-    showData() {
-        console.log(fb.actions.getData());
+    sendSchema() {
+        let schemaObj = fb.actions.getData();
+        this.props.sendFindingSchema(schemaObj);
     }
 
 
@@ -37,7 +38,7 @@ export default class FormBuilder extends React.Component {
         return (
             <div>
                 <div ref="formbuilder"></div>
-                <button style={{'marginTop': '30px'}} onClick={this.showData}>Show data</button>
+                <button style={{'marginTop': '30px'}} onClick={this.sendSchema}>Create a form</button>
             </div>
         )
     }
