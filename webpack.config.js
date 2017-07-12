@@ -4,6 +4,7 @@ const webpack = require('webpack');
 module.exports = {
 
     entry: [
+        './node_modules/formBuilder/dist/form-render.min.js',
         path.resolve(__dirname, 'client') + '/app/App.jsx'
     ],
 
@@ -19,7 +20,7 @@ module.exports = {
                 include: path.resolve(__dirname, 'client'),
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015']
+                    presets: ['react', 'es2015', 'stage-2']
                 }
             },
             {
@@ -42,7 +43,8 @@ module.exports = {
             "window.jQuery": "jquery",
             "window.$": "jquery",
             "jquery-ui": "jquery-ui",
-            formBuilder: "formBuilder"
+            formBuilder: "formBuilder",
+            formRender: "formRender"
         })
     ]
 };
