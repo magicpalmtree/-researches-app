@@ -39,9 +39,7 @@ export default class FormRender extends React.Component {
 
     render() {
         return (
-            <div>
-                <div ref="formrender"></div>
-            </div>
+            <form name="dynamicForm" ref="formrender"></form>
         )
     }
 

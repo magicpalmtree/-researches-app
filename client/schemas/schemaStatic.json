@@ -127,61 +127,6 @@
     "Poznamka": {
       "type": "string",
       "title": "Poznámka"
-    },
-
-    "dynam": {
-      "type": "object",
-      "title": "",
-      "properties": {
-        "Vzorek": {
-          "type": "string",
-          "title": "Vzorek"
-        },
-
-
-        "BotanickyDruh": {
-          "type": "string",
-          "title": "Botanický druh"
-        },
-
-        "NISP": {
-          "type": "string",
-          "title": "NISP (počet určených nálezů)"
-        },
-
-
-        "Botanik": {
-          "type": "string",
-          "title": "Botanik"
-        },
-
-        "RokUrceni": {
-          "type": "string",
-          "format": "date",
-          "title": "Rok určení"
-        },
-
-
-        "ReferenceArcheobot": {
-          "type": "string",
-          "title": "Reference (archeobot.)"
-        },
-
-        "StavZachovani": {
-          "type": "string",
-          "title": "Stav zachování"
-        },
-
-        "PoznamkaArcheobot": {
-          "type": "string",
-          "title": "Poznámka"
-        },
-
-        "Objem": {
-          "type": "string",
-          "title": "Objem"
-        }
-      }
     }
   }
 }
