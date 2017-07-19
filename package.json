@@ -27,6 +27,7 @@
     "react-dom": "^15.4.2",
     "react-jsonschema-form": "^0.48.2",
     "react-paginate": "^4.4.2",
+    "react-toastr": "^2.8.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

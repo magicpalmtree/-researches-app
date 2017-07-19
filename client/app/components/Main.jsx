@@ -82,7 +82,7 @@ export default class Main extends React.Component {
                             <Modal.Title>Build a new schema</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Build/>
+                            <Build onSchemaCreated={this.closeBuildModal}/>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={this.closeBuildModal}>Close</Button>

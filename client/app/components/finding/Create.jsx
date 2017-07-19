@@ -45,14 +45,14 @@ export default class Create extends React.Component {
      * Create a JSON from FormData() object. Then perform a POST request.
      */
     onSave() {
-        let dynamForm = document.forms.namedItem("dynamicForm");
-        let staticForm = document.forms.namedItem("staticForm");
+        let dynamForm = document.forms.namedItem("dynamicForm"),
+            staticForm = document.forms.namedItem("staticForm");
 
-        let dynamData = new FormData(dynamForm);
-        let staticData = new FormData(staticForm);
+        let dynamData = new FormData(dynamForm),
+            staticData = new FormData(staticForm);
 
-        let formData = {};
-        let dynam = {};
+        let formData = {},
+            dynam = {};
 
         for(let entry of staticData.entries()) {
             formData[entry[0]] = entry[1];

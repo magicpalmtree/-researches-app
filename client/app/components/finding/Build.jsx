@@ -1,10 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import FormBuilder from '../FormBuilder.jsx';
 
 import {FormControl} from 'react-bootstrap';
 
 import axios from 'axios';
-import {apiPrefixSchemas} from '../../App.jsx'
+import {apiPrefixSchemas} from '../../App.jsx';
+
+import {ToastContainer, ToastMessage} from 'react-toastr';
+
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+
 
 export default class Build extends React.Component {
 
@@ -17,7 +23,8 @@ export default class Build extends React.Component {
 
         this.getFindingSchema = this.getFindingSchema.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
-
+        this.showAlertSuccess = this.showAlertSuccess.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
@@ -27,11 +34,10 @@ export default class Build extends React.Component {
             definition: schemaObj
         };
 
-        console.log(schema);
-
         axios.post(apiPrefixSchemas, schema)
             .then(() => {
-                console.log("success")
+                this.showAlertSuccess();
+                // this.closeModal();
             });
     }
 
@@ -41,12 +47,35 @@ export default class Build extends React.Component {
         });
     }
 
+    showAlertSuccess() {
+        this.refs.container.success('Schema was created', 'Success', {
+            closeButton: true,
+        });
+        // Clear formBuilder and input after submitting form
+        fb.actions.clearFields();
+        ReactDOM.findDOMNode(this.refs.schemaName).value = '';
+        this.setState({
+            schemaNameValue: ''
+        })
+    }
+
+    closeModal() {
+        this.props.onSchemaCreated();
+    }
+
     render() {
         return (
             <div>
+                <ToastContainer
+                    toastMessageFactory={ToastMessageFactory}
+                    ref="container"
+                    className="toast-top-right"
+                />
+
                 <FormControl
                     type="text"
                     value={this.state.value}
+                    ref="schemaName"
                     placeholder="Enter name"
                     onChange={this.handleNameChange}
                     style={{marginBottom: '15px', border: '3px dashed #ccc'}}
