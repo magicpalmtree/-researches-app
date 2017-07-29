@@ -33,7 +33,6 @@ export default class FormBuilder extends React.Component {
         this.props.sendFindingSchema(schemaObj);
     }
 
-    clearFields
 
 
     render() {

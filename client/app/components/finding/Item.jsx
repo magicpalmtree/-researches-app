@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import Confirm from 'react-confirm-bootstrap';
+
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 
 import './Item.css'
@@ -71,8 +73,14 @@ export default class Item extends React.Component {
                                 <span className='fui-new' onClick={() => this.toggleEdit()}/>
 
                         }
-                        <span className="fui-trash" onClick={() => this.removeItem(this.props.item._id)} />
-                        </span>
+                        <Confirm
+                            onConfirm={() => this.removeItem(this.props.item._id)}
+                            body="Are you sure you want to delete this?"
+                            confirmText="Confirm"
+                            title="Deleting item">
+                            <span className="fui-trash"> </span>
+						</Confirm>
+                </span>
                 </div>
             }>
                 <Tabs defaultActiveKey={1} id="uncontrolled-tab">
