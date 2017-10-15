@@ -1,9 +1,7 @@
 import React from 'react';
-
 import $ from 'jquery';
-require('jquery-ui');
-
 import formBuilder from 'formBuilder';
+import 'jquery-ui';
 
 export default class FormBuilder extends React.Component {
 
@@ -18,6 +16,7 @@ export default class FormBuilder extends React.Component {
     }
 
     componentDidMount() {
+        // Initialize formbuilder and render it at the page
         const {formbuilder} = this.refs;
 
         let options = {
@@ -29,8 +28,9 @@ export default class FormBuilder extends React.Component {
     }
 
     sendSchema() {
+        // Get schema data object from formbuilder and send it to the parent component
         let schemaObj = fb.actions.getData();
-        this.props.sendFindingSchema(schemaObj);
+        this.props.sendSchema(schemaObj);
     }
 
 

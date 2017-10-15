@@ -1,7 +1,7 @@
 import React from 'react';
 
 import $ from 'jquery';
-require('jquery-ui');
+import 'jquery-ui';
 
 
 export default class FormRender extends React.Component {
@@ -30,7 +30,7 @@ export default class FormRender extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({schema: nextProps.schema}, function () {
+        this.setState({schema: nextProps.schema}, () => {
             this.renderPlugin(this.state.schema[0].definition);
         });
     }

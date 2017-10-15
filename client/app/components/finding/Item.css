@@ -28,3 +28,7 @@
 .list-item .label-bold {
     font-weight: 700;
 }
+
+.item-panel {
+    margin-right: 10px;
+}

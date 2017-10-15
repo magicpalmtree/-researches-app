@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import FormBuilder from '../FormBuilder.jsx';
-
 import {FormControl} from 'react-bootstrap';
-
 import axios from 'axios';
 import {apiPrefixSchemas} from '../../App.jsx';
-
 import {ToastContainer, ToastMessage} from 'react-toastr';
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
@@ -18,49 +15,54 @@ export default class Build extends React.Component {
         super(props, context);
 
         this.state = {
-            schemaNameValue: ''
+            schemaName: ''
         };
 
-        this.getFindingSchema = this.getFindingSchema.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.showAlertSuccess = this.showAlertSuccess.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.saveSchema = this.saveSchema.bind(this);
+        this.onSchemaNameChange = this.onSchemaNameChange.bind(this);
+        this.showToastSuccess = this.showToastSuccess.bind(this);
     }
 
 
-    getFindingSchema(schemaObj) {
+    saveSchema(schemaObj) {
         let schema = {
-            name: this.state.schemaNameValue,
+            name: this.state.schemaName,
             definition: schemaObj
         };
 
-        axios.post(apiPrefixSchemas, schema)
-            .then(() => {
-                this.showAlertSuccess();
-                // this.closeModal();
-            });
+        if (this.state.schemaName) {
+            axios.post(apiPrefixSchemas, schema)
+                .then(() => {
+                    this.showToastSuccess();
+                });
+        } else {
+            this.showToastError();
+        }
     }
 
-    handleNameChange(evt) {
+    onSchemaNameChange(e) {
         this.setState({
-            schemaNameValue: evt.target.value
+            schemaName: e.target.value
         });
     }
 
-    showAlertSuccess() {
+    showToastSuccess() {
         this.refs.container.success('Schema was created', 'Success', {
             closeButton: true,
         });
+
         // Clear formBuilder and input after submitting form
         fb.actions.clearFields();
         ReactDOM.findDOMNode(this.refs.schemaName).value = '';
         this.setState({
-            schemaNameValue: ''
+            schemaName: ''
         })
     }
 
-    closeModal() {
-        this.props.onSchemaCreated();
+    showToastError() {
+        this.refs.container.error('Schema name is missing!', 'Error', {
+            closeButton: true,
+        });
     }
 
     render() {
@@ -74,15 +76,14 @@ export default class Build extends React.Component {
 
                 <FormControl
                     type="text"
-                    value={this.state.value}
+                    value={this.state.schemaName}
                     ref="schemaName"
                     placeholder="Enter name"
-                    onChange={this.handleNameChange}
+                    onChange={this.onSchemaNameChange}
                     style={{marginBottom: '15px', border: '3px dashed #ccc'}}
                 />
-                <FormBuilder sendFindingSchema={this.getFindingSchema} />
+                <FormBuilder sendSchema={this.saveSchema} />
             </div>
         )
     }
-
 }

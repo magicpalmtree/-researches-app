@@ -1,16 +1,16 @@
 import React from 'react';
-// import schemaStatic from '../../../schemas/schemaStatic.json';
 import axios from 'axios';
 import {apiPrefix} from "../../App.jsx";
 import {apiPrefixSchemas} from "../../App.jsx";
-
-// import Form from "react-jsonschema-form";
 import FormRender from "../FormRender.jsx";
-
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-
 import Emitter from '../../../helpers/emitters.js';
+import ReactTimeout from 'react-timeout'
+import {ToastContainer, ToastMessage} from 'react-toastr';
 
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+
+// Define helping function to building form easier
 function FieldGroup({ id, label, ...props }) {
     return (
         <FormGroup controlId={id}>
@@ -30,9 +30,9 @@ export default class Create extends React.Component {
             schemaOptions: [],
         };
 
-        this.changeHandler = this.changeHandler.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.onSave = this.onSave.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
+        this.close = this.close.bind(this);
+        this.save = this.save.bind(this);
         this.getSchemaOptions = this.getSchemaOptions.bind(this);
     }
 
@@ -44,7 +44,7 @@ export default class Create extends React.Component {
     /**
      * Create a JSON from FormData() object. Then perform a POST request.
      */
-    onSave() {
+    save() {
         let dynamForm = document.forms.namedItem("dynamicForm"),
             staticForm = document.forms.namedItem("staticForm");
 
@@ -64,34 +64,31 @@ export default class Create extends React.Component {
 
         formData.dynam = dynam;
 
-        console.log(formData);
-
         axios.post(apiPrefix, formData)
             .then(() => {
-                this.closeModal();
+                this.close();
                 Emitter.emit('onListRefresh');
             });
     }
 
 
     /**
-     * Perform GET request to retrieve a list of dynamic schemas from a db.
+     * Perform GET request to retrieve a list of schemas from a db.
      */
     getSchemaOptions() {
-        let _this = this;
         axios.get(apiPrefixSchemas)
-            .then(function(result) {
-                _this.setState({
+            .then((result) => {
+                this.setState({
                     schemaOptions: result.data
                 })
             });
     }
 
-    closeModal() {
-        this.props.onFindingCreated();
+    close() {
+        this.props.onFindingCreate();
     }
 
-    changeHandler(e) {
+    onSelectChange(e) {
         this.setState({
             selectValue: e.target.value
         });
@@ -250,7 +247,7 @@ export default class Create extends React.Component {
 
                 <FormGroup controlId="formControlsSelect">
                     <ControlLabel>Dynamická část</ControlLabel>
-                    <FormControl componentClass="select" onChange={this.changeHandler} placeholder="Select a schema">
+                    <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select a schema">
                         <option></option>
                         {this.state.schemaOptions.map((opt, i) => (
                             <option value={opt._id} key={i}>{opt.name}</option>
@@ -258,11 +255,11 @@ export default class Create extends React.Component {
                     </FormControl>
                 </FormGroup>
 
-                {this.state.selectValue !== '' ? <FormRender schema={
+                { this.state.selectValue !== '' ? <FormRender schema={
                     this.state.schemaOptions.filter((el) =>
                     el._id === this.state.selectValue)}/> : <div></div> }
 
-                <button onClick={this.onSave}>Save</button>
+                <button onClick={this.save}>Save</button>
             </div>
         )
     }

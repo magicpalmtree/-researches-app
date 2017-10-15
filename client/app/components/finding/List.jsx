@@ -1,15 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import {apiPrefix} from '../../App.jsx'
-
-import Filter from './Filter.jsx';
 import Item from './Item.jsx';
-
 import Emitter from '../../../helpers/emitters.js'
-
 import $ from 'jquery';
-
 import ReactPaginate from 'react-paginate';
+import Spinner from 'react-spinkit'
+import './Item.css'
 
 const PER_PAGE = 5;
 
@@ -24,24 +21,18 @@ export default class List extends React.Component {
             offset: 0
         };
 
-        this.handleSelect = this.handleSelect.bind(this);
-        this.toggleClick = this.toggleClick.bind(this);
+        // TODO: Implement filter panel
+        // this.toggleFilter = this.toggleFilter.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.handlePageClick = this.handlePageClick.bind(this);
+        this.onPageClick = this.onPageClick.bind(this);
     }
 
-    handleSelect(eventKey) {
-        this.setState({
-            activePage: eventKey
-        });
-    }
-
-    toggleClick() {
-        this.setState({
-            showFilter: !this.state.showFilter
-        })
-    }
+    // toggleFilter() {
+    //     this.setState({
+    //         showFilter: !this.state.showFilter
+    //     })
+    // }
 
     refreshList() {
         $.ajax({
@@ -51,7 +42,10 @@ export default class List extends React.Component {
             type     : 'GET',
 
             success: data => {
-                this.setState({findings: data.findings, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
+                this.setState({
+                    findings: data.findings,
+                    pageCount: Math.ceil(data.meta.total_count / data.meta.limit)
+                });
             },
 
             error: (xhr, status, err) => {
@@ -60,7 +54,7 @@ export default class List extends React.Component {
         });
     }
 
-    handlePageClick(data) {
+    onPageClick(data) {
         let selected = data.selected;
         let offset = Math.ceil(selected * PER_PAGE);
 
@@ -70,27 +64,19 @@ export default class List extends React.Component {
     };
 
     render() {
-        if( this.state.findings === undefined ) {
-            return <div>Loading...</div>
+        if (!this.state.findings) {
+            return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
         } else {
             return(
-                <div style={{padding: '20px'}}>
-
-                    {/*<Filter open={this.state.showFilter} toggleOpenHandler={this.toggleClick}/>*/}
-
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        flexWrap: 'wrap'
-                    }}>
+                <div className="list-inner">
+                    <div className="list-wrapper">
                         {
                             this.state.findings.map((item) => {
-                                return <Item onDelete={this.deleteFinding} key={item._id} item={item} />
+                                return <Item delete={this.deleteFinding} key={item._id} item={item} />
                             })
                         }
                     </div>
-                    <div style={{textAlign: 'center'}}>
+                    <div className="paginate-wrapper">
                         <ReactPaginate previousLabel={"previous"}
                                        nextLabel={"next"}
                                        breakLabel={<a href="">...</a>}
@@ -98,7 +84,7 @@ export default class List extends React.Component {
                                        pageCount={this.state.pageCount}
                                        marginPagesDisplayed={2}
                                        pageRangeDisplayed={5}
-                                       onPageChange={this.handlePageClick}
+                                       onPageChange={this.onPageClick}
                                        containerClassName={"pagination"}
                                        subContainerClassName={"pages pagination"}
                                        activeClassName={"active"} />
@@ -112,6 +98,7 @@ export default class List extends React.Component {
 
     componentWillMount() {
         this.refreshList();
+
         Emitter.addListener('onListRefresh', () => {
             this.refreshList();
         });
@@ -119,9 +106,10 @@ export default class List extends React.Component {
 
 
     deleteFinding(id) {
-        axios.delete(apiPrefix + id).then(() => {
-            this.refreshList();
-        });
+        axios.delete(apiPrefix + id)
+            .then(() => {
+                this.refreshList();
+            });
 
     }
 

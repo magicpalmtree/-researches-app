@@ -1,12 +1,8 @@
 import React from 'react';
-
 import List from './finding/List.jsx';
 import Create from './finding/Create.jsx';
 import Build from './finding/Build.jsx';
-
-// import FormBuilder from 'react-forms-builder';
-
-import {Navbar, Nav, NavItem, Modal, Button} from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Modal } from 'react-bootstrap';
 
 
 export default class Main extends React.Component {
@@ -70,11 +66,8 @@ export default class Main extends React.Component {
                             <Modal.Title>Create a new finding</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Create refreshList={this.loadFindings} onFindingCreated={this.closeCreateModal}/>
+                            <Create refreshList={this.loadFindings} onFindingCreate={this.closeCreateModal}/>
                         </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.closeCreateModal}>Close</Button>
-                        </Modal.Footer>
                     </Modal>
 
                     <Modal bsSize="large" show={this.state.showBuildModal} onHide={this.closeBuildModal}>
@@ -82,11 +75,8 @@ export default class Main extends React.Component {
                             <Modal.Title>Build a new schema</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Build onSchemaCreated={this.closeBuildModal}/>
+                            <Build />
                         </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.closeBuildModal}>Close</Button>
-                        </Modal.Footer>
                     </Modal>
 
                     <List />

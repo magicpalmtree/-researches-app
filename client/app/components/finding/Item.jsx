@@ -1,17 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-
 import Confirm from 'react-confirm-bootstrap';
-
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
-
 import './Item.css'
 import {apiPrefix} from '../../App.jsx'
 
-
-const panelStyle = {
-    marginRight: '10px'
-};
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -23,7 +16,7 @@ export default class Item extends React.Component {
         };
 
         this.toggleEdit = this.toggleEdit.bind(this);
-        this.onItemSave = this.onItemSave.bind(this);
+        this.saveItem = this.saveItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         this.onInputDynamChange = this.onInputDynamChange.bind(this);
@@ -35,15 +28,13 @@ export default class Item extends React.Component {
         })
     }
 
-    onItemSave() {
+    saveItem() {
         this.toggleEdit();
-
-        axios.put(apiPrefix + this.state.item._id, this.state.item)
-            .then(() => {});
+        axios.put(apiPrefix + this.state.item._id, this.state.item);
     }
 
     removeItem(id) {
-        this.props.onDelete(id);
+        this.props.delete(id);
     }
 
     onInputChange(e) {
@@ -64,12 +55,12 @@ export default class Item extends React.Component {
 
     render() {
         return (
-            <Panel style={panelStyle} header={
+            <Panel className="item-panel" header={
                 <div className="header-container">
                     <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
                     <span className="icon-container">
                         {
-                            this.state.editMode ? <span className={'fui-check'} onClick={() => this.onItemSave()}/> :
+                            this.state.editMode ? <span className={'fui-check'} onClick={() => this.saveItem()}/> :
                                 <span className='fui-new' onClick={() => this.toggleEdit()}/>
 
                         }
@@ -88,12 +79,12 @@ export default class Item extends React.Component {
                         <ListGroup fill>
                             {
                                 Object.keys(this.state.item).map((key) => {
-                                    if(key !== '_id' && key !== '__v' && key !== 'dynam' && key !== 'type') {
-                                        return <ListGroupItem className="list-item" key={key}>
-                                            <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                            <input className="form-control" onChange={this.onInputChange} name={key} type="text"
-                                                   value={this.state.item[key]}/> : this.state.item[key]}
-                                        </ListGroupItem>
+                                    if (key !== '_id' && key !== '__v' && key !== 'dynam' && key !== 'type') {
+                                        return  <ListGroupItem className="list-item" key={key}>
+                                                  <span className="label-bold"> {key} </span> : {this.state.editMode ?
+                                                    <input className="form-control" onChange={this.onInputChange} name={key} type="text"
+                                                        value={this.state.item[key]}/> : this.state.item[key]}
+                                                </ListGroupItem>
                                     }
                                 })
 
@@ -101,20 +92,23 @@ export default class Item extends React.Component {
 
                         </ListGroup>
                     </Tab>
-                    <Tab eventKey={2} title="Dynamic">
-                        <ListGroup fill>
-                            {
-                                Object.keys(this.state.item.dynam).map((key) => {
-
-                                    return <ListGroupItem className="list-item" key={key}>
-                                        <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                        <input className="form-control" onChange={this.onInputDynamChange} name={key} type="text"
-                                               value={this.state.item.dynam[key]}/> : this.state.item.dynam[key]}
-                                    </ListGroupItem>
-                                })
-                            }
-                        </ListGroup>
-                    </Tab>
+                    {this.state.item.dynam ?
+                        <Tab eventKey={2} title="Dynamic">
+                            <ListGroup fill>
+                                {
+                                    Object.keys(this.state.item.dynam).map((key) => {
+                                        return <ListGroupItem className="list-item" key={key}>
+                                            <span className="label-bold"> {key} </span> : {this.state.editMode ?
+                                            <input className="form-control" onChange={this.onInputDynamChange}
+                                                   name={key} type="text"
+                                                   value={this.state.item.dynam[key]}/> : this.state.item.dynam[key]}
+                                        </ListGroupItem>
+                                    })
+                                }
+                            </ListGroup>
+                        </Tab> :
+                        <div></div>
+                    }
                 </Tabs>
             </Panel>
         )
