@@ -7,52 +7,36 @@ export default class Filter extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggleOpen = this.toggleOpen.bind(this);
+        this.open = this.open.bind(this);
     }
 
-    toggleOpen() {
-        this.props.toggleOpenHandler();
+    open() {
+        this.props.toggleOpen();
     }
 
     render() {
         return (
             <div style={{marginBottom: '20px'}}>
-                <Button bsStyle="primary" onClick={this.toggleOpen}>
+                <Button bsStyle="primary" onClick={this.open}>
                     Filter
                 </Button>
 
-                <Collapse in={this.props.open}>
+                <Collapse in={this.props.isOpen}>
                     <div>
                         <Form horizontal>
                             <FormGroup>
                                 <Col componentClass={ControlLabel} sm={1}>
-                                    Field 1
+                                    Lokalita
                                 </Col>
                                 <Col sm={4}>
                                     <FormControl placeholder="Field 1" />
                                 </Col>
 
                                 <Col componentClass={ControlLabel} sm={1}>
-                                    Field 2
+                                    Kraj
                                 </Col>
                                 <Col sm={4}>
                                     <FormControl placeholder="Field 1" />
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Col componentClass={ControlLabel} sm={1}>
-                                    Field 3
-                                </Col>
-                                <Col sm={4}>
-                                    <FormControl placeholder="Field 2" />
-                                </Col>
-
-                                <Col componentClass={ControlLabel} sm={1}>
-                                    Field 4
-                                </Col>
-                                <Col sm={4}>
-                                    <FormControl placeholder="Field 2" />
                                 </Col>
                             </FormGroup>
                         </Form>

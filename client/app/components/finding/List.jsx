@@ -1,12 +1,15 @@
 import React from 'react';
-import axios from 'axios';
-import {apiPrefix} from '../../App.jsx'
+import api from '../../../api/index';
 import Item from './Item.jsx';
-import Emitter from '../../../helpers/emitters.js'
-import $ from 'jquery';
+import Emitter from '../../../helpers/emitters.js';
 import ReactPaginate from 'react-paginate';
-import Spinner from 'react-spinkit'
-import './Item.css'
+import Filter from './Filter.jsx';
+import Spinner from 'react-spinkit';
+import './List.css';
+
+import {ToastContainer, ToastMessage} from 'react-toastr';
+
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
 const PER_PAGE = 5;
 
@@ -21,37 +24,28 @@ export default class List extends React.Component {
             offset: 0
         };
 
-        // TODO: Implement filter panel
-        // this.toggleFilter = this.toggleFilter.bind(this);
+        this.toggleFilter = this.toggleFilter.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.onPageClick = this.onPageClick.bind(this);
     }
 
-    // toggleFilter() {
-    //     this.setState({
-    //         showFilter: !this.state.showFilter
-    //     })
-    // }
+    toggleFilter() {
+        this.setState({
+            showFilter: !this.state.showFilter
+        })
+    }
 
-    refreshList() {
-        $.ajax({
-            url      : apiPrefix,
-            data     : {limit: PER_PAGE, offset: this.state.offset},
-            dataType : 'json',
-            type     : 'GET',
-
-            success: data => {
-                this.setState({
-                    findings: data.findings,
-                    pageCount: Math.ceil(data.meta.total_count / data.meta.limit)
-                });
-            },
-
-            error: (xhr, status, err) => {
-                console.error(apiPrefix, status, err.toString());
-            }
-        });
+    async refreshList() {
+        try {
+            let result = await api.getFindings({limit: PER_PAGE, offset: this.state.offset});
+            this.setState({
+                findings: result.data.findings,
+                pageCount: Math.ceil(result.data.meta.total_count / result.data.meta.limit)
+            });
+        } catch(e) {
+            this.refs.container.error(e.toString(), '', { closeButton: true });
+        }
     }
 
     onPageClick(data) {
@@ -68,30 +62,37 @@ export default class List extends React.Component {
             return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
         } else {
             return(
-                <div className="list-inner">
-                    <div className="list-wrapper">
-                        {
-                            this.state.findings.map((item) => {
-                                return <Item delete={this.deleteFinding} key={item._id} item={item} />
-                            })
-                        }
-                    </div>
-                    <div className="paginate-wrapper">
-                        <ReactPaginate previousLabel={"previous"}
-                                       nextLabel={"next"}
-                                       breakLabel={<a href="">...</a>}
-                                       breakClassName={"break-me"}
-                                       pageCount={this.state.pageCount}
-                                       marginPagesDisplayed={2}
-                                       pageRangeDisplayed={5}
-                                       onPageChange={this.onPageClick}
-                                       containerClassName={"pagination"}
-                                       subContainerClassName={"pages pagination"}
-                                       activeClassName={"active"} />
-                    </div>
+                <div>
+                    <ToastContainer
+                        toastMessageFactory={ToastMessageFactory}
+                        ref="container"
+                        className="toast-top-right"
+                    />
+                    <div className="list-inner">
+                        <Filter isOpen={this.state.showFilter} toggleOpen={this.toggleFilter} />
+                        <div className="list-wrapper">
+                            {
+                                this.state.findings.map((item) => {
+                                    return <Item delete={this.deleteFinding} key={item._id} item={item} />
+                                })
+                            }
+                        </div>
+                        <div className="paginate-wrapper">
+                            <ReactPaginate previousLabel={"previous"}
+                                           nextLabel={"next"}
+                                           breakLabel={<a href="">...</a>}
+                                           breakClassName={"break-me"}
+                                           pageCount={this.state.pageCount}
+                                           marginPagesDisplayed={2}
+                                           pageRangeDisplayed={5}
+                                           onPageChange={this.onPageClick}
+                                           containerClassName={"pagination"}
+                                           subContainerClassName={"pages pagination"}
+                                           activeClassName={"active"} />
+                        </div>
 
+                    </div>
                 </div>
-
             );
         }
     }
@@ -105,12 +106,9 @@ export default class List extends React.Component {
     }
 
 
-    deleteFinding(id) {
-        axios.delete(apiPrefix + id)
-            .then(() => {
-                this.refreshList();
-            });
-
+    async deleteFinding(id) {
+        await api.deleteFinding(id);
+        this.refreshList();
     }
 
 }

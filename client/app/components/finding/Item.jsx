@@ -1,10 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../../../api/index'
 import Confirm from 'react-confirm-bootstrap';
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 import './Item.css'
-import {apiPrefix} from '../../App.jsx'
-
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -28,9 +26,9 @@ export default class Item extends React.Component {
         })
     }
 
-    saveItem() {
+    async saveItem() {
         this.toggleEdit();
-        axios.put(apiPrefix + this.state.item._id, this.state.item);
+        await api.updateFinding(this.state.item._id, this.state.item);
     }
 
     removeItem(id) {

@@ -1,14 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import {apiPrefix} from "../../App.jsx";
-import {apiPrefixSchemas} from "../../App.jsx";
+import api from '../../../api/index'
 import FormRender from "../FormRender.jsx";
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import Emitter from '../../../helpers/emitters.js';
-import ReactTimeout from 'react-timeout'
-import {ToastContainer, ToastMessage} from 'react-toastr';
-
-const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
 // Define helping function to building form easier
 function FieldGroup({ id, label, ...props }) {
@@ -37,14 +31,14 @@ export default class Create extends React.Component {
     }
 
 
-    componentWillMount() {
-        this.getSchemaOptions();
+    async componentWillMount() {
+        await this.getSchemaOptions();
     }
 
     /**
      * Create a JSON from FormData() object. Then perform a POST request.
      */
-    save() {
+    async save() {
         let dynamForm = document.forms.namedItem("dynamicForm"),
             staticForm = document.forms.namedItem("staticForm");
 
@@ -64,24 +58,21 @@ export default class Create extends React.Component {
 
         formData.dynam = dynam;
 
-        axios.post(apiPrefix, formData)
-            .then(() => {
-                this.close();
-                Emitter.emit('onListRefresh');
-            });
+        await api.createFinding(formData);
+        this.close();
+        Emitter.emit('onListRefresh');
+
     }
 
 
     /**
      * Perform GET request to retrieve a list of schemas from a db.
      */
-    getSchemaOptions() {
-        axios.get(apiPrefixSchemas)
-            .then((result) => {
-                this.setState({
-                    schemaOptions: result.data
-                })
-            });
+    async getSchemaOptions() {
+        let result = await api.getFindingSchemas();
+        this.setState({
+            schemaOptions: result.data
+        })
     }
 
     close() {

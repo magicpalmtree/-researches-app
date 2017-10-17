@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FormBuilder from '../FormBuilder.jsx';
 import {FormControl} from 'react-bootstrap';
-import axios from 'axios';
-import {apiPrefixSchemas} from '../../App.jsx';
+import api from '../../../api/index';
 import {ToastContainer, ToastMessage} from 'react-toastr';
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
@@ -24,17 +23,15 @@ export default class Build extends React.Component {
     }
 
 
-    saveSchema(schemaObj) {
+    async saveSchema(schemaObj) {
         let schema = {
             name: this.state.schemaName,
             definition: schemaObj
         };
 
         if (this.state.schemaName) {
-            axios.post(apiPrefixSchemas, schema)
-                .then(() => {
-                    this.showToastSuccess();
-                });
+            await api.createFindingSchema(schema);
+            this.showToastSuccess();
         } else {
             this.showToastError();
         }
