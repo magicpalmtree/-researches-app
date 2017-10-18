@@ -1,9 +1,12 @@
 import React from 'react';
-import api from '../../../api/index';
+import api from '../../../services/api';
 import Item from './Item.jsx';
 import Emitter from '../../../helpers/emitters.js';
 import ReactPaginate from 'react-paginate';
-import Filter from './Filter.jsx';
+import {apiPrefix} from '../../App.jsx'
+import $ from 'jquery';
+import staticKeys from '../../../helpers/static';
+import {FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import Spinner from 'react-spinkit';
 import './List.css';
 
@@ -20,6 +23,8 @@ export default class List extends React.Component {
 
         this.state = {
             showFilter: false,
+            filterBy: '',
+            filteredList: [],
             findings: [],
             offset: 0
         };
@@ -28,6 +33,8 @@ export default class List extends React.Component {
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.onPageClick = this.onPageClick.bind(this);
+        this.onFilterChange = this.onFilterChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
     }
 
     toggleFilter() {
@@ -36,16 +43,25 @@ export default class List extends React.Component {
         })
     }
 
-    async refreshList() {
-        try {
-            let result = await api.getFindings({limit: PER_PAGE, offset: this.state.offset});
-            this.setState({
-                findings: result.data.findings,
-                pageCount: Math.ceil(result.data.meta.total_count / result.data.meta.limit)
-            });
-        } catch(e) {
-            this.refs.container.error(e.toString(), '', { closeButton: true });
-        }
+    refreshList() {
+        $.ajax({
+            url      : apiPrefix,
+            data     : {limit: PER_PAGE, offset: this.state.offset},
+            dataType : 'json',
+            type     : 'GET',
+
+            success: data => {
+                this.setState({
+                    findings: data.findings,
+                    filteredList: data.findings,
+                    pageCount: Math.ceil(data.meta.total_count / data.meta.limit)
+                });
+            },
+
+            error: (xhr, status, err) => {
+                console.error(apiPrefix, status, err.toString());
+            }
+        });
     }
 
     onPageClick(data) {
@@ -57,8 +73,29 @@ export default class List extends React.Component {
         });
     };
 
+    onFilterChange(e) {
+        if (!e.target.value) {
+            this.setState({
+                filteredList: this.state.findings,
+            });
+        }
+        let filterVal = e.target.value.toString();
+        if (this.state.filterBy) {
+            let list = this.state.findings.filter(item => item[this.state.filterBy].includes(filterVal));
+            this.setState({
+                filteredList: list,
+            });
+        }
+    };
+
+    onSelectChange(e) {
+        this.setState({
+            filterBy: e.target.value
+        });
+    };
+
     render() {
-        if (!this.state.findings) {
+        if (!this.state.filteredList) {
             return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
         } else {
             return(
@@ -69,10 +106,24 @@ export default class List extends React.Component {
                         className="toast-top-right"
                     />
                     <div className="list-inner">
-                        <Filter isOpen={this.state.showFilter} toggleOpen={this.toggleFilter} />
+
+                        <FormGroup>
+                            <Col sm={2}>
+                                <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select">
+                                    <option></option>
+                                    {staticKeys.map((key, i) => (
+                                        <option value={key.name} key={i}>{key.label}</option>
+                                    ))}
+                                </FormControl>
+                            </Col>
+                            <Col sm={4}>
+                                <FormControl onChange={this.onFilterChange} />
+                            </Col>
+                        </FormGroup>
+
                         <div className="list-wrapper">
                             {
-                                this.state.findings.map((item) => {
+                                this.state.filteredList.map((item) => {
                                     return <Item delete={this.deleteFinding} key={item._id} item={item} />
                                 })
                             }
