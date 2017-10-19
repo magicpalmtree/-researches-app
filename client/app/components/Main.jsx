@@ -2,7 +2,7 @@ import React from 'react';
 import List from './finding/List.jsx';
 import Create from './finding/Create.jsx';
 import Build from './finding/Build.jsx';
-import { Navbar, Nav, NavItem, Modal } from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 
 
 export default class Main extends React.Component {
@@ -41,25 +41,12 @@ export default class Main extends React.Component {
 
     render() {
             return (
-                <div>
-                    <Navbar inverse>
-                        <Navbar.Header>
-                            <Navbar.Brand>
-                                <a href="#">Researches app</a>
-                            </Navbar.Brand>
-                            <Navbar.Toggle />
-                        </Navbar.Header>
-                        <Navbar.Collapse>
-                            <Nav pullRight>
-                                <NavItem onClick={this.openCreateModal}>Create</NavItem>
-                            </Nav>
-                            <Nav pullRight>
-                                <NavItem onClick={this.openBuildModal}>Build</NavItem>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
+                <div  className="container-fluid">
 
+                    <h2>Findings</h2>
 
+                    <Button onClick={this.openCreateModal}>Create</Button>
+                    <Button onClick={this.openBuildModal}>Build</Button>
 
                     <Modal show={this.state.showCreateModal} onHide={this.closeCreateModal}>
                         <Modal.Header closeButton>

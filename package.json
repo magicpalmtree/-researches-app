@@ -28,6 +28,8 @@
     "react-dom": "^15.4.2",
     "react-jsonschema-form": "^0.48.2",
     "react-paginate": "^4.4.2",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.2.2",
     "react-spinkit": "^3.0.0",
     "react-timeout": "^1.0.1",
     "react-toastr": "^2.8.2",
