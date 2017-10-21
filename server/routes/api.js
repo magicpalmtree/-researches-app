@@ -8,33 +8,10 @@ const FindingSchema = require('../models/finding_schema');
 
 const router = express.Router();
 
-const PER_PAGE = 5;
-
-function getPaginatedItems(items, offset) {
-    return items.slice(offset, offset + PER_PAGE);
-}
-
 // get a list of findings from a db
 router.get('/findings', function(req, res){
-    Finding.find({}).then(function(findings){
-        let offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
-        let nextOffset = offset + PER_PAGE;
-        let previousOffset = (offset - PER_PAGE < 1) ? 0 : offset - PER_PAGE;
-
-        let meta = {
-            limit: PER_PAGE,
-            next: util.format('?limit=%s&offset=%s', PER_PAGE, nextOffset),
-            offset: req.query.offset,
-            previous: util.format('?limit=%s&offset=%s', PER_PAGE, previousOffset),
-            total_count: findings.length
-        };
-
-        let json = {
-            meta: meta,
-            findings: getPaginatedItems(findings, offset)
-        };
-
-        return res.json(json);
+    Finding.find({}).then(function(findings) {
+        return res.send(findings);
     })
 });
 
