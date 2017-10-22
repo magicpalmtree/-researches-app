@@ -32,12 +32,14 @@ export default class Pagination extends React.Component {
         }
     }
 
-    setPage(page) {
+    setPage(page, restrict=false) {
         let items = this.props.items;
         let pager = this.state.pager;
 
-        if (page < 1 || page > pager.totalPages) {
-            return;
+        if (restrict) {
+            if (page > pager.totalPages) {
+                return;
+            }
         }
 
         // get new pager object for specified page
@@ -117,7 +119,7 @@ export default class Pagination extends React.Component {
                     <a onClick={() => this.setPage(1)}>First</a>
                 </li>
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
+                    <a onClick={() => this.setPage(pager.currentPage - 1, true)}>Previous</a>
                 </li>
                 {pager.pages.map((page, index) =>
                     <li key={index} className={pager.currentPage === page ? 'active' : ''}>
@@ -125,7 +127,7 @@ export default class Pagination extends React.Component {
                     </li>
                 )}
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
+                    <a onClick={() => this.setPage(pager.currentPage + 1, true)}>Next</a>
                 </li>
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
                     <a onClick={() => this.setPage(pager.totalPages)}>Last</a>

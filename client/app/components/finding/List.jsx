@@ -9,6 +9,7 @@ import Spinner from 'react-spinkit';
 import './List.css';
 
 import {ToastContainer, ToastMessage} from 'react-toastr';
+import * as ReactDOM from "react-dom";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
@@ -19,25 +20,17 @@ export default class List extends React.Component {
         super(props, context);
 
         this.state = {
-            showFilter: false,
             filterBy: '',
             filteredList: [],
             findings: [],
             pageOfItems: []
         };
 
-        this.toggleFilter = this.toggleFilter.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
         this.onFilterChange = this.onFilterChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-    }
-
-    toggleFilter() {
-        this.setState({
-            showFilter: !this.state.showFilter
-        })
     }
 
     async refreshList() {
@@ -56,6 +49,7 @@ export default class List extends React.Component {
             });
         }
         let filterVal = e.target.value.toString();
+
         if (this.state.filterBy) {
             let list = this.state.findings.filter(item => item[this.state.filterBy].includes(filterVal));
             this.setState({
@@ -65,6 +59,14 @@ export default class List extends React.Component {
     };
 
     onSelectChange(e) {
+        if (this.refs.filterVal) {
+            ReactDOM.findDOMNode(this.refs.filterVal).value = '';
+        }
+        if (!this.filterBy) {
+            this.setState({
+                filteredList: this.state.findings
+            });
+        }
         this.setState({
             filterBy: e.target.value
         });
@@ -86,9 +88,11 @@ export default class List extends React.Component {
                         className="toast-top-right"
                     />
                     <div className="list-inner">
-
                         <FormGroup>
-                            <Col sm={2}>
+                            <Col sm={1}>
+                                <ControlLabel>Search:</ControlLabel>
+                            </Col>
+                            <Col sm={3}>
                                 <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select">
                                     <option></option>
                                     {staticKeys.map((key, i) => (
@@ -96,9 +100,13 @@ export default class List extends React.Component {
                                     ))}
                                 </FormControl>
                             </Col>
-                            <Col sm={4}>
-                                <FormControl onChange={this.onFilterChange} />
-                            </Col>
+                            {
+                                this.state.filterBy ?
+                                <Col sm={3}>
+                                    <FormControl ref="filterVal" onChange={this.onFilterChange} />
+                                </Col> : ''
+                            }
+
                         </FormGroup>
 
                         <div className="list-wrapper">
