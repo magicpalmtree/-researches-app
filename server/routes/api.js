@@ -15,7 +15,7 @@ function getPaginatedItems(items, offset) {
 }
 
 // get a list of findings from a db
-router.get('/findings', function(req, res){
+router.get('/findings', function(req, res){                             // TODO: Co kdyz chci vsechny?
     Finding.find({}).then(function(findings){
         let offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
         let nextOffset = offset + PER_PAGE;
