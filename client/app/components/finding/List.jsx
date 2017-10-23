@@ -1,17 +1,18 @@
 import React from 'react';
-import api from '../../../api/index';
+import api from '../../../services/api';
 import Item from './Item.jsx';
 import Emitter from '../../../helpers/emitters.js';
-import ReactPaginate from 'react-paginate';
-import Filter from './Filter.jsx';
+import Pagination from '../Pagination.jsx'
+import staticKeys from '../../../helpers/static';
+import {FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import Spinner from 'react-spinkit';
 import './List.css';
 
 import {ToastContainer, ToastMessage} from 'react-toastr';
+import * as ReactDOM from "react-dom";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
-const PER_PAGE = 5;
 
 export default class List extends React.Component {
 
@@ -19,46 +20,64 @@ export default class List extends React.Component {
         super(props, context);
 
         this.state = {
-            showFilter: false,
+            filterBy: '',
+            filteredList: [],
             findings: [],
-            offset: 0
+            pageOfItems: []
         };
 
-        this.toggleFilter = this.toggleFilter.bind(this);
         this.deleteFinding = this.deleteFinding.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.onPageClick = this.onPageClick.bind(this);
-    }
-
-    toggleFilter() {
-        this.setState({
-            showFilter: !this.state.showFilter
-        })
+        this.onPageChange = this.onPageChange.bind(this);
+        this.onFilterChange = this.onFilterChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
     }
 
     async refreshList() {
-        try {
-            let result = await api.getFindings({limit: PER_PAGE, offset: this.state.offset});
-            this.setState({
-                findings: result.data.findings,
-                pageCount: Math.ceil(result.data.meta.total_count / result.data.meta.limit)
-            });
-        } catch(e) {
-            this.refs.container.error(e.toString(), '', { closeButton: true });
-        }
+        let result = await api.getFindings();
+
+        this.setState({
+            findings: result.data,
+            filteredList: result.data,
+        })
     }
 
-    onPageClick(data) {
-        let selected = data.selected;
-        let offset = Math.ceil(selected * PER_PAGE);
+    onFilterChange(e) {
+        if (!e.target.value) {
+            this.setState({
+                filteredList: this.state.findings,
+            });
+        }
+        let filterVal = e.target.value.toString();
 
-        this.setState({offset: offset}, () => {
-            this.refreshList();
+        if (this.state.filterBy) {
+            let list = this.state.findings.filter(item => item[this.state.filterBy].includes(filterVal));
+            this.setState({
+                filteredList: list,
+            });
+        }
+    };
+
+    onSelectChange(e) {
+        if (this.refs.filterVal) {
+            ReactDOM.findDOMNode(this.refs.filterVal).value = '';
+        }
+        if (!this.filterBy) {
+            this.setState({
+                filteredList: this.state.findings
+            });
+        }
+        this.setState({
+            filterBy: e.target.value
         });
     };
 
+    onPageChange(pageOfItems) {
+        this.setState({ pageOfItems: pageOfItems });
+    };
+
     render() {
-        if (!this.state.findings) {
+        if (!this.state.filteredList) {
             return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
         } else {
             return(
@@ -69,26 +88,36 @@ export default class List extends React.Component {
                         className="toast-top-right"
                     />
                     <div className="list-inner">
-                        <Filter isOpen={this.state.showFilter} toggleOpen={this.toggleFilter} />
+                        <FormGroup>
+                            <Col sm={1}>
+                                <ControlLabel>Search:</ControlLabel>
+                            </Col>
+                            <Col sm={3}>
+                                <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select">
+                                    <option></option>
+                                    {staticKeys.map((key, i) => (
+                                        <option value={key.name} key={i}>{key.label}</option>
+                                    ))}
+                                </FormControl>
+                            </Col>
+                            {
+                                this.state.filterBy ?
+                                <Col sm={3}>
+                                    <FormControl ref="filterVal" onChange={this.onFilterChange} />
+                                </Col> : ''
+                            }
+
+                        </FormGroup>
+
                         <div className="list-wrapper">
                             {
-                                this.state.findings.map((item) => {
+                                this.state.pageOfItems.map((item) => {
                                     return <Item delete={this.deleteFinding} key={item._id} item={item} />
                                 })
                             }
                         </div>
                         <div className="paginate-wrapper">
-                            <ReactPaginate previousLabel={"previous"}
-                                           nextLabel={"next"}
-                                           breakLabel={<a href="">...</a>}
-                                           breakClassName={"break-me"}
-                                           pageCount={this.state.pageCount}
-                                           marginPagesDisplayed={2}
-                                           pageRangeDisplayed={5}
-                                           onPageChange={this.onPageClick}
-                                           containerClassName={"pagination"}
-                                           subContainerClassName={"pages pagination"}
-                                           activeClassName={"active"} />
+                            <Pagination items={this.state.filteredList} onPageChange={this.onPageChange} pageSize={5} />
                         </div>
 
                     </div>
@@ -97,18 +126,18 @@ export default class List extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this.refreshList();
+    async componentWillMount() {
+        await this.refreshList();
 
-        Emitter.addListener('onListRefresh', () => {
-            this.refreshList();
+        Emitter.addListener('onListRefresh', async () => {
+            await this.refreshList();
         });
     }
 
 
     async deleteFinding(id) {
         await api.deleteFinding(id);
-        this.refreshList();
+        await this.refreshList();
     }
 
 }

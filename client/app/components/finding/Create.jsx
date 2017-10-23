@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../../../api/index'
+import api from '../../../services/api'
 import FormRender from "../FormRender.jsx";
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import Emitter from '../../../helpers/emitters.js';
@@ -183,6 +183,7 @@ export default class Create extends React.Component {
                         id="formControlsText"
                         type="text"
                         label="Vrstva"
+                        name="vrstva"
                     />
                     <FieldGroup
                         id="formControlsText"

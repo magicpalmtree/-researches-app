@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FormBuilder from '../FormBuilder.jsx';
 import {FormControl} from 'react-bootstrap';
-import api from '../../../api/index';
+import api from '../../../services/api';
 import {ToastContainer, ToastMessage} from 'react-toastr';
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);

@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../../../api/index'
+import api from '../../../services/api'
 import Confirm from 'react-confirm-bootstrap';
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 import './Item.css'
