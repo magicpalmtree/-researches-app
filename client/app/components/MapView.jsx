@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col} from "react-bootstrap";
-import api from "../../api/index";
+import api from '../../services/api';
 import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
 import Emitter from '../../helpers/emitters.js';
@@ -18,21 +18,22 @@ export default class MapView extends React.Component {
 
         this.refreshList = this.refreshList.bind(this);
 
-
-
     }
 
     async refreshList() {
         try {
             let result = await api.getFindings();
             this.setState({
-                findings: result.data.findings,
+                findings: result.data,
             });
 
             // init map and process
 
 
-            let mapCenter = {lat: 49.885551, lon: 14.982962};
+            // let mapCenter = {lat: 49.885551, lon: 14.982962};
+
+
+            var mapCenter = new google.maps.LatLng(parseFloat(49.885551),parseFloat(14.982962));
             let map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 7,
                 center: mapCenter
@@ -51,8 +52,7 @@ export default class MapView extends React.Component {
                 },
             };
 
-            this.state.findings.forEach(function(element) {
-
+            this.state.findings.every(function(element, i) {
 
                 geocoder.geocode( { 'address': element.Lokalita}, function(results, status) {               // pomucka, TODO: zbavit se toho a presunout to do editace
                     if (status == 'OK') {
@@ -67,7 +67,8 @@ export default class MapView extends React.Component {
                     }
                 });
 
-                    console.log(element);
+                console.log(element);
+                return i<5;                         // TODO: Je tu natvrdo prvnich pet znamu, kvuli limitu API - Odstranit
             });
 
 
@@ -132,11 +133,12 @@ export default class MapView extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this.refreshList();
 
-        Emitter.addListener('onListRefresh', () => {         // TODO: ma to tu byt nebo ne?
-            this.refreshList();
+    async componentWillMount() {
+        await this.refreshList();
+
+        Emitter.addListener('onListRefresh', async () => { // TODO: ma to tu byt nebo ne?
+            await this.refreshList();
         });
     }
 }
