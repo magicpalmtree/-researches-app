@@ -5,6 +5,7 @@ import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
 import Emitter from '../../helpers/emitters.js';
 import './MapView.css';
+import Item from "./finding/Item.jsx";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
@@ -13,14 +14,22 @@ export default class MapView extends React.Component {
         super(props, context);
 
         this.state = {
-            data: {}
+            data: {},
+            selectedItems: []
         };
+
+        this.markers = [];
 
         this.refreshList = this.refreshList.bind(this);
 
+        this.onPlacemarkClick = this.onPlacemarkClick.bind(this);
+
     }
 
+
+
     async refreshList() {
+        var that = this;
         try {
             let result = await api.getFindings();
             this.setState({
@@ -54,6 +63,7 @@ export default class MapView extends React.Component {
 
             this.state.findings.every(function(element, i) {
 
+
                 geocoder.geocode( { 'address': element.Lokalita}, function(results, status) {               // pomucka, TODO: zbavit se toho a presunout to do editace
                     if (status == 'OK') {
                         map.setCenter(results[0].geometry.location);
@@ -61,6 +71,25 @@ export default class MapView extends React.Component {
                             map: map,
                             position: results[0].geometry.location,
                             icon: icons[element.type].icon,
+                        });
+
+                        that.markers.push(marker);
+
+                        marker.addListener('click', function() {
+                            // map.setZoom(8);
+                            // map.setCenter(marker.getPosition());
+
+
+                            // that.markers.every(function (m) {            // todo: vyresit nulovani markeru
+                            // // console.log(m);
+                            //    m.setAnimation(null);
+                            // });
+                            // this.setAnimation(google.maps.Animation.BOUNCE);
+
+                            that.setState({
+                                selectedItems: [element]
+                            });
+
                         });
                     } else {
                         alert('Geocode was not successful for the following reason: ' + status);
@@ -100,28 +129,42 @@ export default class MapView extends React.Component {
             return(
 
                 <div>
+                    <ToastContainer
+                        toastMessageFactory={ToastMessageFactory}
+                        ref="container"
+                        className="toast-top-right"
+                    />
 
-                    <Col sm={4} md={3}>
+                    <div id="map-toolbox">
 
-                        <ToastContainer
-                            toastMessageFactory={ToastMessageFactory}
-                            ref="container"
-                            className="toast-top-right"
-                        />
+                        <div className="container-fluid">
 
                         <h2>Map view</h2>
 
+                        <hr />
 
-                    </Col>
+                        <div className="item-wrapper">
+                            {
+                                this.state.selectedItems.map((item) => {
+                                    return <Item delete={this.deleteFinding} key={item._id} item={item} />
+                                })
+                            }
+                        </div>
+                        </div>
+
+
+                    </div>
 
                     <div id="legend">
                         <strong>Map legend</strong>
                     </div>
 
-                    <div id="mapContainer">
-                        <div id="map"></div>
-                    </div>
 
+                    <div id="map-container">
+
+                        <div id="map"></div>
+
+                    </div>
 
 
 

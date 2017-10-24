@@ -1,8 +1,17 @@
 
-#mapContainer {
+#map-toolbox {
 	position: absolute;
 	top: 50px;
 	left: 0;
+	bottom: 0;
+	width: 30%;
+	overflow-y: auto;
+}
+
+#map-container {
+	position: absolute;
+	top: 50px;
+	left: 30%;
 	right: 0;
 	bottom: 0;
 }
