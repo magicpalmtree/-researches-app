@@ -58,8 +58,8 @@ export default class Item extends React.Component {
                     <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
                     <span className="icon-container">
                         {
-                            this.state.editMode ? <span className={'fui-check'} onClick={() => this.saveItem()}/> :
-                                <span className='fui-new' onClick={() => this.toggleEdit()}/>
+                            this.state.editMode ? <span className={'glyphicon glyphicon-ok'} onClick={() => this.saveItem()}/> :
+                                <span className='glyphicon glyphicon-pencil' onClick={() => this.toggleEdit()}/>
 
                         }
                         <Confirm
@@ -67,7 +67,7 @@ export default class Item extends React.Component {
                             body="Are you sure you want to delete this?"
                             confirmText="Confirm"
                             title="Deleting item">
-                            <span className="fui-trash"> </span>
+                            <span className="glyphicon glyphicon-trash"> </span>
 						</Confirm>
                 </span>
                 </div>
