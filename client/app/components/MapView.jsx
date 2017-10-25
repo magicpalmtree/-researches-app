@@ -55,7 +55,7 @@ export default class MapView extends React.Component {
             this.state.findings.every(function(element, i) {
 
                 geocoder.geocode( { 'address': element.Lokalita}, function(results, status) {               // pomucka, TODO: zbavit se toho a presunout to do editace
-                    if (status == 'OK') {
+                    if (status === 'OK') {
                         map.setCenter(results[0].geometry.location);
                         var marker = new google.maps.Marker({
                             map: map,
@@ -84,8 +84,6 @@ export default class MapView extends React.Component {
 
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 
-
-
         } catch(e) {
             throw e;    // TODO: ten toaster nefuguje, opravit
             // this.refs.container.error(e.toString(), '', { closeButton: true });
@@ -98,20 +96,14 @@ export default class MapView extends React.Component {
             return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
         } else {
             return(
-
                 <div>
-
                     <Col sm={4} md={3}>
-
                         <ToastContainer
                             toastMessageFactory={ToastMessageFactory}
                             ref="container"
                             className="toast-top-right"
                         />
-
                         <h2>Map view</h2>
-
-
                     </Col>
 
                     <div id="legend">
@@ -121,14 +113,7 @@ export default class MapView extends React.Component {
                     <div id="mapContainer">
                         <div id="map"></div>
                     </div>
-
-
-
-
-
-
                 </div>
-
             );
         }
     }
@@ -137,7 +122,7 @@ export default class MapView extends React.Component {
     async componentWillMount() {
         await this.refreshList();
 
-        Emitter.addListener('onListRefresh', async () => { // TODO: ma to tu byt nebo ne?
+        Emitter.addListener('onListRefresh', async () => {
             await this.refreshList();
         });
     }

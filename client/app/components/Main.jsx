@@ -43,10 +43,12 @@ export default class Main extends React.Component {
             return (
                 <div  className="container-fluid">
 
-                    <h2>Findings</h2>
+                    <div>
+                        <h2>Findings</h2>
 
-                    <Button onClick={this.openCreateModal}>Create</Button>
-                    <Button onClick={this.openBuildModal}>Build</Button>
+                        <Button onClick={this.openCreateModal}>Create</Button>
+                        <Button onClick={this.openBuildModal}>Build</Button>
+                    </div>
 
                     <Modal show={this.state.showCreateModal} onHide={this.closeCreateModal}>
                         <Modal.Header closeButton>

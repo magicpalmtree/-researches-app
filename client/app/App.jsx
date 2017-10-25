@@ -21,34 +21,34 @@ export default class App extends React.Component {
     render() {
         return(
 
-                <Router>
+            <Router>
                 <div>
-                <Navbar inverse fluid staticTop>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <Link to="/">Researches app</Link>
-                        </Navbar.Brand>
-                        <Navbar.Toggle />
-                    </Navbar.Header>
-                    <Navbar.Collapse>
+                    <Navbar inverse fluid staticTop>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <Link to="/">Researches app</Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        <Navbar.Collapse>
 
-                        <Nav>
-                            <LinkContainer to="/findings">
-                                <NavItem>Findings</NavItem>
-                            </LinkContainer>
-                            <LinkContainer to="/map">
-                                <NavItem>Map view</NavItem>
-                            </LinkContainer>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
+                            <Nav>
+                                <LinkContainer to="/findings">
+                                    <NavItem>Findings</NavItem>
+                                </LinkContainer>
+                                <LinkContainer to="/map">
+                                    <NavItem>Map view</NavItem>
+                                </LinkContainer>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
 
                     <Route exact path="/" component={Landing}/>
                     <Route path="/findings" component={Main}/>
                     <Route path="/map" component={MapView}/>
 
                 </div>
-                </Router>
+            </Router>
 
         );
     }
