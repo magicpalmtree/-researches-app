@@ -6,8 +6,18 @@ import Spinner from 'react-spinkit';
 import Emitter from '../../helpers/emitters.js';
 import './MapView.css';
 import Item from "./finding/Item.jsx";
+import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
+import MapComponent from "../mapView/components/MapComponent.jsx";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+
+// map component must be wrapperd with these HOCs, library requrement
+// see https://tomchentw.github.io/react-google-maps/#installation
+const WrappedMapComponent = withScriptjs(withGoogleMap((props) =>
+    <MapComponent markers={props.markers}
+                  markerTypes={props.markerTypes}
+                  onMarkerClickCallback={props.onMarkerClickCallback}/>
+));
 
 export default class MapView extends React.Component {
     constructor(props, context) {
@@ -15,77 +25,28 @@ export default class MapView extends React.Component {
 
         this.state = {
             data: {},
-            selectedItems: [],
+            selectedFinding: null,
             findingTypes: {},
             displayTypes: [],
         };
 
-        this.markers = [];
-
         this.refreshList = this.refreshList.bind(this);
-
     }
 
+    /**
+     * Refresh data
+     *
+     * @returns {Promise.<void>}
+     */
     async refreshList() {
-        var that = this;
         try {
 
-            //
             let typesResult = await api.getFindingTypes();
-            this.setState({
-                findingTypes: typesResult.data,
-            });
-
             let findingsResult = await api.getFindings();
             this.setState({
+                findingTypes: typesResult.data,
                 findings: findingsResult.data,
             });
-
-            // init map and process
-
-
-            // let mapCenter = {lat: 49.885551, lon: 14.982962};
-
-
-            var mapCenter = new google.maps.LatLng(parseFloat(49.885551), parseFloat(14.982962));
-            let map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 7,
-                center: mapCenter
-            });
-
-            let geocoder = new google.maps.Geocoder();
-            var iconBase = 'http://maps.google.com/mapfiles/kml/paddle/';
-
-            this.state.findings.forEach(function (element, i) {
-
-                // map.setCenter(results    [0].geometry.location);         // todo: calculate map center and zoom based on all data
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: new google.maps.LatLng(parseFloat(element.gps.lat), parseFloat(element.gps.lon)),
-                    icon: that.state.findingTypes[element.type].mapIcon,
-                });
-
-                that.markers.push(marker);
-
-                marker.addListener('click', function () {
-                    // map.setZoom(8);
-                    // map.setCenter(marker.getPosition());
-
-
-                    // that.markers.every(function (m) {            // todo: vyresit nulovani markeru
-                    // // console.log(m);
-                    //    m.setAnimation(null);
-                    // });
-                    // this.setAnimation(google.maps.Animation.BOUNCE);
-
-                    that.setState({
-                        selectedItems: [element]
-                    });
-                });
-
-                console.log(element);
-            });
-
 
         } catch (e) {
             throw e;    // TODO: ten toaster nefuguje, opravit
@@ -93,6 +54,23 @@ export default class MapView extends React.Component {
         }
     }
 
+    /**
+     * Show details on selected finding (marker)
+     *
+     * @param marker
+     */
+    onFindingClick(marker){
+
+        this.setState({
+            selectedFinding: marker
+        });
+    }
+
+    /**
+     * Render component
+     *
+     * @returns {XML}
+     */
     render() {
 
         if (!this.state.findings) {
@@ -131,32 +109,38 @@ export default class MapView extends React.Component {
 
                             <hr />
 
-                            <div className="item-wrapper">
-                                {
-                                    this.state.selectedItems.map((item) => {
-                                        return <Item delete={this.deleteFinding} key={item._id} item={item}/>
-                                    })
-                                }
-                            </div>
+                            {this.state.selectedFinding !== null ? (
+                                <div className="item-wrapper">
+                                    <p>{this.state.selectedFinding._id}</p>
+                                </div>
+                            ) : (
+                                <p>Click a map pin for finding info</p>
+                            )}
+
                         </div>
 
-
                     </div>
 
+                    // TODO: neprodukcni klic, zmenit !
 
-                    <div id="map-container">
+                    <WrappedMapComponent
+                        // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8HRY96IlGOrm49g4htKZpaVUV1OVWjKA&v=3.exp&libraries=geometry,drawing,places"
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"           // works just fine without the key, hmm...
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div id="map-container" />}
+                        mapElement={<div id="map" />}
+                        markers = {this.state.findings}
+                        markerTypes = {this.state.findingTypes}
+                        onMarkerClickCallback={(marker) => (this.onFindingClick(marker))}        // TODO: not sure if this is ok to do?
+                    />
 
-                        <div id="map"></div>
-
-                    </div>
                 </div>
-
             );
         }
     }
 
 
-    async componentWillMount() {
+    async componentWillMount() {                // TODO: is this necessary? No data modifications occur at the moment
         await this.refreshList();
 
         Emitter.addListener('onListRefresh', async () => {
