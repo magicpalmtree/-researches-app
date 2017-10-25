@@ -45,7 +45,7 @@ export default {
                     "Poznamka": "Lorem ipsum",
                     "gps" : {
                         "lat": 48.971727,
-                        "lon": 14.457506,
+                        "lng": 14.457506,
                     },
                     "dynam": {
                         "Vzorek": "vz1",
