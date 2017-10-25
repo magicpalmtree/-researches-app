@@ -56,7 +56,7 @@ export default class MapView extends React.Component {
             let geocoder = new google.maps.Geocoder();
             var iconBase = 'http://maps.google.com/mapfiles/kml/paddle/';
 
-            this.state.findings.every(function (element, i) {
+            this.state.findings.forEach(function (element, i) {
 
 
                 geocoder.geocode({'address': element.Lokalita}, function (results, status) {               // pomucka, TODO: zbavit se toho a presunout to do editace
