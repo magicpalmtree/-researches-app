@@ -18,7 +18,7 @@ export default {
             'data': [
                 {
                     "_id": "5939a787c05735d3dc12378d",
-                    "Lokalita": "Branišovská, České Budějovice",
+                    "Lokalita": "Stromovka, České Budějovice",
                     "type": "AB",
                     "Kraj": "12345",
                     "Okres": "CB",
@@ -43,6 +43,10 @@ export default {
                     "TypOdberu": "Odber",
                     "InventarizacniCislo": "1234567",
                     "Poznamka": "Lorem ipsum",
+                    "gps" : {
+                        "lat": 48.971727,
+                        "lon": 14.457506,
+                    },
                     "dynam": {
                         "Vzorek": "vz1",
                         "BotanickyDruh": "1",
@@ -52,7 +56,7 @@ export default {
                 },
                 {
                     "_id": "5939a787c05735d3dc12378e",
-                    "Lokalita": "Praha",
+                    "Lokalita": "Stromovka, České Budějovice",
                     "type": "AZ",
                     "Kraj": "12345",
                     "Okres": "CB",
@@ -77,6 +81,10 @@ export default {
                     "TypOdberu": "Odber",
                     "InventarizacniCislo": "1234567",
                     "Poznamka": "Lorem ipsum",
+                    "gps" : {
+                        "lat": 48.970487,
+                        "lon": 14.454953,
+                    },
                     "dynam": {
                         "Cislo": "001",
                         "ZoologickyDruh": "2",
@@ -86,7 +94,7 @@ export default {
                 },
                 {
                     "_id": "5939a787c05735d3dc12378f",
-                    "Lokalita": "Světlá nad Sázavou, Sázavská",
+                    "Lokalita": "Světlá nad Sázavou, Pod mostem přes Sázavu",
                     "type": "AB",
                     "Kraj": "12345",
                     "Okres": "CB",
@@ -111,6 +119,10 @@ export default {
                     "TypOdberu": "Odber",
                     "InventarizacniCislo": "1234567",
                     "Poznamka": "Lorem ipsum",
+                    "gps" : {
+                        "lat": 49.665961,
+                        "lon": 15.405384,
+                    },
                     "dynam": {
                         "Vzorek": "vz1",
                         "BotanickyDruh": "1",
@@ -145,6 +157,10 @@ export default {
                     "TypOdberu": "Odber",
                     "InventarizacniCislo": "1234567",
                     "Poznamka": "Lorem ipsum",
+                    "gps" : {
+                        "lat": 49.911501,
+                        "lon": 15.045100,
+                    },
                     "dynam": {
                         "NISP": "45",
                         "Archezoolog": "Milos Jarda",
@@ -179,6 +195,10 @@ export default {
                     "TypOdberu": "Odber",
                     "InventarizacniCislo": "1234567",
                     "Poznamka": "Lorem ipsum",
+                    "gps" : {
+                        "lat": 49.912587,
+                        "lon": 15.034720,
+                    },
                     "dynam": {
                         "Objem": "45",
                         "Botanik": "Milos Novak",

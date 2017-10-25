@@ -58,37 +58,29 @@ export default class MapView extends React.Component {
 
             this.state.findings.forEach(function (element, i) {
 
+                // map.setCenter(results    [0].geometry.location);         // todo: calculate map center and zoom based on all data
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(parseFloat(element.gps.lat), parseFloat(element.gps.lon)),
+                    icon: that.state.findingTypes[element.type].mapIcon,
+                });
 
-                geocoder.geocode({'address': element.Lokalita}, function (results, status) {               // pomucka, TODO: zbavit se toho a presunout to do editace
-                    if (status == 'OK') {
-                        map.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location,
-                            icon: that.state.findingTypes[element.type].mapIcon,
-                        });
+                that.markers.push(marker);
 
-                        that.markers.push(marker);
-
-                        marker.addListener('click', function () {
-                            // map.setZoom(8);
-                            // map.setCenter(marker.getPosition());
+                marker.addListener('click', function () {
+                    // map.setZoom(8);
+                    // map.setCenter(marker.getPosition());
 
 
-                            // that.markers.every(function (m) {            // todo: vyresit nulovani markeru
-                            // // console.log(m);
-                            //    m.setAnimation(null);
-                            // });
-                            // this.setAnimation(google.maps.Animation.BOUNCE);
+                    // that.markers.every(function (m) {            // todo: vyresit nulovani markeru
+                    // // console.log(m);
+                    //    m.setAnimation(null);
+                    // });
+                    // this.setAnimation(google.maps.Animation.BOUNCE);
 
-                            that.setState({
-                                selectedItems: [element]
-                            });
-
-                        });
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
+                    that.setState({
+                        selectedItems: [element]
+                    });
                 });
 
                 console.log(element);
