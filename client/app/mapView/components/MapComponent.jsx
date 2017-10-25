@@ -58,7 +58,7 @@ export default class MapComponent extends React.Component {
                     this.state.markers.map((key) => {
                         return (
 
-                            <Marker onClick={this.onMarkerClick.bind(this, key)}
+                            <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
                                     position={{ lat: key.gps.lat, lng: key.gps.lng }}
                                     icon={this.state.markerTypes[key.type].mapIcon}
                                     animation={this.getMarkerAnimation(key)} />
@@ -92,4 +92,40 @@ export default class MapComponent extends React.Component {
         // now grab the services we need
         this.googleMaps = googleMaps
     }
+
+    /**
+     * Update map if markers change
+     *
+     * @param nextProps
+     */
+    componentWillReceiveProps(nextProps) {
+
+        // TODO: Ugly, maybe check some unique id or count
+        if(JSON.stringify(this.props.markers) !== JSON.stringify(nextProps.markers))
+        {
+            this.setState({
+                markers: nextProps.markers
+            });
+        }
+
+        // chcek if the active marker needs to be cleard
+        if (this.state.activeMarker !== null){
+            let found = false;
+            for (let newMarker of nextProps.markers) {
+                if (newMarker._id === this.state.activeMarker._id) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found){            // if the active marker is not in the new marker set, clear it
+                this.setState({
+                    activeMarker: null
+                });
+            }
+        }
+
+
+    }
+
 }
