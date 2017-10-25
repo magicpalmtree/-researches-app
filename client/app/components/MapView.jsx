@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col} from "react-bootstrap";
-import api from '../../services/api';
+import api from '../../services/apiMock';
 import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
 import Emitter from '../../helpers/emitters.js';
@@ -21,8 +21,6 @@ export default class MapView extends React.Component {
         this.markers = [];
 
         this.refreshList = this.refreshList.bind(this);
-
-        this.onPlacemarkClick = this.onPlacemarkClick.bind(this);
 
     }
 
