@@ -1,12 +1,21 @@
-import axios from 'axios'
-
-import { apiPrefix } from '../app/App.jsx'
-import { apiPrefixSchemas } from '../app/App.jsx'
+/**
+ * Mock api for idenpendet development of Map view
+ *
+ * TODO: remove when changes are incorporate into the real api
+ *
+ */
 
 export default {
+
+    /**
+     * Returns a set of predefined findings to test the map view functionality.
+     *
+     * @param data
+     * @returns {Promise.<{data: [*,*,*,*,*]}>}
+     */
     async getFindings(data) {
-        return {'data':
-            [
+        return {
+            'data': [
                 {
                     "_id": "5939a787c05735d3dc12378d",
                     "Lokalita": "Branišovská, České Budějovice",
@@ -181,23 +190,68 @@ export default {
         };
     },
 
+    /**
+     * Returns a dictionary of used findings' types, keyed by its unique identifier.
+     * Format:
+     *
+     *  {
+     *      <string, unique identifier> : {
+     *          name: <string, Type name>,
+     *          color: <string, Hex color value with leading hash>,
+     *          mapIcon: <string, Map icon URL>,
+     *      },
+     *      ...
+     *  }
+     *
+     *
+     * @returns {Promise.<{data: {AZ: {name: string}, AB: {name: string}}}>}
+     */
+    async getFindingTypes() {
+
+        // TODO: Recomanded to use Material Design color pallete future in editation of finding types
+        // see https://material.io/guidelines/style/color.html#color-color-palette
+
+        return {
+            'data': {
+                "AZ": {
+                    "name": "Archeozoologie",
+                    "color": "#9C27B0",
+                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/purple-blank_maps.png"   // TODO: possibly load locally? Copyright issues?
+                },
+                "AB": {
+                    "name": "Archeobotanika",
+                    "color": "#8BC34A",
+                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/grn-blank_maps.png"
+                },
+            }
+        }
+    },
+
+
+    // unimplemented interface stubs
+
     async createFinding(finding) {
+        console.error("Not implemented in this mock");
         return
     },
 
     async deleteFinding(id) {
-      return
+        console.error("Not implemented in this mock");
+        return
     },
 
     async updateFinding(id, finding) {
+        console.error("Not implemented in this mock");
         return
     },
 
     async getFindingSchemas() {
+        console.error("Not implemented in this mock");
         return
     },
 
     async createFindingSchema(schema) {
+        console.error("Not implemented in this mock");
         return
     }
 }
