@@ -59,7 +59,7 @@ export default class MapComponent extends React.Component {
                         return (
 
                             <Marker onClick={this.onMarkerClick.bind(this, key)}
-                                    position={{ lat: key.gps.lat, lng: key.gps.lon }}
+                                    position={{ lat: key.gps.lat, lng: key.gps.lng }}
                                     icon={this.state.markerTypes[key.type].mapIcon}
                                     animation={this.getMarkerAnimation(key)} />
                         )

@@ -83,7 +83,7 @@ export default {
                     "Poznamka": "Lorem ipsum",
                     "gps" : {
                         "lat": 48.970487,
-                        "lon": 14.454953,
+                        "lng": 14.454953,
                     },
                     "dynam": {
                         "Cislo": "001",
@@ -121,7 +121,7 @@ export default {
                     "Poznamka": "Lorem ipsum",
                     "gps" : {
                         "lat": 49.665961,
-                        "lon": 15.405384,
+                        "lng": 15.405384,
                     },
                     "dynam": {
                         "Vzorek": "vz1",
@@ -159,7 +159,7 @@ export default {
                     "Poznamka": "Lorem ipsum",
                     "gps" : {
                         "lat": 49.911501,
-                        "lon": 15.045100,
+                        "lng": 15.045100,
                     },
                     "dynam": {
                         "NISP": "45",
@@ -197,7 +197,7 @@ export default {
                     "Poznamka": "Lorem ipsum",
                     "gps" : {
                         "lat": 49.912587,
-                        "lon": 15.034720,
+                        "lng": 15.034720,
                     },
                     "dynam": {
                         "Objem": "45",
