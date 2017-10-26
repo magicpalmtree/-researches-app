@@ -1,7 +1,8 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import api from '../../../services/api'
 import FormRender from "../FormRender.jsx";
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 import Emitter from '../../../helpers/emitters.js';
 
 // Define helping function to building form easier
@@ -22,10 +23,10 @@ export default class Create extends React.Component {
         this.state = {
             selectValue: '',
             schemaOptions: [],
+            submitted: false
         };
 
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.close = this.close.bind(this);
         this.save = this.save.bind(this);
         this.getSchemaOptions = this.getSchemaOptions.bind(this);
     }
@@ -59,9 +60,10 @@ export default class Create extends React.Component {
         formData.dynam = dynam;
 
         await api.createFinding(formData);
-        this.close();
-        Emitter.emit('onListRefresh');
 
+        this.setState({
+            submitted : true
+        });
     }
 
 
@@ -75,10 +77,6 @@ export default class Create extends React.Component {
         })
     }
 
-    close() {
-        this.props.onFindingCreate();
-    }
-
     onSelectChange(e) {
         this.setState({
             selectValue: e.target.value
@@ -86,173 +84,179 @@ export default class Create extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <form name="staticForm">
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Lokalita-naleziště"
-                        name="lokalita"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Kraj"
-                        name="kraj"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Okres"
-                        name="okres"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Katastr"
-                        name="katastr"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Nadmořská výška"
-                        name="nadmorskaVyska"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Zkoumaná plocha"
-                        name="zkoumanaPlocha"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Archeolog"
-                        name="archeolog"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Rok výzkumu"
-                        name="rokVyzkumu"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Instituce"
-                        name="instituce"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Koordináty XYZ"
-                        name="koordinatyXYZ"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Mapa"
-                        name="mapa"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Sonda"
-                        name="sonda"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Sektor"
-                        name="sektor"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Objekt"
-                        name="objekt"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Typ objektu"
-                        name="typObjektu"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Vrstva"
-                        name="vrstva"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Hloubka(od do)"
-                        name="hloubka"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Datace - archeologické období"
-                        name="dataceObd"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Datace - archeologická kultura"
-                        name="dataceKult"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Typ naleziště"
-                        name="typNaleziste"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Reference"
-                        name="reference"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Typ odběru"
-                        name="typOdberu"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Inventarizační číslo"
-                        name="inventarizacniCislo"
-                    />
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="Poznámka"
-                        name="poznamka"
-                    />
-                </form>
+        if (this.state.submitted) {
+            return (<Redirect to="/findings"/>)
+        } else {
+            return (
+                <div style={{margin: '20px 25%'}}>
+                    <form name="staticForm">
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Lokalita-naleziště"
+                            name="lokalita"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Kraj"
+                            name="kraj"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Okres"
+                            name="okres"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Katastr"
+                            name="katastr"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Nadmořská výška"
+                            name="nadmorskaVyska"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Zkoumaná plocha"
+                            name="zkoumanaPlocha"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Archeolog"
+                            name="archeolog"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Rok výzkumu"
+                            name="rokVyzkumu"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Instituce"
+                            name="instituce"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Koordináty XYZ"
+                            name="koordinatyXYZ"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Mapa"
+                            name="mapa"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Sonda"
+                            name="sonda"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Sektor"
+                            name="sektor"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Objekt"
+                            name="objekt"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Typ objektu"
+                            name="typObjektu"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Vrstva"
+                            name="vrstva"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Hloubka(od do)"
+                            name="hloubka"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Datace - archeologické období"
+                            name="dataceObd"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Datace - archeologická kultura"
+                            name="dataceKult"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Typ naleziště"
+                            name="typNaleziste"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Reference"
+                            name="reference"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Typ odběru"
+                            name="typOdberu"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Inventarizační číslo"
+                            name="inventarizacniCislo"
+                        />
+                        <FieldGroup
+                            id="formControlsText"
+                            type="text"
+                            label="Poznámka"
+                            name="poznamka"
+                        />
+                    </form>
 
-                <hr/>
+                    <hr/>
 
-                <FormGroup controlId="formControlsSelect">
-                    <ControlLabel>Dynamická část</ControlLabel>
-                    <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select a schema">
-                        <option></option>
-                        {this.state.schemaOptions.map((opt, i) => (
-                            <option value={opt._id} key={i}>{opt.name}</option>
-                        ))}
-                    </FormControl>
-                </FormGroup>
+                    <FormGroup controlId="formControlsSelect">
+                        <ControlLabel>Dynamická část</ControlLabel>
+                        <FormControl componentClass="select" onChange={this.onSelectChange} placeholder="Select a schema">
+                            <option></option>
+                            {this.state.schemaOptions.map((opt, i) => (
+                                <option value={opt._id} key={i}>{opt.name}</option>
+                            ))}
+                        </FormControl>
+                    </FormGroup>
 
-                { this.state.selectValue !== '' ? <FormRender schema={
-                    this.state.schemaOptions.filter((el) =>
-                    el._id === this.state.selectValue)}/> : <div></div> }
+                    { this.state.selectValue !== '' ? <FormRender schema={
+                        this.state.schemaOptions.filter((el) =>
+                        el._id === this.state.selectValue)}/> : <div></div> }
 
-                <button onClick={this.save}>Save</button>
-            </div>
-        )
+
+                    <Button bsStyle="primary" bsSize="large" onClick={this.save}>Save</Button>
+
+                </div>
+            )
+        }
     }
 }

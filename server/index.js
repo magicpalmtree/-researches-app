@@ -12,7 +12,7 @@ const port = process.env.PORT || 8099;
 // connect to mongodb
 // Uncomment the necessary
 // mongoose.connect('mongodb://localhost/researches1');
-// mongoose.connect('mongodb://localhost/researches_test');
+mongoose.connect('mongodb://localhost/researches_test');
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());

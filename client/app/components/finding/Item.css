@@ -15,7 +15,7 @@
     color: #16a085;
 }
 
-.icon-container > span:first-child {
+.icon-container > span:not(:last-child) {
     margin-right: 15px;
     cursor: pointer;
 }

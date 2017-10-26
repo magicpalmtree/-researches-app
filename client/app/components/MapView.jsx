@@ -121,9 +121,5 @@ export default class MapView extends React.Component {
 
     async componentWillMount() {
         await this.refreshList();
-
-        Emitter.addListener('onListRefresh', async () => {
-            await this.refreshList();
-        });
     }
 }
