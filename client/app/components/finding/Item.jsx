@@ -31,7 +31,12 @@ export default class Item extends React.Component {
                         <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
                     </Link>
                     <span className="icon-container">
-                        <span className="glyphicon glyphicon-plus" />
+                        <Link to={{
+                            pathname: '/create',
+                            state: { item: this.state.item }
+                        }}>
+                            <span className="glyphicon glyphicon-plus" />
+                        </Link>
                         <Confirm
                             onConfirm={() => this.removeItem(this.props.item._id)}
                             body="Are you sure you want to delete this?"

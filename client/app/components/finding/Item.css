@@ -15,9 +15,13 @@
     color: #16a085;
 }
 
-.icon-container > span:not(:last-child) {
+.icon-container span {
     margin-right: 15px;
     cursor: pointer;
+}
+
+.icon-container > span {
+    margin-right: 0;
 }
 
 .list-item:first-child {
