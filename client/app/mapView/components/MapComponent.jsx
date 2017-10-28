@@ -109,8 +109,6 @@ export default class MapComponent extends React.Component {
                 // GPS position is a polygon
                 } else if (key.gps.length > 1) {
 
-                    console.log(this.calculatePolygonsCenter(key.gps));
-
                     return ([
                         <Polygon key={key._id}
                                  path={key.gps}
@@ -127,8 +125,10 @@ export default class MapComponent extends React.Component {
                         // this center marker is needed for clustering to work properry
                         // because it doesnt count with polyhons etc.
                         <Marker key={key._id + "_dummy"}
+                                onClick={this.onMarkerClick.bind(this, key)}
                                 position={this.calculatePolygonsCenter(key.gps)}
                                 icon={this.state.markerTypes[key.DOC_TYPE].mapPolygonIcon}      // dummy empty image, TODO: replace with local
+                                animation={this.getMarkerAnimation(key)}
                         />
                     ])
                 }

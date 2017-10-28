@@ -119,7 +119,7 @@ export default {
                     }],
                     "Poznamka": "Lorem ipsum",
                     "tag":[
-                        {"text":"Coarse location","color":"waring"}     // bootstrap standard colors
+                        {"text":"Coarse location","color":"warning"}     // bootstrap standard colors
                     ],
                     "dynam": {
                         "Reference": "Reference1",

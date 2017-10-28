@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, Col, Row} from "react-bootstrap";
+import {Checkbox, Col, Label, Row} from "react-bootstrap";
 import api from '../../services/apiMock';
 import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
@@ -92,8 +92,6 @@ export default class MapView extends React.Component {
      */
     onFindingTypeChange(event, state){
 
-        console.log(event);
-
         // toggle type filter state
         let findingTypesShownTemp = this.state.findingTypesShown;
         findingTypesShownTemp[event.props.name] = state;
@@ -103,7 +101,7 @@ export default class MapView extends React.Component {
 
         // clear currently selected finding if it belongs to the type, that is now beeing filtred-out
         if (this.state.selectedFinding !== null){
-            if (this.state.selectedFinding.type === event.props.name && !state) {
+            if (this.state.selectedFinding.DOC_TYPE === event.props.name && !state) {
                 this.setState({
                     selectedFinding: null
                 });
@@ -127,12 +125,31 @@ export default class MapView extends React.Component {
 
     onClusteringToggle(elem, state) {
 
-        console.log('Clustering state: ');
-        console.log(state);
-
         this.setState({ clusteringActive: state });
+    }
 
-        console.log(this.state.clusteringActive);
+    renderFindingElement(key, element){      // TODO: temporary, move to standalone compnent if needed for
+        switch (key) {
+            case 'gps':
+            case '_id':
+            case 'Sample_ID':
+            case 'DOC_TYPE':
+            case 'dynam':
+            case 'tag':
+                return "";
+                break;
+        }
+
+        if (typeof element === "string"){
+            return (
+                <p key={key}>
+                    <small className="text-muted">{key}</small><br />
+                    {element}
+                </p>
+            )
+        }
+
+
     }
 
     /**
@@ -206,7 +223,23 @@ export default class MapView extends React.Component {
 
                             {this.state.selectedFinding !== null ? (
                                 <div className="item-wrapper">
-                                    <p>{this.state.selectedFinding._id}</p>
+                                    <h4>{this.state.selectedFinding['Sample_ID']}</h4>
+
+                                    {
+                                        this.state.selectedFinding.tag.map(function (tag) {
+                                            return (
+                                                <Label key={tag.text} bsStyle={tag.color}>{tag.text}</Label>
+                                            )
+                                        })
+                                    }
+
+                                    {
+                                        Object.keys(this.state.selectedFinding).map((attribute) => {
+                                            return (
+                                                this.renderFindingElement(attribute,this.state.selectedFinding[attribute])
+                                            )
+                                        })
+                                    }
                                 </div>
                             ) : (
                                 <p className="text-muted text-center"><em>Click a map pin for finding info</em></p>
