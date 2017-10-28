@@ -1,5 +1,5 @@
 import React from 'react';
-import {GoogleMap, Marker} from "react-google-maps";
+import {GoogleMap, Marker, Polygon} from "react-google-maps";
 import {MarkerClusterer} from "react-google-maps/lib/components/addons/MarkerClusterer";
 
 
@@ -50,48 +50,86 @@ export default class MapComponent extends React.Component {
         return null;
     }
 
+
+    /**
+     * Internal helper method for wrapping map content with Google maps component
+     *
+     * @param content A JSX collection of markers, polygons and other elements
+     * @returns {XML}
+     */
+    googleMapWrap(content) {
+
+        return (
+            <GoogleMap
+                defaultZoom={7}
+                defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
+                mapTypeId="terrain"
+            >
+            {content}
+
+            </GoogleMap>
+        );
+    }
+
     render() {
 
         let mapContent = (
             this.state.markers.map((key) => {
-                return (
 
-                    <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
-                            position={{ lat: key.gps[0].lat, lng: key.gps[0].lng }}
-                            icon={this.state.markerTypes[key.DOC_TYPE].mapIcon}
-                            animation={this.getMarkerAnimation(key)} />
-                )
+                // GPS position is a point
+                if (key.gps.length === 1){
+                    return (
+                        <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
+                                position={{ lat: key.gps[0].lat, lng: key.gps[0].lng }}
+                                icon={this.state.markerTypes[key.DOC_TYPE].mapIcon}
+                                animation={this.getMarkerAnimation(key)} />
+                    )
+
+                // GPS position is a polygon
+                } else if (key.gps.length > 1) {
+
+                    return ([
+                        <Polygon key={key._id}
+                                 path={key.gps}
+                                 onClick={this.onMarkerClick.bind(this, key)}
+                                 options={{
+                                     strokeColor: this.state.markerTypes[key.DOC_TYPE].color,
+                                     fillColor: this.state.markerTypes[key.DOC_TYPE].color,
+                                     strokeOpacity: 0.9,
+                                     strokeWeight: 1,
+                                     fillOpacity: 0.6
+                                 }}
+                        />,
+
+                        // this dummy hidden marker is needed for clustering to work properry
+                        // because it doesnt count with polyhons etc.
+                        <Marker key={key._id + "_dummy"}
+                                position={{ lat: key.gps[0].lat, lng: key.gps[0].lng }}
+                                icon="http://maps.google.com/mapfiles/kml/pal2/icon15.png"      // dummy empty image, TODO: replace with local
+                        />
+                    ])
+                }
             })
         );
 
 
         if (this.state.clusteringActive){
             return (
-                <GoogleMap
-                    defaultZoom={7}
-                    defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
-                    mapTypeId="terrain"
-                >
+
+                this.googleMapWrap(
                     <MarkerClusterer
                         averageCenter
                         enableRetinaIcons
                         gridSize={60}
                         maxZoom={13}
                     >
-                    {mapContent}
+                        {mapContent}
                     </MarkerClusterer>
-
-                </GoogleMap>
+                )
             );
         } else {
             return (
-                <GoogleMap
-                    defaultZoom={7}
-                    defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
-                    mapTypeId="terrain"
-                >
-                    {mapContent}
-                </GoogleMap>
+                this.googleMapWrap(mapContent)
             );
         }
 
