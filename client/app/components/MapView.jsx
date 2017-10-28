@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, Col} from "react-bootstrap";
+import {Checkbox, Col, Row} from "react-bootstrap";
 import api from '../../services/apiMock';
 import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
@@ -8,6 +8,11 @@ import './MapView.css';
 import Item from "./finding/Item.jsx";
 import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
 import MapComponent from "../mapView/components/MapComponent.jsx";
+import Switch from 'react-bootstrap-switch';
+
+// TODO: I belive there must be a better way, I don't know it now, sorry :(
+
+import '../../../node_modules/react-bootstrap-switch/dist/css/bootstrap3/react-bootstrap-switch.min.css';
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
@@ -16,7 +21,9 @@ const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 const WrappedMapComponent = withScriptjs(withGoogleMap((props) =>
     <MapComponent markers={props.markers}
                   markerTypes={props.markerTypes}
-                  onMarkerClickCallback={props.onMarkerClickCallback}/>
+                  onMarkerClickCallback={props.onMarkerClickCallback}
+                  clusteringActive={props.clusteringActive}
+    />
 ));
 
 export default class MapView extends React.Component {
@@ -28,12 +35,14 @@ export default class MapView extends React.Component {
             findingTypes: {},
             selectedFinding: null,
             findingTypesShown: {},
-            filteredFindings: []
+            filteredFindings: [],
+            clusteringActive: false
         };
 
         this.refreshList = this.refreshList.bind(this);
         this.onFindingTypeChange = this.onFindingTypeChange.bind(this);
         this.filterFindings = this.filterFindings.bind(this);
+        this.onClusteringToggle = this.onClusteringToggle.bind(this);
     }
 
     /**
@@ -114,6 +123,16 @@ export default class MapView extends React.Component {
         });
     }
 
+    onClusteringToggle(elem, state) {
+
+        console.log('Clustering state: ');
+        console.log(state);
+
+        this.setState({ clusteringActive: state });
+
+        console.log(this.state.clusteringActive);
+    }
+
     /**
      * Render component
      *
@@ -140,6 +159,20 @@ export default class MapView extends React.Component {
                             <h2 className="h3">Map options</h2>
 
                             <p className="text-muted">TODO: clustering and so on</p>
+
+                            <Row>
+                                <Col sm={7}>
+                                    Clustering
+                                </Col>
+                                <Col sm={5} className="text-right">
+                                    <Switch value={this.state.clusteringActive}
+                                            onChange={(el, state) => this.onClusteringToggle(el, state)}
+                                            name='clusteringToggle'
+                                            bsSize="mini"
+                                    />
+                                </Col>
+                            </Row>
+
 
                             <hr />
 
@@ -183,6 +216,7 @@ export default class MapView extends React.Component {
                         markers = {this.state.filteredFindings}
                         markerTypes = {this.state.findingTypes}
                         onMarkerClickCallback={(marker) => (this.onFindingClick(marker))}        // TODO: not sure if this is ok to do?
+                        clusteringActive = {this.state.clusteringActive}
                     />
 
                 </div>

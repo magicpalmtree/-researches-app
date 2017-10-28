@@ -4,14 +4,14 @@
 	top: 50px;
 	left: 0;
 	bottom: 0;
-	width: 30%;
+	width: 20%;
 	overflow-y: auto;
 }
 
 #map-container {
 	position: absolute;
 	top: 50px;
-	left: 30%;
+	left: 20%;
 	right: 0;
 	bottom: 0;
 }

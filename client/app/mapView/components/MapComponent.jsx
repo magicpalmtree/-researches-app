@@ -1,5 +1,6 @@
 import React from 'react';
 import {GoogleMap, Marker} from "react-google-maps";
+import {MarkerClusterer} from "react-google-maps/lib/components/addons/MarkerClusterer";
 
 
 
@@ -11,6 +12,7 @@ export default class MapComponent extends React.Component {
             markers: this.props.markers,
             markerTypes: this.props.markerTypes,
             activeMarker: null,
+            clusteringActive: false,
         };
 
         this.googleMaps = null;         // grabbed on component mount
@@ -49,25 +51,47 @@ export default class MapComponent extends React.Component {
     }
 
     render() {
-        return (
-            <GoogleMap
-                defaultZoom={8}
-                defaultCenter={{lat: 49.885551, lng: 14.982962}}  // todo: calculate map center and zoom based on all data
-            >
-                {
-                    this.state.markers.map((key) => {
-                        return (
 
-                            <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
-                                    position={{ lat: key.gps.lat, lng: key.gps.lng }}
-                                    icon={this.state.markerTypes[key.type].mapIcon}
-                                    animation={this.getMarkerAnimation(key)} />
-                        )
-                    })
-                }
+        let mapContent = (
+            this.state.markers.map((key) => {
+                return (
 
-            </GoogleMap>
+                    <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
+                            position={{ lat: key.gps.lat, lng: key.gps.lng }}
+                            icon={this.state.markerTypes[key.type].mapIcon}
+                            animation={this.getMarkerAnimation(key)} />
+                )
+            })
         );
+
+
+        if (this.state.clusteringActive){
+            return (
+                <GoogleMap
+                    defaultZoom={8}
+                    defaultCenter={{lat: 49.885551, lng: 14.982962}}  // todo: calculate map center and zoom based on all data
+                >
+                    <MarkerClusterer
+                        averageCenter
+                        enableRetinaIcons
+                        gridSize={60}
+                    >
+                    {mapContent}
+                    </MarkerClusterer>
+
+                </GoogleMap>
+            );
+        } else {
+            return (
+                <GoogleMap
+                    defaultZoom={8}
+                    defaultCenter={{lat: 49.885551, lng: 14.982962}}  // todo: calculate map center and zoom based on all data
+                >
+                    {mapContent}
+                </GoogleMap>
+            );
+        }
+
     }
 
     componentWillMount() {
@@ -91,6 +115,8 @@ export default class MapComponent extends React.Component {
         }
         // now grab the services we need
         this.googleMaps = googleMaps
+
+
     }
 
     /**
@@ -124,6 +150,10 @@ export default class MapComponent extends React.Component {
                 });
             }
         }
+
+        this.setState({
+            clusteringActive: nextProps.clusteringActive,
+        })
 
 
     }
