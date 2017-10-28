@@ -71,6 +71,27 @@ export default class MapComponent extends React.Component {
         );
     }
 
+    /**
+     * Calclulate center for given set of GPS coordinates.
+     *
+     * Accepted format:
+     *
+     * [{"lat":12.3456,"lng":45.6789}, ...]
+     *
+     * @param arrayOfCoords
+     * @returns {LatLng|LatLngLatLngLatLng}
+     */
+    calculatePolygonsCenter(arrayOfCoords){
+
+        let calculator = new this.googleMaps.LatLngBounds();
+
+        arrayOfCoords.forEach(function(point){
+            calculator.extend(point);
+        });
+
+        return calculator.getCenter();
+    }
+
     render() {
 
         let mapContent = (
@@ -88,6 +109,8 @@ export default class MapComponent extends React.Component {
                 // GPS position is a polygon
                 } else if (key.gps.length > 1) {
 
+                    console.log(this.calculatePolygonsCenter(key.gps));
+
                     return ([
                         <Polygon key={key._id}
                                  path={key.gps}
@@ -95,17 +118,17 @@ export default class MapComponent extends React.Component {
                                  options={{
                                      strokeColor: this.state.markerTypes[key.DOC_TYPE].color,
                                      fillColor: this.state.markerTypes[key.DOC_TYPE].color,
-                                     strokeOpacity: 0.9,
-                                     strokeWeight: 1,
+                                     strokeOpacity: 1,
+                                     strokeWeight: 2,
                                      fillOpacity: 0.6
                                  }}
                         />,
 
-                        // this dummy hidden marker is needed for clustering to work properry
+                        // this center marker is needed for clustering to work properry
                         // because it doesnt count with polyhons etc.
                         <Marker key={key._id + "_dummy"}
-                                position={{ lat: key.gps[0].lat, lng: key.gps[0].lng }}
-                                icon="http://maps.google.com/mapfiles/kml/pal2/icon15.png"      // dummy empty image, TODO: replace with local
+                                position={this.calculatePolygonsCenter(key.gps)}
+                                icon={this.state.markerTypes[key.DOC_TYPE].mapPolygonIcon}      // dummy empty image, TODO: replace with local
                         />
                     ])
                 }

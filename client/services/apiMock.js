@@ -265,12 +265,14 @@ export default {
                 "AZ": {
                     "name": "Archeozoologie",
                     "color": "#9C27B0",
-                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/orange-blank_maps.png"   // TODO: possibly load locally? Copyright issues?
+                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/orange-blank_maps.png",   // TODO: possibly load locally? Copyright issues?
+                    "mapPolygonIcon": "http://maps.google.com/mapfiles/kml/paddle/orange-diamond_maps.png"
                 },
                 "AB": {
                     "name": "Archeobotanika",
                     "color": "#8BC34A",
-                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/grn-blank_maps.png"
+                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/grn-blank_maps.png",
+                    "mapPolygonIcon": "http://maps.google.com/mapfiles/kml/paddle/grn-diamond_maps.png"
                 },
             }
         }
