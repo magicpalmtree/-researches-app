@@ -236,7 +236,7 @@ export default {
                 "AZ": {
                     "name": "Archeozoologie",
                     "color": "#9C27B0",
-                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/purple-blank_maps.png"   // TODO: possibly load locally? Copyright issues?
+                    "mapIcon": "http://maps.google.com/mapfiles/kml/paddle/orange-blank_maps.png"   // TODO: possibly load locally? Copyright issues?
                 },
                 "AB": {
                     "name": "Archeobotanika",

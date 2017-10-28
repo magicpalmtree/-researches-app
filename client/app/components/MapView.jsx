@@ -90,18 +90,20 @@ export default class MapView extends React.Component {
      *
      * @param event
      */
-    onFindingTypeChange(event){
+    onFindingTypeChange(event, state){
+
+        console.log(event);
 
         // toggle type filter state
         let findingTypesShownTemp = this.state.findingTypesShown;
-        findingTypesShownTemp[event.target.name] = event.target.checked;
+        findingTypesShownTemp[event.props.name] = state;
         this.setState({
             findingTypesShown: findingTypesShownTemp
         });
 
         // clear currently selected finding if it belongs to the type, that is now beeing filtred-out
         if (this.state.selectedFinding !== null){
-            if (this.state.selectedFinding.type === event.target.name && !event.target.checked) {
+            if (this.state.selectedFinding.type === event.props.name && !state) {
                 this.setState({
                     selectedFinding: null
                 });
@@ -158,6 +160,7 @@ export default class MapView extends React.Component {
 
                             <h2 className="h3">Map options</h2>
 
+                            <div>
                             <Row>
                                 <Col sm={7}>
                                     Clustering
@@ -170,24 +173,34 @@ export default class MapView extends React.Component {
                                     />
                                 </Col>
                             </Row>
+                            </div>
 
 
                             <hr />
 
                             <h2 className="h3">Findings sets</h2>
-                            <form>
+                            <div className="map-legend">
                                 {
                                     Object.keys(this.state.findingTypes).map((key) => {
                                         return (
-                                            <Checkbox key={key} name={key} onChange={this.onFindingTypeChange} defaultChecked={this.state.findingTypesShown[key]}>
-                                                {this.state.findingTypes[key].name}
-                                                <img src={this.state.findingTypes[key].mapIcon}/>
-                                            </Checkbox>
 
+                                            <Row key={key}>
+                                                <Col sm={7}>
+                                                    <img src={this.state.findingTypes[key].mapIcon} className="map-legend-icon"/>
+                                                    {this.state.findingTypes[key].name}
+                                                </Col>
+                                                <Col sm={5} className="text-right">
+                                                    <Switch value={this.state.findingTypesShown[key]}
+                                                            onChange={(el, state) => this.onFindingTypeChange(el, state)}
+                                                            name={key}
+                                                            bsSize="mini"
+                                                    />
+                                                </Col>
+                                            </Row>
                                         )
                                     })
                                 }
-                            </form>
+                            </div>
 
                             <hr />
 

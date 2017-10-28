@@ -22,12 +22,16 @@
 	/*height: 300px;*/
 }
 
-#legend {
-	background: white;
-	padding: 1em;
-	border: 1px solid lightgray;
+.map-legend .row {
+	margin-top: 15px;
+	margin-bottom: 15	px;
 }
 
-#legend > div {
-	padding: 2px;
+.map-legend .row .map-legend-icon {
+	padding-right: 5px;
+	height: 30px;
+}
+
+.map-legend .row .bootstrap-switch {
+	margin-top: 5px;
 }
