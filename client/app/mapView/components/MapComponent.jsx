@@ -68,13 +68,15 @@ export default class MapComponent extends React.Component {
         if (this.state.clusteringActive){
             return (
                 <GoogleMap
-                    defaultZoom={8}
-                    defaultCenter={{lat: 49.885551, lng: 14.982962}}  // todo: calculate map center and zoom based on all data
+                    defaultZoom={7}
+                    defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
+                    mapTypeId="terrain"
                 >
                     <MarkerClusterer
                         averageCenter
                         enableRetinaIcons
                         gridSize={60}
+                        maxZoom={13}
                     >
                     {mapContent}
                     </MarkerClusterer>
@@ -84,8 +86,9 @@ export default class MapComponent extends React.Component {
         } else {
             return (
                 <GoogleMap
-                    defaultZoom={8}
-                    defaultCenter={{lat: 49.885551, lng: 14.982962}}  // todo: calculate map center and zoom based on all data
+                    defaultZoom={7}
+                    defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
+                    mapTypeId="terrain"
                 >
                     {mapContent}
                 </GoogleMap>

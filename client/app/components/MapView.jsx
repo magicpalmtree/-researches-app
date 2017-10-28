@@ -158,8 +158,6 @@ export default class MapView extends React.Component {
 
                             <h2 className="h3">Map options</h2>
 
-                            <p className="text-muted">TODO: clustering and so on</p>
-
                             <Row>
                                 <Col sm={7}>
                                     Clustering
