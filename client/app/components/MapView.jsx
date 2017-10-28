@@ -79,7 +79,7 @@ export default class MapView extends React.Component {
      */
     filterFindings(){
 
-        let filteredFindingsTemp =  this.state.findings.filter(item => this.state.findingTypesShown[item.type]);
+        let filteredFindingsTemp =  this.state.findings.filter(item => this.state.findingTypesShown[item.DOC_TYPE]);
         this.setState({
             filteredFindings: filteredFindingsTemp,
         });
