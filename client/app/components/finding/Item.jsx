@@ -32,7 +32,7 @@ export default class Item extends React.Component {
                     </Link>
                     <span className="icon-container">
                         <Link to={{
-                            pathname: '/create',
+                            pathname: '/findings/create',
                             state: { item: this.state.item }
                         }}>
                             <span className="glyphicon glyphicon-plus" />
