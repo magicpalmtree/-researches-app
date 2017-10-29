@@ -41,10 +41,10 @@ export default class App extends React.Component {
                             </Nav>
 
                             <Nav pullRight>
-                                <LinkContainer to="/create">
+                                <LinkContainer to="/findings/create">
                                     <NavItem>Create</NavItem>
                                 </LinkContainer>
-                                <LinkContainer to="/build">
+                                <LinkContainer to="/findings/build">
                                     <NavItem>Build</NavItem>
                                 </LinkContainer>
                             </Nav>
@@ -52,11 +52,11 @@ export default class App extends React.Component {
                     </Navbar>
 
                     <Route exact path="/" component={Landing}/>
-                    <Route path="/findings" component={List}/>
+                    <Route exact path="/findings" component={List}/>
                     <Route path="/finding/:id" component={ItemDetail}/>
                     <Route path="/map" component={MapView}/>
-                    <Route path="/create" component={Create}/>
-                    <Route path="/build" component={Build}/>
+                    <Route path="/findings/create" component={Create}/>
+                    <Route path="/findings/build" component={Build}/>
                 </div>
             </Router>
 
