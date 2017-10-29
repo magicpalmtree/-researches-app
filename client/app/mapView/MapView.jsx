@@ -1,14 +1,13 @@
 import React from 'react';
-import {Checkbox, Col, Label, Row} from "react-bootstrap";
+import {Col, Label, Row} from "react-bootstrap";
 import api from '../../services/apiMock';
 import {ToastContainer, ToastMessage} from "react-toastr";
 import Spinner from 'react-spinkit';
-import Emitter from '../../helpers/emitters.js';
 import './MapView.css';
-import Item from "./finding/Item.jsx";
-import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
-import MapComponent from "../mapView/components/MapComponent.jsx";
+import {withGoogleMap, withScriptjs} from "react-google-maps";
+import MapComponent from "./components/MapComponent.jsx";
 import Switch from 'react-bootstrap-switch';
+import {compose} from "recompose";
 
 // TODO: I belive there must be a better way, I don't know it now, sorry :(
 
@@ -16,15 +15,18 @@ import '../../../node_modules/react-bootstrap-switch/dist/css/bootstrap3/react-b
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
-// map component must be wrapperd with these HOCs, library requrement
-// see https://tomchentw.github.io/react-google-maps/#installation
-const WrappedMapComponent = withScriptjs(withGoogleMap((props) =>
-    <MapComponent markers={props.markers}
-                  markerTypes={props.markerTypes}
-                  onMarkerClickCallback={props.onMarkerClickCallback}
-                  clusteringActive={props.clusteringActive}
-    />
-));
+const WrappedMapComponent = compose(
+    withScriptjs,
+    withGoogleMap
+)(props =>
+
+    <MapComponent
+        markers={props.markers}
+        markerTypes={props.markerTypes}
+        clusteringActive={props.clusteringActive}
+     />
+
+);
 
 export default class MapView extends React.Component {
     constructor(props, context) {
@@ -36,7 +38,7 @@ export default class MapView extends React.Component {
             selectedFinding: null,
             findingTypesShown: {},
             filteredFindings: [],
-            clusteringActive: false
+            clusteringActive: true
         };
 
         this.refreshList = this.refreshList.bind(this);
@@ -69,7 +71,7 @@ export default class MapView extends React.Component {
             });
 
         } catch (e) {
-            throw e;    // TODO: ten toaster nefuguje, opravit
+            throw e;    // TODO: make toaster work to display erros of the real API
             // this.refs.container.error(e.toString(), '', { closeButton: true });
         }
     }
@@ -86,9 +88,10 @@ export default class MapView extends React.Component {
     }
 
     /**
-     * Findings type checkboxes handler
+     * Findings type switches handler
      *
      * @param event
+     * @param state
      */
     onFindingTypeChange(event, state){
 
@@ -112,43 +115,13 @@ export default class MapView extends React.Component {
     }
 
     /**
-     * Show details on selected finding (marker)
+     * Map clustering switch handler
      *
-     * @param marker
+     * @param elem
+     * @param state
      */
-    onFindingClick(marker){
-
-        this.setState({
-            selectedFinding: marker
-        });
-    }
-
     onClusteringToggle(elem, state) {
         this.setState({ clusteringActive: state });
-    }
-
-    renderFindingElement(key, element){      // TODO: temporary, move to standalone compnent if needed for
-        switch (key) {
-            case 'gps':
-            case '_id':
-            case 'Sample_ID':
-            case 'DOC_TYPE':
-            case 'dynam':
-            case 'tag':
-                return "";
-                break;
-        }
-
-        if (typeof element === "string"){
-            return (
-                <p key={key}>
-                    <small className="text-muted">{key}</small><br />
-                    {element}
-                </p>
-            )
-
-        }
-
     }
 
     /**
@@ -159,7 +132,7 @@ export default class MapView extends React.Component {
     render() {
 
         if (!this.state.findings) {
-            return <Spinner name="line-scale-pulse-out" className="spinner"></Spinner>
+            return <Spinner name="line-scale-pulse-out" className="spinner"/>
         } else {
             return (
 
@@ -220,29 +193,7 @@ export default class MapView extends React.Component {
 
                             <hr />
 
-                            {this.state.selectedFinding !== null ? (
-                                <div className="item-wrapper">
-                                    <h4>{this.state.selectedFinding['Sample_ID']}</h4>
-
-                                    {
-                                        this.state.selectedFinding.tag.map(function (tag) {
-                                            return (
-                                                <Label key={tag.text} bsStyle={tag.color}>{tag.text}</Label>
-                                            )
-                                        })
-                                    }
-
-                                    {
-                                        Object.keys(this.state.selectedFinding).map((attribute) => {
-                                            return (
-                                                this.renderFindingElement(attribute,this.state.selectedFinding[attribute])
-                                            )
-                                        })
-                                    }
-                                </div>
-                            ) : (
-                                <p className="text-muted text-center"><em>Click a map pin for finding info</em></p>
-                            )}
+                            <p className="text-muted text-center"><em>Click a map pin for finding info</em></p>
 
                         </div>
 
@@ -258,7 +209,6 @@ export default class MapView extends React.Component {
                         mapElement={<div id="map" />}
                         markers = {this.state.filteredFindings}
                         markerTypes = {this.state.findingTypes}
-                        onMarkerClickCallback={(marker) => (this.onFindingClick(marker))}        // TODO: not sure if this is ok to do?
                         clusteringActive = {this.state.clusteringActive}
                     />
 

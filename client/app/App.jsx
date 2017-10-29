@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Landing from "./components/Landing.jsx";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
-import MapView from "./components/MapView.jsx";
+import MapView from "./mapView/MapView.jsx";
 import {LinkContainer} from "react-router-bootstrap";
 import Create from "./components/finding/Create.jsx";
 import Build from "./components/finding/Build.jsx";
