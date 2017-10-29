@@ -8,6 +8,10 @@ export default {
         return await axios.get(apiPrefix, {data: data})
     },
 
+    async getFinding(id) {
+        return await axios.get(apiPrefix + id)
+    },
+
     async createFinding(finding) {
         return await axios.post(apiPrefix, finding)
     },

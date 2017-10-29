@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import formBuilder from 'formBuilder';
 import 'jquery-ui';
+import {Button} from "react-bootstrap";
 
 export default class FormBuilder extends React.Component {
 
@@ -21,7 +22,12 @@ export default class FormBuilder extends React.Component {
 
         let options = {
             showActionButtons: false,
-            dataType: 'json'
+            dataType: 'json',
+            disableFields: [
+                'button',
+                'file',
+                'hidden'
+            ]
         };
 
         global.fb = $(formbuilder).formBuilder(options);
@@ -39,7 +45,7 @@ export default class FormBuilder extends React.Component {
         return (
             <div>
                 <div ref="formbuilder"></div>
-                <button style={{'marginTop': '30px'}} onClick={this.sendSchema}>Create a form</button>
+                <Button bsStyle="primary" style={{'marginTop': '30px'}} onClick={this.sendSchema}>Create a form</Button>
             </div>
         )
     }

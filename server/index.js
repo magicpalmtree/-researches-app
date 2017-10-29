@@ -10,7 +10,9 @@ const app = express();
 const port = process.env.PORT || 8099;
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/researches1');
+// Uncomment the necessary
+// mongoose.connect('mongodb://localhost/researches1');
+mongoose.connect('mongodb://localhost/researches_test');
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());

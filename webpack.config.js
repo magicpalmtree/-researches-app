@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+    devServer: {
+        historyApiFallback: true
+    },
 
     entry: [
         './node_modules/formBuilder/dist/form-render.min.js',

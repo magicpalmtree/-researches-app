@@ -4,6 +4,7 @@ import FormBuilder from '../FormBuilder.jsx';
 import {FormControl} from 'react-bootstrap';
 import api from '../../../services/api';
 import {ToastContainer, ToastMessage} from 'react-toastr';
+import {Redirect} from "react-router-dom";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
@@ -14,7 +15,7 @@ export default class Build extends React.Component {
         super(props, context);
 
         this.state = {
-            schemaName: ''
+            schemaName: '',
         };
 
         this.saveSchema = this.saveSchema.bind(this);
@@ -52,7 +53,7 @@ export default class Build extends React.Component {
         fb.actions.clearFields();
         ReactDOM.findDOMNode(this.refs.schemaName).value = '';
         this.setState({
-            schemaName: ''
+            schemaName: '',
         })
     }
 
@@ -64,7 +65,7 @@ export default class Build extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{margin: '20px 20%'}}>
                 <ToastContainer
                     toastMessageFactory={ToastMessageFactory}
                     ref="container"

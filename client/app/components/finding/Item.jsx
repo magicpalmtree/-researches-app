@@ -3,65 +3,40 @@ import api from '../../../services/api'
 import Confirm from 'react-confirm-bootstrap';
 import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 import './Item.css'
+import {Link} from "react-router-dom";
 
 export default class Item extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            editMode: false,
             item: this.props.item
         };
 
-        this.toggleEdit = this.toggleEdit.bind(this);
-        this.saveItem = this.saveItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onInputDynamChange = this.onInputDynamChange.bind(this);
     }
 
-    toggleEdit() {
-        this.setState({
-            editMode: !this.state.editMode
-        })
-    }
-
-    async saveItem() {
-        this.toggleEdit();
-        await api.updateFinding(this.state.item._id, this.state.item);
-    }
 
     removeItem(id) {
         this.props.delete(id);
     }
 
-    onInputChange(e) {
-        this.state.item[e.target.name] = e.target.value;
-
-        this.setState({
-            item: this.state.item
-        })
-    }
-
-    onInputDynamChange(e) {
-        this.state.item.dynam[e.target.name] = e.target.value;
-
-        this.setState({
-            item: this.state.item
-        })
-    }
 
     render() {
         return (
+        <div>
             <Panel className="item-panel" header={
                 <div className="header-container">
-                    <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
+                    <Link to={'/finding/' + this.state.item._id}>
+                        <span>{this.state.item.type === 'AB' ? 'Archeobotanika' : this.state.item.type === 'AZ' ? 'Archeozoologie' : 'Typ'}</span>
+                    </Link>
                     <span className="icon-container">
-                        {
-                            this.state.editMode ? <span className={'glyphicon glyphicon-ok'} onClick={() => this.saveItem()}/> :
-                                <span className='glyphicon glyphicon-pencil' onClick={() => this.toggleEdit()}/>
-
-                        }
+                        <Link to={{
+                            pathname: '/create',
+                            state: { item: this.state.item }
+                        }}>
+                            <span className="glyphicon glyphicon-plus" />
+                        </Link>
                         <Confirm
                             onConfirm={() => this.removeItem(this.props.item._id)}
                             body="Are you sure you want to delete this?"
@@ -79,9 +54,7 @@ export default class Item extends React.Component {
                                 Object.keys(this.state.item).map((key) => {
                                     if (key !== '_id' && key !== '__v' && key !== 'dynam' && key !== 'type') {
                                         return  <ListGroupItem className="list-item" key={key}>
-                                                  <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                                    <input className="form-control" onChange={this.onInputChange} name={key} type="text"
-                                                        value={this.state.item[key]}/> : this.state.item[key]}
+                                                  <span className="label-bold"> {key} </span> : {this.state.item[key]}
                                                 </ListGroupItem>
                                     }
                                 })
@@ -96,10 +69,7 @@ export default class Item extends React.Component {
                                 {
                                     Object.keys(this.state.item.dynam).map((key) => {
                                         return <ListGroupItem className="list-item" key={key}>
-                                            <span className="label-bold"> {key} </span> : {this.state.editMode ?
-                                            <input className="form-control" onChange={this.onInputDynamChange}
-                                                   name={key} type="text"
-                                                   value={this.state.item.dynam[key]}/> : this.state.item.dynam[key]}
+                                            <span className="label-bold"> {key} </span> : {this.state.item.dynam[key]}
                                         </ListGroupItem>
                                     })
                                 }
@@ -109,6 +79,7 @@ export default class Item extends React.Component {
                     }
                 </Tabs>
             </Panel>
+        </div>
         )
     }
 }

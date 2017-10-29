@@ -1,6 +1,3 @@
-/**
- * Created by Drml on 19.10.2017.
- */
 import React from 'react';
 import {Well} from "react-bootstrap";
 

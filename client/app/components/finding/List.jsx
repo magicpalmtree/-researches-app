@@ -1,7 +1,6 @@
 import React from 'react';
 import api from '../../../services/api';
 import Item from './Item.jsx';
-import Emitter from '../../../helpers/emitters.js';
 import Pagination from '../Pagination.jsx'
 import staticKeys from '../../../helpers/static';
 import {FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
@@ -128,10 +127,6 @@ export default class List extends React.Component {
 
     async componentWillMount() {
         await this.refreshList();
-
-        Emitter.addListener('onListRefresh', async () => {
-            await this.refreshList();
-        });
     }
 
 

@@ -124,7 +124,6 @@ export default class MapView extends React.Component {
     }
 
     onClusteringToggle(elem, state) {
-
         this.setState({ clusteringActive: state });
     }
 
@@ -147,8 +146,8 @@ export default class MapView extends React.Component {
                     {element}
                 </p>
             )
-        }
 
+        }
 
     }
 
@@ -271,9 +270,5 @@ export default class MapView extends React.Component {
 
     async componentWillMount() {                // TODO: is this necessary? No data modifications occur at the moment
         await this.refreshList();
-
-        Emitter.addListener('onListRefresh', async () => {
-            await this.refreshList();
-        });
     }
 }
