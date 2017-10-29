@@ -86,8 +86,7 @@ export default class MapPoi extends React.Component {
             <InfoWindow onCloseClick={this.closeBalloon.bind(this)}>
 
                 <div className="item-wrapper">
-                    <strong>{this.state.markerData['Sample_ID']}</strong>
-                    <br />
+                    <h3>{this.state.markerData['Sample_ID']}</h3>
                     {
                         this.state.markerData.tag.map(function (tag) {
                             return (

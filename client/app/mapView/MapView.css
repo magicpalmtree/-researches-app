@@ -8,6 +8,16 @@
 	overflow-y: auto;
 }
 
+#map-toolbox h2 {
+	font-size: 18px;
+	color: darkgray;
+	margin-bottom: 15px;
+}
+
+#map-toolbox .btn .glyphicon {
+	margin-right: 7px;
+}
+
 #map-container {
 	position: absolute;
 	top: 50px;
@@ -36,6 +46,11 @@
 	margin-top: 5px;
 }
 
+.item-wrapper h3 {
+	font-size: 18px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
 .item-wrapper .label {
 	margin-right: 5px;
 	margin-bottom: 15px;

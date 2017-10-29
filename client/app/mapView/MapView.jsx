@@ -147,6 +147,19 @@ export default class MapView extends React.Component {
 
                         <div className="container-fluid">
 
+                            <h2 className="h3">Filters</h2>
+
+                            <p className="text-center"><em>No filters set, displaying all avalible data.</em></p>
+
+                            <p className="text-center">
+                                <a href="#" className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon-filter"></span>
+                                    Adjust filters
+                                </a>
+                            </p>
+
+                            <hr />
+
                             <h2 className="h3">Map options</h2>
 
                             <div>
