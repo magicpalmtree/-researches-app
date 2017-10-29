@@ -1,6 +1,7 @@
 import React from 'react';
-import {GoogleMap, Marker, Polygon} from "react-google-maps";
+import {GoogleMap} from "react-google-maps";
 import {MarkerClusterer} from "react-google-maps/lib/components/addons/MarkerClusterer";
+import MapPoi from "./MapPoi.jsx";
 
 
 
@@ -12,42 +13,41 @@ export default class MapComponent extends React.Component {
             markers: this.props.markers,
             markerTypes: this.props.markerTypes,
             activeMarker: null,
-            clusteringActive: false,
+            clusteringActive: true,
         };
 
         this.googleMaps = null;         // grabbed on component mount
+
+        this.setActiveMarker = this.setActiveMarker.bind(this);
     }
 
     /**
-     * Handler for marker-click, making it "active"
+     * Handler for marker-click, making it "active" and opening its balloon
      *
      * @param marker
      */
-    onMarkerClick(marker){
+    setActiveMarker(marker){
         this.setState({
             activeMarker: marker,
         });
 
-        // TODO: add baloon popup, maybe?
-
-        this.props.onMarkerClickCallback(marker);       // notify parrent for further actions
     }
 
     /**
-     * Helper method for determining whether a marker should be animated
-     * (active, currently selected marker should be animated)
+     * Helper method for determining whether a marker's baloon
+     * sould be opened.
      *
      * @param marker
-     * @returns {*} Animation type or null
+     * @returns {boolean}
      */
-    getMarkerAnimation(marker){
+    getBaloonState(marker){
 
         if (this.state.activeMarker !== null) {
             if (marker._id === this.state.activeMarker._id){
-                return this.googleMaps.Animation.BOUNCE;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
 
@@ -64,6 +64,7 @@ export default class MapComponent extends React.Component {
                 defaultZoom={7}
                 defaultCenter={{lat: 49.742285, lng: 15.335175}}  // todo: calculate map center and zoom based on all data
                 mapTypeId="terrain"
+                onClick={() => (this.setActiveMarker(null))}
             >
             {content}
 
@@ -71,67 +72,21 @@ export default class MapComponent extends React.Component {
         );
     }
 
-    /**
-     * Calclulate center for given set of GPS coordinates.
-     *
-     * Accepted format:
-     *
-     * [{"lat":12.3456,"lng":45.6789}, ...]
-     *
-     * @param arrayOfCoords
-     * @returns {LatLng|LatLngLatLngLatLng}
-     */
-    calculatePolygonsCenter(arrayOfCoords){
-
-        let calculator = new this.googleMaps.LatLngBounds();
-
-        arrayOfCoords.forEach(function(point){
-            calculator.extend(point);
-        });
-
-        return calculator.getCenter();
-    }
-
     render() {
 
         let mapContent = (
             this.state.markers.map((key) => {
-
-                // GPS position is a point
-                if (key.gps.length === 1){
-                    return (
-                        <Marker key={key._id} onClick={this.onMarkerClick.bind(this, key)}
-                                position={{ lat: key.gps[0].lat, lng: key.gps[0].lng }}
-                                icon={this.state.markerTypes[key.DOC_TYPE].mapIcon}
-                                animation={this.getMarkerAnimation(key)} />
-                    )
-
-                // GPS position is a polygon
-                } else if (key.gps.length > 1) {
-
-                    return ([
-                        <Polygon key={key._id}
-                                 path={key.gps}
-                                 onClick={this.onMarkerClick.bind(this, key)}
-                                 options={{
-                                     strokeColor: this.state.markerTypes[key.DOC_TYPE].color,
-                                     fillColor: this.state.markerTypes[key.DOC_TYPE].color,
-                                     strokeOpacity: 1,
-                                     strokeWeight: 2,
-                                     fillOpacity: 0.6
-                                 }}
-                        />,
-
-                        // this center marker is needed for clustering to work properry
-                        // because it doesnt count with polyhons etc.
-                        <Marker key={key._id + "_dummy"}
-                                onClick={this.onMarkerClick.bind(this, key)}
-                                position={this.calculatePolygonsCenter(key.gps)}
-                                icon={this.state.markerTypes[key.DOC_TYPE].mapPolygonIcon}      // dummy empty image, TODO: replace with local
-                                animation={this.getMarkerAnimation(key)}
-                        />
-                    ])
-                }
+                return (<MapPoi
+                    key={key._id}
+                    coordinates={key.gps}
+                    icon={this.state.markerTypes[key.DOC_TYPE].mapIcon}
+                    polygonIcon={this.state.markerTypes[key.DOC_TYPE].mapPolygonIcon}
+                    color={this.state.markerTypes[key.DOC_TYPE].color}
+                    markerData={key}
+                    googleMaps={this.googleMaps}
+                    ballonShown={this.getBaloonState(key)}
+                    setActiveMarkerCallback={(key) => (this.setActiveMarker(key))}
+                />);
             })
         );
 
