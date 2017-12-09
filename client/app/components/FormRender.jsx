@@ -4,8 +4,16 @@ import $ from 'jquery';
 import 'jquery-ui';
 
 
-export default class FormRender extends React.Component {
+/**
+ * Wrapper for rendering schemas
+ */
+class FormRender extends React.Component {
 
+    /**
+     * Init props, set state, binds methods
+     * @param props
+     * @param context
+     */
     constructor(props, context) {
         super(props, context);
 
@@ -16,6 +24,10 @@ export default class FormRender extends React.Component {
         this.renderPlugin = this.renderPlugin.bind(this);
     }
 
+    /**
+     * Init formRender plugin with definition and options
+     * @param definition - Schema definition from props
+     */
     renderPlugin(definition) {
         const {formrender} = this.refs;
         let options = {
@@ -29,6 +41,10 @@ export default class FormRender extends React.Component {
         this.renderPlugin(this.props.schema[0].definition);
     }
 
+    /**
+     * Update schema and call render when component receive new props
+     * @param nextProps
+     */
     componentWillReceiveProps(nextProps) {
         this.setState({schema: nextProps.schema}, () => {
             this.renderPlugin(this.state.schema[0].definition);
@@ -45,3 +61,4 @@ export default class FormRender extends React.Component {
 
 }
 
+export default FormRender;

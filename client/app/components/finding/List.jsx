@@ -12,8 +12,10 @@ import * as ReactDOM from "react-dom";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
-
-export default class List extends React.Component {
+/**
+ * Represent list view
+ */
+class List extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -32,6 +34,11 @@ export default class List extends React.Component {
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
+    /**
+     * @async
+     * Call api and refresh list
+     * @returns {Promise.<void>}
+     */
     async refreshList() {
         let result = await api.getFindings();
 
@@ -41,6 +48,10 @@ export default class List extends React.Component {
         })
     }
 
+    /**
+     * Filter items in list view according to 'filterBy' prop
+     * @param e
+     */
     onFilterChange(e) {
         if (!e.target.value) {
             this.setState({
@@ -57,6 +68,10 @@ export default class List extends React.Component {
         }
     };
 
+    /**
+     * Handle select change and set 'filterBy' property
+     * @param e
+     */
     onSelectChange(e) {
         if (this.refs.filterVal) {
             ReactDOM.findDOMNode(this.refs.filterVal).value = '';
@@ -71,6 +86,10 @@ export default class List extends React.Component {
         });
     };
 
+    /**
+     * Handle page changing
+     * @param pageOfItems - Object, retrieved from 'Pagination' child component
+     */
     onPageChange(pageOfItems) {
         this.setState({ pageOfItems: pageOfItems });
     };
@@ -129,12 +148,17 @@ export default class List extends React.Component {
         await this.refreshList();
     }
 
-
+    /**
+     * Call api and delete a finding
+      * @param id
+     * @returns {Promise.<void>}
+     */
     async deleteFinding(id) {
         await api.deleteFinding(id);
         await this.refreshList();
     }
-
 }
+
+export default List;
 
 

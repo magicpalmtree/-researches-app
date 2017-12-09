@@ -5,7 +5,10 @@ import {Tabs, Tab, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
 import './Item.css'
 import {Link} from "react-router-dom";
 
-export default class Item extends React.Component {
+/**
+ * Represent a single item
+ */
+class Item extends React.Component {
     constructor(props) {
         super(props);
 
@@ -16,7 +19,10 @@ export default class Item extends React.Component {
         this.removeItem = this.removeItem.bind(this);
     }
 
-
+    /**
+     * Delete an item in parent component
+     * @param id
+     */
     removeItem(id) {
         this.props.delete(id);
     }
@@ -83,3 +89,5 @@ export default class Item extends React.Component {
         )
     }
 }
+
+export default Item;

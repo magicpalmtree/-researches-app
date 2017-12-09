@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import api from "../../../services/api";
 import {Button, ListGroup, ListGroupItem, Tab, Tabs} from "react-bootstrap";
 
-
-export default class ItemDetail extends React.Component {
+/**
+ * Represent item detail
+ */
+class ItemDetail extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -20,19 +22,31 @@ export default class ItemDetail extends React.Component {
         this.onInputDynamChange = this.onInputDynamChange.bind(this);
     }
 
+    /**
+     * @async
+     * Get a single finding and set state
+     * @returns {Promise.<void>}
+     */
     async componentDidMount() {
-        let finding = await api.getFinding(this.props.match.params.id)
+        let finding = await api.getFinding(this.props.match.params.id);
         this.setState({
             finding: finding.data
         })
     }
 
+    /**
+     * Toggle between edit mode
+     */
     toggleEdit() {
         this.setState({
             editMode: !this.state.editMode
         })
     }
 
+    /**
+     * Handle input change
+     * @param e
+     */
     onInputChange(e) {
         this.state.finding[e.target.name] = e.target.value;
 
@@ -41,6 +55,10 @@ export default class ItemDetail extends React.Component {
         })
     }
 
+    /**
+     * Handle dynamic part input change
+     * @param e
+     */
     onInputDynamChange(e) {
         this.state.item.dynam[e.target.name] = e.target.value;
 
@@ -49,6 +67,11 @@ export default class ItemDetail extends React.Component {
         })
     }
 
+    /**
+     * @async
+     * Send a finding to api
+     * @returns {Promise.<void>}
+     */
     async saveItem() {
         this.toggleEdit();
         await api.updateFinding(this.state.finding._id, this.state.finding);
@@ -104,3 +127,5 @@ export default class ItemDetail extends React.Component {
         )
     }
 }
+
+export default ItemDetail;

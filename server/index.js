@@ -9,10 +9,11 @@ const app = express();
 
 const port = process.env.PORT || 8099;
 
-// connect to mongodb
-// Uncomment the necessary
-// mongoose.connect('mongodb://localhost/researches1');
-mongoose.connect('mongodb://localhost/researches');
+const user = 'admin';
+const password = 'admin';
+
+// connect to remote mongodb
+mongoose.connect(`mongodb://${user}:${password}@ds135196.mlab.com:35196/researches`);
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());

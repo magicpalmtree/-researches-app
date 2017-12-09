@@ -12,26 +12,44 @@ const defaultProps = {
     initialPage: 1
 };
 
-export default class Pagination extends React.Component {
+/**
+ * Reusable component for pagination
+ */
+class Pagination extends React.Component {
+    /**
+     * Init props and set state
+     * @param props
+     */
     constructor(props) {
         super(props);
         this.state = { pager: {} };
     }
 
+    /**
+     * Set page if items array isn't empty
+     */
     componentWillMount() {
-        // set page if items array isn't empty
         if (this.props.items && this.props.items.length) {
             this.setPage(this.props.initialPage);
         }
     }
 
+    /**
+     * Reset page if items array has changed
+     * @param prevProps
+     * @param prevState
+     */
     componentDidUpdate(prevProps, prevState) {
-        // reset page if items array has changed
         if (this.props.items !== prevProps.items) {
             this.setPage(this.props.initialPage);
         }
     }
 
+    /**
+     * Set a single page
+     * @param page - Page which need to be set
+     * @param restrict - Parameter, which prevents from setting the wrong page
+     */
     setPage(page, restrict=false) {
         let items = this.props.items;
         let pager = this.state.pager;
@@ -42,19 +60,35 @@ export default class Pagination extends React.Component {
             }
         }
 
-        // get new pager object for specified page
+        /**
+         * Get new pager object for specified page
+         * @type {{totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages}|*}
+         */
         pager = this.getPager(items.length, page, this.props.pageSize);
 
-        // get new page of items from items array
+        /**
+         * Get new page of items from items array
+         */
         let pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
 
-        // update state
+        /**
+         * Update state
+         */
         this.setState({ pager: pager });
 
-        // call change page function in parent component
+        /**
+         * Call change page function in parent component
+         */
         this.props.onPageChange(pageOfItems);
     }
 
+    /**
+     * Build and returns pager object
+     * @param totalItems
+     * @param currentPage
+     * @param pageSize
+     * @returns {{totalItems: *, currentPage: (*|number), pageSize: (*|number), totalPages: number, startPage: *, endPage: *, startIndex: number, endIndex: number, pages}}
+     */
     getPager(totalItems, currentPage, pageSize) {
         // default to first page
         currentPage = currentPage || 1;
@@ -105,6 +139,10 @@ export default class Pagination extends React.Component {
         };
     }
 
+    /**
+     * Render method
+     * @returns {*}
+     */
     render() {
         let pager = this.state.pager;
 
@@ -140,4 +178,4 @@ export default class Pagination extends React.Component {
 Pagination.propTypes = propTypes;
 Pagination.defaultProps = defaultProps;
 
-
+export default Pagination;

@@ -8,8 +8,10 @@ import {Redirect} from "react-router-dom";
 
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
-
-export default class Build extends React.Component {
+/**
+ * Handle finding schema building
+ */
+class Build extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -23,7 +25,12 @@ export default class Build extends React.Component {
         this.showToastSuccess = this.showToastSuccess.bind(this);
     }
 
-
+    /**
+     * Send a new finding schema to api
+     * @async
+     * @param schemaObj - Schema object retrieved from plugin
+     * @returns {Promise.<void>}
+     */
     async saveSchema(schemaObj) {
         let schema = {
             name: this.state.schemaName,
@@ -38,18 +45,24 @@ export default class Build extends React.Component {
         }
     }
 
+    /**
+     * Handle schema name change
+     * @param e
+     */
     onSchemaNameChange(e) {
         this.setState({
             schemaName: e.target.value
         });
     }
 
+    /**
+     * Show success toast and clear form
+     */
     showToastSuccess() {
         this.refs.container.success('Schema was created', 'Success', {
             closeButton: true,
         });
 
-        // Clear formBuilder and input after submitting form
         fb.actions.clearFields();
         ReactDOM.findDOMNode(this.refs.schemaName).value = '';
         this.setState({
@@ -57,6 +70,9 @@ export default class Build extends React.Component {
         })
     }
 
+    /**
+     * Show error toast
+     */
     showToastError() {
         this.refs.container.error('Schema name is missing!', 'Error', {
             closeButton: true,
@@ -85,3 +101,5 @@ export default class Build extends React.Component {
         )
     }
 }
+
+export default Build;

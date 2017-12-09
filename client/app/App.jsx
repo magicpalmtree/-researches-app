@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Landing from "./components/Landing.jsx";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
-import MapView from "./mapView/MapView.jsx";
 import {LinkContainer} from "react-router-bootstrap";
 import Create from "./components/finding/Create.jsx";
 import Build from "./components/finding/Build.jsx";
@@ -14,12 +13,16 @@ import ItemDetail from "./components/finding/ItemDetail.jsx";
 export const apiPrefix = 'http://localhost:8099/api/findings/';
 export const apiPrefixSchemas = 'http://localhost:8099/api/findings_schemas/';
 
+/**
+ * Main component of application. Renders all components.
+ */
+class App extends React.Component {
 
-export default class App extends React.Component {
-
+    /**
+     * Render method
+     */
     render() {
         return(
-
             <Router>
                 <div>
                     <Navbar inverse fluid staticTop>
@@ -35,9 +38,9 @@ export default class App extends React.Component {
                                 <LinkContainer to="/findings">
                                     <NavItem>Findings</NavItem>
                                 </LinkContainer>
-                                <LinkContainer to="/map">
-                                    <NavItem>Map view</NavItem>
-                                </LinkContainer>
+                                {/*<LinkContainer to="/map">*/}
+                                    {/*<NavItem>Map view</NavItem>*/}
+                                {/*</LinkContainer>*/}
                             </Nav>
 
                             <Nav pullRight>
@@ -54,12 +57,10 @@ export default class App extends React.Component {
                     <Route exact path="/" component={Landing}/>
                     <Route exact path="/findings" component={List}/>
                     <Route path="/finding/:id" component={ItemDetail}/>
-                    <Route path="/map" component={MapView}/>
                     <Route path="/findings/create" component={Create}/>
                     <Route path="/findings/build" component={Build}/>
                 </div>
             </Router>
-
         );
     }
 }

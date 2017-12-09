@@ -46,6 +46,13 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.4",
+    "esdoc": "^1.0.4",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
+    "esdoc-jsx-plugin": "^1.0.0",
+    "esdoc-node": "^1.0.2",
+    "esdoc-node-plugin": "^0.2.1",
+    "esdoc-standard-plugin": "^1.0.0",
+    "jsdoc-react": "^0.3.2",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.2",
     "webpack-dev-server": "^2.4.2"

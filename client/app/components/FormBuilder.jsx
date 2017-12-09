@@ -4,7 +4,10 @@ import formBuilder from 'formBuilder';
 import 'jquery-ui';
 import {Button} from "react-bootstrap";
 
-export default class FormBuilder extends React.Component {
+/**
+ * Wrapper for building schemas
+ */
+class FormBuilder extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -16,8 +19,10 @@ export default class FormBuilder extends React.Component {
 
     }
 
+    /**
+     * Initialize formBuilder and render it with options
+     */
     componentDidMount() {
-        // Initialize formbuilder and render it at the page
         const {formbuilder} = this.refs;
 
         let options = {
@@ -33,8 +38,10 @@ export default class FormBuilder extends React.Component {
         global.fb = $(formbuilder).formBuilder(options);
     }
 
+    /**
+     * Get schema data object from formBuilder and send it to the parent component
+     */
     sendSchema() {
-        // Get schema data object from formbuilder and send it to the parent component
         let schemaObj = fb.actions.getData();
         this.props.sendSchema(schemaObj);
     }
@@ -51,3 +58,5 @@ export default class FormBuilder extends React.Component {
     }
 
 }
+
+export default FormBuilder;

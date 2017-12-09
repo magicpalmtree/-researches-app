@@ -4,7 +4,14 @@ import api from '../../../services/api'
 import FormRender from "../FormRender.jsx";
 import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
-// Define helping function to building form easier
+/**
+ * Define helping function to building form easier
+ * @param id
+ * @param label
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
 function FieldGroup({ id, label, ...props }) {
     return (
         <FormGroup controlId={id}>
@@ -14,7 +21,9 @@ function FieldGroup({ id, label, ...props }) {
     );
 }
 
-export default
+/**
+ * Create a new finding
+ */
 class Create extends React.Component {
 
     constructor(props, context) {
@@ -58,10 +67,17 @@ class Create extends React.Component {
     }
 
 
+    /**
+     * @async
+     * @returns {Promise.<void>}
+     */
     async componentWillMount() {
         await this.getSchemaOptions();
     }
 
+    /**
+     * Init state value with route props, if present
+     */
     componentDidMount() {
         if (this.props.location.state) {
             let itemObj = this.props.location.state.item;
@@ -76,6 +92,7 @@ class Create extends React.Component {
     }
 
     /**
+     * @async
      * Create a JSON from FormData() object. Then perform a POST request.
      */
     async save() {
@@ -105,6 +122,10 @@ class Create extends React.Component {
         });
     }
 
+    /**
+     * Handle input change
+     * @param event
+     */
     onInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -117,6 +138,7 @@ class Create extends React.Component {
 
 
     /**
+     * @async
      * Perform GET request to retrieve a list of schemas from a db.
      */
     async getSchemaOptions() {
@@ -126,6 +148,10 @@ class Create extends React.Component {
         })
     }
 
+    /**
+     * Handle select change
+     * @param e
+     */
     onSelectChange(e) {
         this.setState({
             selectValue: e.target.value
@@ -350,7 +376,6 @@ class Create extends React.Component {
                         this.state.schemaOptions.filter((el) =>
                         el._id === this.state.selectValue)}/> : <div></div> }
 
-
                     <Button bsStyle="primary" bsSize="large" onClick={this.save}>Save</Button>
 
                 </div>
@@ -359,3 +384,4 @@ class Create extends React.Component {
     }
 }
 
+export default Create;

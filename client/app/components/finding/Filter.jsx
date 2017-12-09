@@ -2,8 +2,10 @@ import React from 'react';
 
 import {Button, Collapse, Form, FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 
-export default class Filter extends React.Component {
-
+/**
+ * Filter component
+ */
+class Filter extends React.Component {
     constructor(props) {
         super(props);
 
